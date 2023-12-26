@@ -73,13 +73,11 @@ public class User {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-    @Column
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private Teacher teacher;
 
-    @Column
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Card> cards;
 
@@ -91,13 +89,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
-    @Column
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Enrollment> enrollments;
 
-    @Column
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
@@ -109,23 +105,19 @@ public class User {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Wishlist wishlist;
 
-    @Column
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Comment> comments;
 
-    @Column
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Certification> certifications;
 
-    @Column
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Rating> ratings;
 
-    @Column
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<StudyReminder> studyReminders;
 
@@ -137,13 +129,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "mail_sending_id"))
     private List<MailSending> mailSendings;
 
-    @Column
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<MailSending> sender;
 
-    @Column
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})

@@ -82,11 +82,9 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "training_field_id"))
     private List<TrainingField> trainingFields;
 
-    @Column
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Section> sections;
 
-    @Column
     @OneToOne(mappedBy = "course", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
@@ -100,27 +98,22 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "transaction_id"))
     private List<Transaction> transactions;
 
-    @Column
     @OneToOne(mappedBy = "course", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private CartItem cartItem;
 
-    @Column
     @OneToOne(mappedBy = "course", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private WishlistItem wishlistItem;
 
-    @Column
     @OneToOne(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Certification certification;
 
-    @Column
     @OneToOne(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Rating rating;
 
-    @Column
     @OneToOne(mappedBy = "course", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})

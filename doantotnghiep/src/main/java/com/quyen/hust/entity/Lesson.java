@@ -38,17 +38,14 @@ public class Lesson {
     @JoinColumn(name = "section_id", nullable = false)
     private Section section;
 
-    @Column
     @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<LessonUrl> lessonUrls;
 
-    @Column
     @OneToOne(mappedBy = "lesson", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private Enrollment enrollment;
 
-    @Column
     @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})

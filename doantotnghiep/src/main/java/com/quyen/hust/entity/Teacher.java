@@ -23,7 +23,7 @@ public class Teacher {
     @Column(name = "teaching_expertise")
     private String teachingExpertise;
 
-    @Column(name = "years_of_ experience")
+    @Column(name = "years_of_experience")
     private Integer yearsOfExperience;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = {

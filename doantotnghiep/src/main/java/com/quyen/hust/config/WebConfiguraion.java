@@ -28,7 +28,7 @@ public class WebConfiguraion extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:/home");
+        registry.addViewController("/").setViewName("forward:/users");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
