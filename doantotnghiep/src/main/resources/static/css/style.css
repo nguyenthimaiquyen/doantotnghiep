@@ -532,9 +532,9 @@ a:focus,a:hover,.portfolio-cat a:hover,.footer-menu li a:hover {
 	margin-bottom: 55px;
 }
 .main-menu ul li:hover > a {color: var(--theme-color);}
-.main-menu nav a[aria-current="page"] {
-	color: var(--theme-color);
-}
+/*.main-menu nav a[aria-current="page"] {*/
+/*	color: var(--theme-color);*/
+/*}*/
 /* mega menu */
 .main-menu ul li .mega-menu {
 	position: absolute;

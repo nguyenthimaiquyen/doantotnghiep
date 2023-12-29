@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<header th:fragment="header-website">
+    <div id="header-sticky" class="transparent-header header-area home2 home4 white-color-header">
+        <div class="header">
+            <div class="container-wrapper">
+                <div class="row align-items-center justify-content-between position-relative">
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-5 col-6">
+                        <div class="logo">
+                            <a href="index.html" class="d-block"><img src="/images/logo/logo.png" alt="Larna"></a>
+                        </div>
+                    </div><!-- /col -->
+                    <div class="col-xl-6 col-lg-7 col-md-1 col-sm-1 col-1 pl-lg-4 d-none d-lg-flex position-static">
+                        <div class="main-menu">
+                            <nav id="mobile-menu">
+                                <ul class="d-block">
+                                    <li><a class="mega-title" th:href="@{/api/v1}">Home</a>
+                                    </li><!-- /Home -->
+
+                                    <li><a th:href="@{/api/v1/about}">About</a>
+                                    </li><!-- /About -->
+
+                                    <li><a th:href="@{/api/v1/courses}">Course</a>
+                                    </li><!-- /Course -->
+
+                                    <li><a th:href="@{/api/v1/instructors}">Instructor</a>
+                                    </li><!-- /Instructor -->
+
+                                    <li><a th:href="@{/api/v1/myLearning}">My Learning</a>
+                                    </li><!-- /My learning -->
+
+                                    <li><a th:href="@{/api/v1/contact}">Contact</a>
+                                    </li><!-- /Contact -->
+                                </ul>
+                            </nav>
+                        </div><!-- /main-menu -->
+                    </div><!-- /col -->
+                    <div class="col-xl-2 col-lg-3 col-md-6 col-sm-4 col-4 pl-lg-0">
+                        <div class="header-right d-flex align-items-center justify-content-end">
+                            <ul class="header-login mr-15 d-none d-sm-block">
+                                <li>
+                                    <a class="d-inline-block main-color" th:href="@{/api/v1/login}"
+                                       data-toggle="tooltip"
+                                       data-selector="true" data-placement="bottom" title="Login / Register">
+                                        Login</a>
+                                </li>
+                            </ul><!-- /header-login -->
+
+                            <div class="my-btn d-none d-sm-block">
+                                <a th:href="@{/api/v1/signup}" class="btn white-bg">sign up</a>
+                            </div><!-- /Sign Up -->
+
+                            <div class="d-block d-sm-none pl-20">
+                                <a class="mobile-menubar theme-color" href="javascript:void(0);"><i
+                                        class="far fa-bars"></i></a>
+                            </div><!-- /mobile-menubar -->
+                        </div><!-- /header-right -->
+                    </div><!-- /col -->
+                </div><!-- /row -->
+            </div><!-- /container -->
+        </div>
+    </div><!-- /header-bottom -->
+</header>
+
+</body>
+</html>

@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/graduate
-    username: spring
-    password: spring
+    username: root
+    password:
   jpa:
     database: mysql
     show-sql: false
@@ -20,3 +20,12 @@ spring:
           auth: true
           starttls:
             enable: true
+  thymeleaf: # Thymeleaf
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: file:src/main/resources/templates/
+    resources: # Static resources
+      static-locations: file:src/main/resources/static/
+      cache:
+        period: 0

@@ -8,6 +8,7 @@
 <header th:replace="~{fragments/header-website :: header-website}"></header>
 <!--  header-area-end  -->
 
+
 <main>
     <!-- ======other-page-area-start=========================================== -->
     <div class="other-page-area">
@@ -34,36 +35,36 @@
     <div class="login-register-area mt-160 mb-105">
         <div class="container">
             <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                    <div class="login-area mb-60">
-                        <h4 class="text-capitalize">Sign in</h4>
-                        <div class="login-form mt-40">
+                <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
+                    <div class="register-area mb-60">
+                        <h4 class="text-capitalize">Sign up</h4>
+                        <div class="register-form mt-40">
                             <form action="#">
-                                <div class="log-email">
-                                    <input class="email w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
-                                           type="email" name="inputEmail" id="inputEmail" required
-                                           placeholder="Username or email address *">
-                                </div>
-                                <div class="log-pass mt-15">
-                                    <input class="email w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
-                                           type="password" name="l-pass" id="l-pass" required placeholder="Password">
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="save-info login-check d-flex align-items-center mt-4">
-                                        <input class="p-0" type="checkbox"
-                                               aria-label="Checkbox for following text input">
-                                        <p class="main-color mb-0 pl-10">Remember me</p>
+                                <div class="register-email mb-20">
+                                    <div class="log-email">
+                                        <input class="u-name w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
+                                               type="text" name="u-name" id="u-name" required placeholder="Username*">
                                     </div>
-                                    <div class="f-get-pass">
-                                        <a href="login.html" class="main-color d-inline-block mt-4">Forgot Password?</a>
+                                    <div class="log-email mt-15">
+                                        <input class="u-email w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
+                                               type="email" name="u-email" id="u-email" required
+                                               placeholder="Email address *">
                                     </div>
-                                </div>
-                                <div class="my-btn mt-4">
-                                    <button class="btn w-100 theme-bg text-uppercase rounded-0" type="submit"
-                                            name="submit">Sign In
-                                    </button>
+                                    <div class="log-pass mt-15">
+                                        <input class="r-pass w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
+                                               type="password" name="r-pass" id="r-pass" required
+                                               placeholder="Password">
+                                    </div>
                                 </div>
                             </form>
+                            <p class="pt-sm-3 pt-2 pb-1">Your personal data will be used to support your experience
+                                throughout this website, to manage access to your account, and for other purposes
+                                described in our <a href="#" class="theme-color theme-hover">privacy policy</a></p>
+                            <div class="my-btn mt-20">
+                                <button class="btn w-100 theme-bg text-uppercase rounded-0" type="submit" name="submit">
+                                    Sign up
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div><!-- /col -->

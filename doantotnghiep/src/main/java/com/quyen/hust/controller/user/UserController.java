@@ -8,14 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping
 public class UserController {
 
 
-    @GetMapping
-    public String getUserPage(Model model) {
-        return "index";
-    }
+
 
 
 }
