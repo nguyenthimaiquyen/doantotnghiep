@@ -1,11 +1,11 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Online Courses - My Cart')}"></head>
+<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Học tập - Larna')}"></head>
 
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header-website :: header-website}"></header>
+<header th:replace="~{fragments/header-login :: header-login}"></header>
 <!--  header-area-end  -->
 
 
@@ -14,25 +14,15 @@
     <div class="other-page-area">
         <div class="page-height  primary-overlay d-flex align-items-center position-relative">
             <div class="other-page-bg position-absolute w-100 h-100 bg-no-repeat bg-cover z-index-1"
-                 data-background="/images/about-page/about-page-hero.jpg"></div><!-- home2 slider bg -->
+                 data-background="/images/about-page/about-page1.jpg"></div><!-- home2 slider bg -->
 
             <div class="container">
                 <div class="row">
 
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="page-content text-center mt-110">
-
                             <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
-                                data-aos-delay="150"><span class="f-700">Shopping</span> Cart</h1>
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb justify-content-center bg-transparent">
-                                    <li class="breadcrumb-item"><a class="text-white" href="../index.html">Home</a></li>
-                                    <li class="breadcrumb-item active text-capitalize text-white" aria-current="page">
-                                        Shop
-                                    </li>
-                                </ol>
-                            </nav>
-
+                                data-aos-delay="150"><span class="f-700">Giỏ hàng</span></h1>
                         </div>
                     </div><!-- /col -->
 
@@ -46,16 +36,15 @@
     <!-- ====== cart-area-start=============================================== -->
     <div class="cart-area mt-165 mb-165">
         <div class="container">
-            <h3 class="mb-40 cart-title">Your Cart Items</h3>
+            <h3 class="mb-40 cart-title">1 khóa học trong giỏ hàng</h3>
             <div class="cart-table table-responsive">
                 <table class="table border-0">
                     <thead>
                     <tr>
-                        <th scope="col" class="pl-0">Item Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">total</th>
-                        <th scope="col"></th>
+                        <th scope="col" class="pl-0" style="width: 60%">Khóa học</th>
+                        <th scope="col" style="width: 10%">Giá</th>
+                        <th scope="col" style="width: 20%"></th>
+                        <th scope="col" style="width: 10%"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -66,7 +55,7 @@
                                     <img src="/images/cart/cart-img1.jpg" alt="images01">
                                 </a>
                                 <h5>
-                                    <a href="#" class="p-name main-color">Larna mervelous pen</a>
+                                    <a href="#" class="p-name main-color">Lập trình Java Spring Boot</a>
                                 </h5>
                             </div>
                         </td>
@@ -74,13 +63,9 @@
                             <div class="cart-price primary-color">$35.00</div>
                         </td>
                         <td>
-                            <div class="quantity-field position-relative d-inline-block">
-                                <input type="text" name="select1" value="0"
-                                       class="quantity-input-arrow quantity-input-2 primary-border2 text-center">
+                            <div class="my-btn d-none d-sm-block text-center">
+                                <a href="#" class="btn theme-bg">Chuyển vào danh sách mong ước</a>
                             </div>
-                        </td>
-                        <td>
-                            <div class="cart-price primary-color">$35.00</div>
                         </td>
                         <td class="text-right">
                             <a href="#"
@@ -95,21 +80,17 @@
                                     <img src="/images/cart/cart-img2.jpg" alt="images02">
                                 </a>
                                 <h5>
-                                    <a href="#" class="p-name main-color">Photoshop anvanced tutorial</a>
+                                    <a href="#" class="p-name main-color">Lập trình C++</a>
                                 </h5>
                             </div>
                         </td>
                         <td>
-                            <div class="cart-price primary-color">$35.00</div>
+                            <div class="cart-price primary-color">$25.00</div>
                         </td>
                         <td>
-                            <div class="quantity-field position-relative d-inline-block">
-                                <input type="text" name="select1" value="0"
-                                       class="quantity-input-arrow quantity-input-2 primary-border2 text-center">
+                            <div class="my-btn d-none d-sm-block text-center">
+                                <a href="#" class="btn theme-bg">Chuyển vào danh sách mong ước</a>
                             </div>
-                        </td>
-                        <td>
-                            <div class="cart-price primary-color">$35.00</div>
                         </td>
                         <td class="text-right">
                             <a href="#"
@@ -124,21 +105,17 @@
                                     <img src="/images/cart/cart-img3.jpg" alt="images03">
                                 </a>
                                 <h5>
-                                    <a href="#" class="p-name main-color">Larna smart cap</a>
+                                    <a href="#" class="p-name main-color">Lập trình mạng Java</a>
                                 </h5>
                             </div>
                         </td>
                         <td>
-                            <div class="cart-price primary-color">$35.00</div>
+                            <div class="cart-price primary-color">$30.00</div>
                         </td>
                         <td>
-                            <div class="quantity-field position-relative d-inline-block">
-                                <input type="text" name="select1" value="0"
-                                       class="quantity-input-arrow quantity-input-2 primary-border2 text-center">
+                            <div class="my-btn d-none d-sm-block text-center">
+                                <a href="#" class="btn theme-bg">Chuyển vào danh sách mong ước</a>
                             </div>
-                        </td>
-                        <td>
-                            <div class="cart-price primary-color">$35.00</div>
                         </td>
                         <td class="text-right">
                             <a href="#"
@@ -155,8 +132,8 @@
                         <div class="shoping-con-area">
                             <form action="#">
                                 <div class="my-btn">
-                                    <a href="#" class="btn d-inline-block primary-bg rounded-0 mt-15">Continue
-                                        Shopping</a>
+                                    <a th:href="@{/api/v1/courses}"
+                                       class="btn d-inline-block primary-bg rounded-0 mt-15">Xem các khóa học khác</a>
                                 </div><!-- /my-btn -->
                             </form>
                         </div>
@@ -164,11 +141,11 @@
                     <div class="col-xl-4  col-lg-6  col-md-6  col-sm-12 col-12">
                         <div class="update-area text-md-right">
                             <a href="#"
-                               class="btn primary-border2 text-uppercase f-500 d-inline-block rounded-0 main-color mt-15 mr-3">Update
-                                Cart</a>
+                               class="btn primary-border2 text-uppercase f-500 d-inline-block rounded-0 main-color mt-15 mr-3">
+                                Cập nhật giỏ hàng</a>
                             <a href="#"
-                               class="btn primary-border2 text-uppercase f-500 d-inline-block rounded-0 main-color mt-15">Clear
-                                All</a>
+                               class="btn primary-border2 text-uppercase f-500 d-inline-block rounded-0 main-color mt-15">Xóa
+                                hết</a>
                         </div>
                     </div><!-- /col -->
                 </div><!-- /row -->
@@ -176,90 +153,29 @@
 
             <div class="cart-bottom-content">
                 <div class="row">
-                    <div class="col-xl-4  col-lg-4  col-md-6  col-sm-12 col-12">
-                        <div class="calculate-shopping-info-area mt-50">
-                            <h5 class="cart-title mb-45">Have A Coupon Code ?</h5>
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mr-200">
+                        <div class="coupon-apply-area mt-70">
+                            <h5 class="cart-title mb-30">Bạn có mã giảm giá ?</h5>
                             <form action="#">
-                                <div class="row">
-                                    <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12 mb-3 d-flex align-items-center">
-                                        <span class="text-uppercase main-color f-500 pr-2">Country</span>
-                                        <div class="country-select w-100">
-                                            <select class="w-100">
-                                                <option value="volvo">Your Country</option>
-                                                <option value="saab">bangladesh</option>
-                                                <option value="mercedes">Algeria</option>
-                                                <option value="audi">Afghanistan</option>
-                                                <option value="audi2">Ghana</option>
-                                                <option value="audi3">Albania</option>
-                                                <option value="audi4">Bahrain</option>
-                                                <option value="audi5">Colombia</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12 mb-3 d-flex align-items-center">
-                                        <span class="text-uppercase main-color f-500 pr-3 d-inline-block">State</span>
-                                        <div class="country-select w-100 ">
-                                            <select class="w-100">
-                                                <option value="volvo">Select your State</option>
-                                                <option value="saab">bangladesh</option>
-                                                <option value="mercedes">Algeria</option>
-                                                <option value="audi">Afghanistan</option>
-                                                <option value="audi2">Ghana</option>
-                                                <option value="audi3">Albania</option>
-                                                <option value="audi4">Bahrain</option>
-                                                <option value="audi5">Colombia</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12 mb-3 d-flex align-items-center">
-                                        <span class="text-uppercase main-color f-500 pr-3">Zip Code</span>
-                                        <div class="checkout-form-list w-100">
-                                            <input type="text" placeholder="Write your zip code" class="w-100 pl-15">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12 d-flex align-items-center">
-                                        <div class="my-btn">
-                                            <a href="#" class="btn d-inline-block transparent-bg f-500 rounded-0">calculate</a>
-                                        </div><!-- /my-btn -->
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div><!-- /col -->
-                    <div class="col-xl-4  col-lg-4  col-md-6  col-sm-12 col-12">
-                        <div class="coupon-apply-area mt-50">
-                            <h5 class="cart-title mb-45">Have A Coupon Code ?</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Write your Coupon code" class="w-100 pl-15 mr-2">
+                                <input type="text" placeholder="Nhập mã giảm giá" class="w-100 pl-15 mr-2">
                                 <div class="my-btn">
-                                    <a href="#" class="btn d-inline-block transparent-bg f-500 rounded-0 mt-3">Apply
-                                        Code</a>
+                                    <a href="#" class="btn d-inline-block transparent-bg f-500 rounded-0 mt-3">Áp dụng
+                                        mã</a>
                                 </div><!-- /my-btn -->
                             </form>
                         </div>
                     </div><!-- /col -->
-                    <div class="col-xl-4  col-lg-4  col-md-12  col-sm-12 col-12">
+                    <div class="col-xl-4  col-lg-4  col-md-12  col-sm-12 col-12 ml-200 mt-30">
                         <div class="total-price-area total-price-bg text-center pt-25 pb-25 pr-30 pl-30 mt-50">
-                            <ul class="primary-border-bottom">
-                                <li class="d-flex justify-content-between align-items-center text-uppercase f-500 mb-6">
-                                    <span>Sub Total</span><span class="primary-color">$216.00</span>
-                                </li>
-                                <li class="d-flex justify-content-between align-items-center text-uppercase f-500 mb-22">
-                                    <span>Shipping</span><span class="primary-color">$20.00</span>
-                                </li>
-                            </ul>
                             <ul class="pt-20 pb-20">
                                 <li class="g-total d-flex justify-content-between align-items-center text-uppercase f-500">
-                                    <span>Grand Total</span><span class="primary-color">$236.00</span>
+                                    <span>Tổng</span><span class="primary-color">$236.00</span>
                                 </li>
                             </ul>
                             <div class="my-btn">
-                                <a href="#" class="btn d-block theme-bg f-500 rounded-0 px-1">Proceed to checkout</a>
+                                <a th:href="@{/api/v1/payments}" class="btn d-block theme-bg f-500 rounded-0 px-1">
+                                   Tiến hành thanh toán</a>
                             </div><!-- /my-btn -->
-                            <p class="mb-1 mt-3">Checkout with multiple address</p>
                         </div>
                     </div><!-- /col -->
                 </div>

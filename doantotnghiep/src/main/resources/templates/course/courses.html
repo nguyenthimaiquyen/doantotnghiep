@@ -14,27 +14,40 @@
     <div class="other-page-area">
         <div class="page-height  primary-overlay d-flex align-items-center position-relative">
             <div class="other-page-bg position-absolute w-100 h-100 bg-no-repeat bg-cover z-index-1"
-                 data-background="/images/about-page/about-page-hero.jpg"></div><!-- home2 slider bg -->
-
+                 data-background="/images/about-page/about-page1.jpg"></div><!-- home2 slider bg -->
             <div class="container">
                 <div class="row">
-
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="page-content text-center mt-110">
                             <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
-                                data-aos-delay="150">our <span class="f-700">Courses</span></h1>
+                                data-aos-delay="150">Tất cả <span class="f-700">khóa học</span></h1>
                         </div>
                     </div><!-- /col -->
-
                 </div><!-- /row -->
             </div><!-- /container -->
         </div>
     </div>
     <!-- slider-area-end  -->
 
+    <!--    search-->
+    <div class="other-page-area">
+        <div class="container mt-45">
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">
+                    <form action="#" class="hero-search position-relative mt-40 mb-30">
+                        <input class="w-100 rounded-0 pl-20 pr-20 pt-20 pb-20" type="text"
+                               placeholder="Type your keyword">
+                        <a class="position-absolute right-0 top-0 f-500 pt-20 pb-20 pl-45 pr-45 text-uppercase text-white primary-bg2 d-block h-100"
+                           href="#">Tìm kiếm ngay</a>
+                    </form>
+                </div><!-- /col -->
+            </div>
+        </div>
+    </div>
+
 
     <!-- ====== course-header-area-start=============================================== -->
-    <div class="course-header-area mt-160">
+    <div class="course-header-area mt-100">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12 d-flex align-items-center">
@@ -58,7 +71,7 @@
                     </div><!-- /view-mode -->
 
                     <div class="course-title">
-                        <p class="mb-0">Showing 1 - 12 of 300 Course</p>
+                        <p class="mb-0">Hiển thị 1 - 6 của 12 khóa học</p>
                     </div>
                 </div><!-- /col -->
                 <div class="col-xl-6  col-lg-6  col-md-6  col-sm-4 col-12 d-flex align-items-center justify-content-sm-end">
@@ -66,12 +79,10 @@
                         <form action="#" class="mb-10 course-filter">
                             <select class="bg-transparent secondary-color border-0 pl-0 rounded-0"
                                     id="exampleFormControlSelect1">
-                                <option value="menu_order" selected="selected">Select Category</option>
-                                <option value="popularity">popularity</option>
-                                <option value="rating">average rating</option>
-                                <option value="date">latest</option>
-                                <option value="price">price: low to high</option>
-                                <option value="price-desc">price: high to low</option>
+                                <option value="menu_order" selected="selected">Chọn thể loại</option>
+                                <option value="programming">Lập trình</option>
+                                <option value="general">Đại cương</option>
+                                <option value="security">Bảo mật</option>
                             </select>
                         </form>
                     </div><!-- /course-selection -->
@@ -80,11 +91,11 @@
                         <form action="#" class="ml-md-3 ml-0 mb-10 course-filter">
                             <select class="bg-transparent secondary-color border-0 pl-0 rounded-0 text-right"
                                     id="exampleFormControlSelect2">
-                                <option value="menu_order" selected="selected">Sort By</option>
-                                <option value="popularity">popular</option>
-                                <option value="rating">rating</option>
-                                <option value="date">latest</option>
-                                <option value="price">low high</option>
+                                <option value="menu_order" selected="selected">Sắp xếp theo</option>
+                                <option value="popularity">Phổ biến</option>
+                                <option value="rating">Đánh giá</option>
+                                <option value="date">Mới nhất</option>
+                                <option value="price">Giá thấp</option>
                             </select>
                         </form>
                     </div><!-- /course-selection -->
@@ -111,7 +122,7 @@
                                                  alt="course-image01">
 
                                             <div class="pc-category z-index1 position-absolute">
-                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Softweare</span>
+                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>
                                             </div><!-- /pc-category  -->
                                         </div><!-- /p-course img -->
 
@@ -137,7 +148,7 @@
 
                                         <div class="single-popular-course-content primary-border-bottom pb-6">
                                             <h3>
-                                                <a href="course-details.html">Design for the web with Abobe Illustrator
+                                                <a th:href="@{/api/v1/courses/details}">Design for the web with Abobe Illustrator
                                                     and photoshop</a>
                                             </h3>
                                             <p class="admin mb-2">
@@ -171,7 +182,7 @@
                                                  alt="course-image01">
 
                                             <div class="pc-category z-index1 position-absolute">
-                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Softweare</span>
+                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>
                                             </div><!-- /pc-category  -->
                                         </div><!-- /p-course img -->
 
@@ -231,7 +242,7 @@
                                                  alt="course-image01">
 
                                             <div class="pc-category z-index1 position-absolute">
-                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Softweare</span>
+                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>
                                             </div><!-- /pc-category  -->
                                         </div><!-- /p-course img -->
 
@@ -351,7 +362,7 @@
                                                  alt="course-image01">
 
                                             <div class="pc-category z-index1 position-absolute">
-                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Softweare</span>
+                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>
                                             </div><!-- /pc-category  -->
                                         </div><!-- /p-course img -->
 
@@ -411,7 +422,7 @@
                                                  alt="course-image01">
 
                                             <div class="pc-category z-index1 position-absolute">
-                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Softweare</span>
+                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>
                                             </div><!-- /pc-category  -->
                                         </div><!-- /p-course img -->
 
@@ -479,7 +490,7 @@
                                         <div class="popular-course-content bg-white pt-25 pb-10 pl-40 pr-30">
                                             <div class="popular-course-review d-flex align-items-center mb-12">
                                                 <div class="pc-category z-index1 mr-20">
-                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Softweare</span>
+                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Software</span>
                                                 </div><!-- /pc-category  -->
                                                 <ul class="review-ratting mr-10">
                                                     <li>
@@ -544,7 +555,7 @@
                                         <div class="popular-course-content bg-white pt-25 pb-10 pl-40 pr-30">
                                             <div class="popular-course-review d-flex align-items-center mb-12">
                                                 <div class="pc-category z-index1 mr-20">
-                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Softweare</span>
+                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Software</span>
                                                 </div><!-- /pc-category  -->
                                                 <ul class="review-ratting mr-10">
                                                     <li>
@@ -609,7 +620,7 @@
                                         <div class="popular-course-content bg-white pt-25 pb-10 pl-40 pr-30">
                                             <div class="popular-course-review d-flex align-items-center mb-12">
                                                 <div class="pc-category z-index1 mr-20">
-                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Softweare</span>
+                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Software</span>
                                                 </div><!-- /pc-category  -->
                                                 <ul class="review-ratting mr-10">
                                                     <li>
@@ -674,7 +685,7 @@
                                         <div class="popular-course-content bg-white pt-25 pb-10 pl-40 pr-30">
                                             <div class="popular-course-review d-flex align-items-center mb-12">
                                                 <div class="pc-category z-index1 mr-20">
-                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Softweare</span>
+                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Software</span>
                                                 </div><!-- /pc-category  -->
                                                 <ul class="review-ratting mr-10">
                                                     <li>
@@ -739,7 +750,7 @@
                                         <div class="popular-course-content bg-white pt-25 pb-10 pl-40 pr-30">
                                             <div class="popular-course-review d-flex align-items-center mb-12">
                                                 <div class="pc-category z-index1 mr-20">
-                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Softweare</span>
+                                                    <span class="text-white f-500 theme-bg text-uppercase d-inline-block py-1 px-3">Software</span>
                                                 </div><!-- /pc-category  -->
                                                 <ul class="review-ratting mr-10">
                                                     <li>

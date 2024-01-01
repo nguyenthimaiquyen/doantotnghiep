@@ -1,0 +1,148 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Online Courses - My Cart')}"></head>
+
+<body>
+
+<!--  ====== header-area-start=======================================  -->
+<header th:replace="~{fragments/header-login :: header-login}"></header>
+<!--  header-area-end  -->
+
+
+<main>
+    <!-- ======other-page-area-start=========================================== -->
+    <div class="other-page-area">
+        <div class="page-height  primary-overlay d-flex align-items-center position-relative">
+            <div class="other-page-bg position-absolute w-100 h-100 bg-no-repeat bg-cover z-index-1"
+                 data-background="/images/about-page/about-page1.jpg"></div><!-- home2 slider bg -->
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="page-content text-center mt-110">
+                            <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
+                                data-aos-delay="150">Danh sách <span class="f-700">mong ước</span></h1>
+                        </div>
+                    </div><!-- /col -->
+
+                </div><!-- /row -->
+            </div><!-- /container -->
+        </div>
+    </div>
+    <!-- slider-area-end  -->
+
+
+    <!-- ====== cart-area-start=============================================== -->
+    <div class="cart-area mt-165 mb-165">
+        <div class="container">
+            <h3 class="mb-40 cart-title">1 khóa học trong danh sách mong ước</h3>
+            <div class="cart-table table-responsive">
+                <table class="table border-0">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="pl-0" style="width: 60%">Item Name</th>
+                        <th scope="col" style="width: 10%">Price</th>
+                        <th scope="col" style="width: 20%"></th>
+                        <th scope="col" style="width: 10%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="w-50 pl-0">
+                            <div class="cart-item-wrapper d-flex align-items-center">
+                                <a href="#" class="cart-img d-block mr-30">
+                                    <img src="/images/cart/cart-img1.jpg" alt="images01">
+                                </a>
+                                <h5>
+                                    <a href="#" class="p-name main-color">Larna mervelous pen</a>
+                                </h5>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cart-price primary-color">$35.00</div>
+                        </td>
+                        <td>
+                            <div class="my-btn d-none d-sm-block text-center">
+                                <a href="#" class="btn theme-bg">Chuyển vào giỏ hàng</a>
+                            </div>
+                        </td>
+                        <td class="text-right">
+                            <a href="#"
+                               class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center">
+                                <span><i class="fal fa-times"></i></span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-50 pl-0">
+                            <div class="cart-item-wrapper d-flex align-items-center">
+                                <a href="#" class="cart-img d-block mr-30">
+                                    <img src="/images/cart/cart-img2.jpg" alt="images02">
+                                </a>
+                                <h5>
+                                    <a href="#" class="p-name main-color">Photoshop anvanced tutorial</a>
+                                </h5>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cart-price primary-color">$35.00</div>
+                        </td>
+                        <td>
+                            <div class="my-btn d-none d-sm-block text-center">
+                                <a href="#" class="btn theme-bg">Chuyển vào giỏ hàng</a>
+                            </div>
+                        </td>
+                        <td class="text-right">
+                            <a href="#"
+                               class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center"><span><i
+                                    class="fal fa-times"></i></span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w-50 pl-0">
+                            <div class="cart-item-wrapper d-flex align-items-center">
+                                <a href="#" class="cart-img d-block mr-30">
+                                    <img src="/images/cart/cart-img3.jpg" alt="images03">
+                                </a>
+                                <h5>
+                                    <a href="#" class="p-name main-color">Larna smart cap</a>
+                                </h5>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cart-price primary-color">$35.00</div>
+                        </td>
+                        <td>
+                            <div class="my-btn d-none d-sm-block text-center">
+                                <a href="#" class="btn theme-bg">Chuyển vào giỏ hàng</a>
+                            </div>
+                        </td>
+                        <td class="text-right">
+                            <a href="#"
+                               class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center"><span><i
+                                    class="fal fa-times"></i></span></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div><!-- /container -->
+    </div>
+    <!-- cart-area-end -->
+
+
+</main>
+
+<!-- ====== footer-area-start ============================================ -->
+<footer th:replace="~{fragments/footer-website :: footer-website}"></footer>
+
+<!-- back top -->
+<div id="scroll" class="scroll-up">
+    <div class="top text-center"><span class="white-bg theme-color d-block"><i class="fa fa-arrow-alt-up"></i></span>
+    </div>
+</div>
+
+<div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
+</body>
+</html>

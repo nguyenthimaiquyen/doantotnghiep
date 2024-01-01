@@ -1734,7 +1734,13 @@ a:focus,a:hover,.portfolio-cat a:hover,.footer-menu li a:hover {
 }
 .avatar-info p {
 	font-size: 14px;
-}   
+}
+
+.testi-avatar img {
+	width: 40px;
+	height: 40px;
+	object-fit: cover;
+}
 .single-testimonial p {
 	line-height: 1.7;
 }
@@ -2807,7 +2813,7 @@ a:focus,a:hover,.portfolio-cat a:hover,.footer-menu li a:hover {
 }
 .faq-page-content .nav-pills .nav-link.active, .faq-page-content .nav-pills .nav-link:hover {background: var(--primary-bg); color: #ffffff;}
 .faq2-wrapper .nav-link {
-	font-size: 21px;
+	font-size: 18px;
 	color: var(--main-color);
 	font-weight: 500;
 	border-bottom: 1px solid #e5e5e5;

@@ -20,10 +20,12 @@ public class TeacherCertification {
     @Column
     private Long id;
 
+    @Column
+    private String certification;
+
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
 
-    @Column
-    private String certification;
+
 }

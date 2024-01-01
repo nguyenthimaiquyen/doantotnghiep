@@ -5,7 +5,7 @@
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header-website :: header-website}"></header>
+<header th:replace="~{fragments/header-login :: header-login}"></header>
 <!--  header-area-end  -->
 
 
@@ -14,7 +14,7 @@
     <div class="other-page-area">
         <div class="page-height primary-overlay d-flex align-items-center position-relative">
             <div class="other-page-bg position-absolute w-100 h-100 bg-no-repeat bg-cover z-index-1"
-                 data-background="/images/about-page/about-page-hero.jpg"></div><!-- home2 slider bg -->
+                 data-background="/images/about-page/about-page1.jpg"></div><!-- home2 slider bg -->
 
             <div class="container">
                 <div class="row">
@@ -22,7 +22,7 @@
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="page-content text-center mt-110">
                             <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
-                                data-aos-delay="150">My <span class="f-700">Learning</span></h1>
+                                data-aos-delay="150"><span class="f-700">Quá trình </span>học tập</h1>
                         </div>
                     </div><!-- /col -->
 
@@ -34,7 +34,7 @@
 
 
     <!-- ====== faq-page-area-start============================================ -->
-    <div class="faq-page-area faq-page2 pt-140 mb-115 over-hidden">
+    <div class="faq-page-area faq-page2 pt-100 mb-115 over-hidden">
         <div class="container">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -42,338 +42,65 @@
                         <div class="nav faq-nav justify-content-center" id="faq-tabs" role="tablist"
                              aria-orientation="vertical">
                             <a href="#tab1" class="nav-link active" data-toggle="pill" role="tab" aria-controls="tab1"
-                               aria-selected="true">Admission</a>
+                               aria-selected="true">Tất cả khóa học</a>
 
                             <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab2"
-                               aria-selected="false">Subjects</a>
+                               aria-selected="false">Mong muốn</a>
 
                             <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3"
-                               aria-selected="false">Students</a>
+                               aria-selected="false">Đã lưu trữ</a>
 
                             <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4"
-                               aria-selected="false">Scholarships</a>
+                               aria-selected="false">Nhắc nhở học tập</a>
 
-                            <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5"
-                               aria-selected="false">Others</a>
                         </div>
 
                         <div class="tab-content mt-55" id="faq-tab-content">
                             <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
+                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
+                                        <h5 class="mb-20">Danh sách tất cả khóa học của tôi</h5>
 
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why Larna is the best ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
 
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad nim ad
-                                                    minim veniam, quis nostrud exercitation ullamco lab ons equuntur
-                                                    magni dolores.</p>
-                                            </div><!-- /faq-text -->
-                                        </div>
-                                    </div><!-- /col -->
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why Larna is the best ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad nim ad
-                                                    minim veniam, quis nostrud exercitation ullamco lab ons equuntur
-                                                    magni dolores.</p>
-                                            </div><!-- /faq-text -->
-                                        </div>
                                     </div><!-- /col -->
                                 </div><!-- /row -->
                             </div>
                             <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="tab2">
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">What is the benefits of taking admission in Larna
-                                                    ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco labonsequuntur magni
-                                                    dolores eos qui rati one voluptatem sequi nesciunt. Neque porro
-                                                    quisquam non numquam eius modi tempora incidunt ut labore et
-                                                    dolor.</p>
-                                            </div><!-- /faq-text -->
+                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
+                                        <h5 class="mb-20">Danh sách các khóa học mong muốn</h5>
 
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo.</p>
-                                            </div><!-- /faq-text -->
 
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco labonsequuntur magni
-                                                    dolores.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">What is the benefits of taking admission in Larna
-                                                    ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo.</p>
-                                            </div><!-- /faq-text -->
-                                        </div>
-                                    </div><!-- /col -->
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why Larna is the best ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco labonsequuntur magni
-                                                    dolores eos qui rati one voluptatem sequi nesciunt. Neque porro
-                                                    quisquam non numquam eius modi tempora incidunt ut labore et
-                                                    dolor.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">What is the benefits of taking admission in Larna
-                                                    ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco labonsequuntur magni
-                                                    dolores.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">What is the benefits of taking admission in Larna
-                                                    ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo.</p>
-                                            </div><!-- /faq-text -->
-                                        </div>
                                     </div><!-- /col -->
                                 </div><!-- /row -->
                             </div>
                             <div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="tab3">
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why Larna is the best ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
+                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
+                                        <h5 class="mb-20">Các khóa học đã hoàn thành</h5>
 
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
 
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad nim ad
-                                                    minim veniam, quis nostrud exercitation ullamco lab ons equuntur
-                                                    magni dolores.</p>
-                                            </div><!-- /faq-text -->
-                                        </div>
-                                    </div><!-- /col -->
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
 
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why Larna is the best ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad nim ad
-                                                    minim veniam, quis nostrud exercitation ullamco lab ons equuntur
-                                                    magni dolores.</p>
-                                            </div><!-- /faq-text -->
-                                        </div>
                                     </div><!-- /col -->
                                 </div><!-- /row -->
                             </div>
                             <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="tab4">
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco labonsequuntur magni
-                                                    dolores eos qui rati one voluptatem sequi nesciunt. Neque porro
-                                                    quisquam non numquam eius modi tempora incidunt ut labore et
-                                                    dolor.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">What is the benefits of taking admission in Larna
-                                                    ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco labonsequuntur magni
-                                                    dolores.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">What is the benefits of taking admission in Larna
-                                                    ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo.</p>
-                                            </div><!-- /faq-text -->
-                                        </div>
+                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
+                                        <h5 class="mb-20">Nhắc nhở học tập</h5>
+                                        <p>Học một chút mỗi ngày sẽ giúp bạn tích lũy kiến thức. Nghiên cứu cho thấy
+                                            rằng những học viên biến việc học thành thói quen sẽ có nhiều khả năng đạt
+                                            được mục tiêu hơn. Hãy dành thời gian để học và nhận lời nhắc bằng cách sử
+                                            dụng trình lên lịch học tập.</p>
                                     </div><!-- /col -->
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why Larna is the best ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco labonsequuntur magni
-                                                    dolores eos qui rati one voluptatem sequi nesciunt. Neque porro
-                                                    quisquam non numquam eius modi tempora incidunt ut labore et
-                                                    dolor.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">What is the benefits of taking admission in Larna
-                                                    ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco labonsequuntur magni
-                                                    dolores.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">What is the benefits of taking admission in Larna
-                                                    ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                                    Lorem ipsum dolor sunt ut labore et dolore magna aliqua. Ut enim ad
-                                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                    aliquip ex ea commodo.</p>
-                                            </div><!-- /faq-text -->
-                                        </div>
-                                    </div><!-- /col -->
-                                </div><!-- /row -->
-                            </div>
-                            <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="tab5">
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why Larna is the best ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad nim ad
-                                                    minim veniam, quis nostrud exercitation ullamco lab ons equuntur
-                                                    magni dolores.</p>
-                                            </div><!-- /faq-text -->
-                                        </div>
-                                    </div><!-- /col -->
-                                    <div class="col-xl-6 col-lg-6 col-md-  col-sm- col-">
-                                        <div class="faq-page-wrapper">
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why Larna is the best ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad re
-                                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exer cita tion
-                                                    ullamco labonsequuntur magni dolores eos.</p>
-                                            </div><!-- /faq-text -->
-
-                                            <div class="faq-text mb-45">
-                                                <h3 class="mb-20">Why should we take admission on Larna ?</h3>
-                                                <p>Ampor incididunt ut labore et dolore magna aliqua. Ut enim ad nim ad
-                                                    minim veniam, quis nostrud exercitation ullamco lab ons equuntur
-                                                    magni dolores.</p>
-                                            </div><!-- /faq-text -->
+                                    <div class="col-xl-8  col-lg-6  col-md-6  col-sm-12 col-12">
+                                        <div class="shoping-con-area">
+                                            <form action="#">
+                                                <div class="my-btn">
+                                                    <a href="#"
+                                                       class="btn d-inline-block primary-bg rounded-0 mt-15">Lên lịch thời gian học</a>
+                                                </div><!-- /my-btn -->
+                                            </form>
                                         </div>
                                     </div><!-- /col -->
                                 </div><!-- /row -->

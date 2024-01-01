@@ -44,7 +44,6 @@ public class MailSending {
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;
 
-    @Column
     @OneToMany(mappedBy = "mailSending", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MailUrl> mailUrls;
 

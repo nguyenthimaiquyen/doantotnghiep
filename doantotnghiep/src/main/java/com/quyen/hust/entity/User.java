@@ -11,7 +11,9 @@ import javax.validation.constraints.Email;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -49,8 +51,7 @@ public class User {
     private Boolean activated;
 
     @Column
-    @Lob
-    private Blob avatar;
+    private String avatar;
 
     @Column(length = 10)
     private String phone;
@@ -87,7 +88,7 @@ public class User {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,

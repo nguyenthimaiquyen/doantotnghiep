@@ -22,7 +22,7 @@ public class Role {
     private Long id;
 
     @Column(name = "role_name", length = 50)
-    private String roleName;
+    private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,

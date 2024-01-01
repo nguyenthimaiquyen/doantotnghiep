@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Online Courses - Login')}"></head>
+<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Larna - Đăng ký')}"></head>
 
 <body>
 
@@ -14,14 +14,14 @@
     <div class="other-page-area">
         <div class="page-height  primary-overlay d-flex align-items-center position-relative">
             <div class="other-page-bg position-absolute w-100 h-100 bg-no-repeat bg-cover z-index-1"
-                 data-background="/images/about-page/about-page-hero.jpg"></div><!-- home2 slider bg -->
+                 data-background="/images/about-page/about-page1.jpg"></div><!-- home2 slider bg -->
 
             <div class="container">
                 <div class="row">
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="page-content text-center mt-110">
                             <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
-                                data-aos-delay="150">My <span class="f-700">account</span></h1>
+                                data-aos-delay="150"><span class="f-700">Tài khoản</span></h1>
                         </div>
                     </div><!-- /col -->
                 </div><!-- /row -->
@@ -37,32 +37,33 @@
             <div class="row">
                 <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
                     <div class="register-area mb-60">
-                        <h4 class="text-capitalize">Sign up</h4>
+                        <h4 class="text-capitalize">Đăng ký</h4>
                         <div class="register-form mt-40">
                             <form action="#">
                                 <div class="register-email mb-20">
                                     <div class="log-email">
                                         <input class="u-name w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
-                                               type="text" name="u-name" id="u-name" required placeholder="Username*">
+                                               type="text" name="u-name" id="u-name" required placeholder="họ và tên">
                                     </div>
                                     <div class="log-email mt-15">
                                         <input class="u-email w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
                                                type="email" name="u-email" id="u-email" required
-                                               placeholder="Email address *">
+                                               placeholder="quyen@gmail.com">
                                     </div>
                                     <div class="log-pass mt-15">
                                         <input class="r-pass w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
                                                type="password" name="r-pass" id="r-pass" required
-                                               placeholder="Password">
+                                               placeholder="mật khẩu">
                                     </div>
                                 </div>
                             </form>
-                            <p class="pt-sm-3 pt-2 pb-1">Your personal data will be used to support your experience
-                                throughout this website, to manage access to your account, and for other purposes
-                                described in our <a href="#" class="theme-color theme-hover">privacy policy</a></p>
+                            <p class="pt-sm-3 pt-2 pb-1">Bằng việc đăng ký, bạn đồng ý với
+                                <a href="#" class="theme-color theme-hover">Điều khoản sử dụng</a> và
+                                <a href="#" class="theme-color theme-hover">Chính sách về quyền riêng tư</a>
+                            </p>
                             <div class="my-btn mt-20">
                                 <button class="btn w-100 theme-bg text-uppercase rounded-0" type="submit" name="submit">
-                                    Sign up
+                                    Đăng ký
                                 </button>
                             </div>
                         </div>

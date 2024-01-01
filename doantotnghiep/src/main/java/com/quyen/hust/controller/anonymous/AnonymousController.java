@@ -26,6 +26,11 @@ public class AnonymousController {
         return "course/courses";
     }
 
+    @GetMapping("/courses/details")
+    public String getCourseDetailsPage(Model model) {
+        return "course/course-details";
+    }
+
     @GetMapping("/instructors")
     public String getInstructorPage(Model model) {
         return "instructor/instructors";
@@ -54,6 +59,11 @@ public class AnonymousController {
     @GetMapping("/faq")
     public String getFAQPage(Model model) {
         return "layout/faq";
+    }
+
+    @GetMapping("/error")
+    public String getErrorPage(Model model) {
+        return "error/error";
     }
 
 

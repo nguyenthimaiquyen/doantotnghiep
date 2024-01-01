@@ -32,7 +32,6 @@ public class Teacher {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TeacherCertification> teacherCertifications;
 
@@ -44,7 +43,6 @@ public class Teacher {
             inverseJoinColumns = @JoinColumn(name = "training_field_id"))
     private List<TrainingField> trainingFields;
 
-    @Column
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
