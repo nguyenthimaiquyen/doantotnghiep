@@ -15,27 +15,14 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "sections")
-public class Section {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Long id;
+public class Section extends BaseEntity {
 
     @Column
     private String title;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column(name = "modified_at")
-    private LocalDateTime modifiedAt;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @Column
-    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Lesson> lessons;
+
 }

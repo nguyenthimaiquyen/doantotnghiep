@@ -13,12 +13,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "lessons")
-public class LessonUrl {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Long id;
+public class LessonUrl extends BaseEntity {
 
     @Column(name = "resource_url")
     private String resourceUrl;

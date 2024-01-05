@@ -1,15 +1,12 @@
 package com.quyen.hust.model.response;
 
 import com.quyen.hust.statics.DifficultyLevel;
-import com.quyen.hust.statics.Status;
+import com.quyen.hust.statics.CourseStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Data
@@ -30,7 +27,7 @@ public class CourseDataResponse {
 
     private String courseFeeUnit;
 
-    private Status status;
+    private CourseStatus courseStatus;
 
     private Integer totalLessons;
 

@@ -1,7 +1,7 @@
 package com.quyen.hust.security;
 
-import com.quyen.hust.entity.User;
-import com.quyen.hust.repository.UserJpaRepository;
+import com.quyen.hust.entity.user.User;
+import com.quyen.hust.repository.user.UserJpaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -2215,10 +2215,10 @@ pre code {
 }
 
 .form-control {
-    display: block;
+    display: block; !important;
     width: 100%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
+    padding: .370rem .70rem;
+    font-size: 0.9rem;
     line-height: 1.5;
     color: #495057;
     background-color: #fff;

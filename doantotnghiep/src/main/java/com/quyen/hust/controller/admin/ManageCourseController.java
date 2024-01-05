@@ -13,6 +13,6 @@ public class ManageCourseController {
 
     @GetMapping
     public String getCourseManagementPage(Model model) {
-        return "admin/course/manage-course";
+        return "admin/course/admin-course-management";
     }
 }

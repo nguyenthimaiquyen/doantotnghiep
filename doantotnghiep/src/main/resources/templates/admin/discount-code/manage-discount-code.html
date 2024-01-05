@@ -13,23 +13,62 @@
 
     <!-- ====== faq-page-area-start============================================ -->
     <div class="faq-page-area faq-page2 pt-140 mb-115 over-hidden">
-        <div class="container">
-            <div class="row">
+        <div class="container" style="max-width: 1400px;">
+            <div class="row my-5">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h4>Quản lý mã giảm giá</h4>
+                    <button class="btn btn-success create-discountCode-btn">Tạo mới mã giảm giá</button>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h5>Danh sách mã giảm giá</h5>
                 </div><!-- /col -->
             </div><!-- /row -->
-            <div class="row">
+            <div class="row my-3">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-
-
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Code Name</th>
+                            <th>Discount Value</th>
+                            <th>Discount Unit</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Usage Limitation Count</th>
+                            <th>Used Count</th>
+                            <th>Activated</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="discountCode : ${discountCodes}">
+                            <td th:text="${discountCode.id}"></td>
+                            <td th:text="${discountCode.codeName}"></td>
+                            <td th:text="${discountCode.discountValue}"></td>
+                            <td th:text="${discountCode.discountUnit}"></td>
+                            <td th:text="${discountCode.startDate}"></td>
+                            <td th:text="${discountCode.endDate}"></td>
+                            <td th:text="${discountCode.usageLimitationCount}"></td>
+                            <td th:text="${discountCode.usedCount}"></td>
+                            <td th:text="${discountCode.activated}"></td>
+                            <td>
+                                <button class="btn btn-primary btn-sm update-discountCode-btn"
+                                        th:attr="discountCode-id=${discountCode.id}">
+                                    <i class="far fa-edit" aria-hidden="true"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-discountCode-btn"
+                                        th:attr="discountCode-id=${discountCode.id}">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div><!-- /col -->
             </div><!-- /row -->
         </div><!-- /container -->
     </div>
-    <!-- faq-area-end -->
-    <!-- faq-area-end -->
-
 
 </main>
 
@@ -41,6 +80,9 @@
     <div class="top text-center"><span class="white-bg theme-color d-block"><i class="fa fa-arrow-alt-up"></i></span>
     </div>
 </div>
+
+<div th:replace="~{admin/discount-code/discountCode-modal :: discountCode-modal}"></div>
+<div th:replace="~{admin/discount-code/discountCode-delete-modal :: discountCode-delete-modal}"></div>
 
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>

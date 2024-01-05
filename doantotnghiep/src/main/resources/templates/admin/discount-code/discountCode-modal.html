@@ -1,0 +1,52 @@
+<!-- Modal -->
+<div class="modal fade" id="discountCode-modal" tabindex="-1" role="dialog"
+     aria-hidden="true" th:fragment="discountCode-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mã giảm giá</h5>
+                <button type="button" class="close close-modal" aria-label="Close">
+                    <span aria-hidden="true" data-dismiss="modal">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="discountCode-form">
+                    <div class="form-group">
+                        <label for="codeName">Tên mã<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="codeName" placeholder="Nhập tên mã" name="codeName">
+                    </div>
+                    <div class="form-group">
+                        <label for="discountValue">Giá trị giảm giá<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="discountValue" placeholder="Nhập giá trị giảm giá"
+                               name="discountValue">
+                    </div>
+                    <div class="form-group">
+                        <label for="discountUnit">Đơn vị tính<span class="text-danger">*</span></label>
+                        <select class="form-control" id="discountUnit" name="discountUnit" style="display: block;">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">Ngày hiệu lực<span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="startDate" placeholder="Nhập ngày hiệu lực"
+                               name="startDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">Ngày kết thúc<span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="endDate" placeholder="Nhập ngày kết thúc"
+                               name="endDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="usageLimitationCount">Giới hạn sử dụng<span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="usageLimitationCount"
+                               placeholder="Nhập giới hạn sử dụng" name="usageLimitationCount">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="save-discountCode-btn">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

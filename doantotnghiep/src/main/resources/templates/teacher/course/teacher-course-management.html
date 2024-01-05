@@ -1,0 +1,228 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Học tập - Larna')}"></head>
+
+<body>
+
+<!--  ====== header-area-start=======================================  -->
+<header th:replace="~{fragments/header-teacher :: header-teacher}"></header>
+<!--  header-area-end  -->
+
+
+<main>
+
+    <!-- ====== faq-page-area-start============================================ -->
+    <div class="faq-page-area faq-page2 pt-140 mb-115 over-hidden">
+        <div class="container" style="max-width: 1400px;">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="faq2-wrapper pl-xl-4 pl-lg-3">
+                        <div class="nav faq-nav justify-content-center" id="faq-tabs" role="tablist"
+                             aria-orientation="vertical">
+                            <a href="#tab1" class="nav-link active" data-toggle="pill" role="tab" aria-controls="tab1"
+                               aria-selected="true">Phác thảo</a>
+
+                            <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab2"
+                               aria-selected="false">Chờ phê duyệt</a>
+
+                            <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3"
+                               aria-selected="false">Đã phê duyệt</a>
+
+                            <a href="#tab1" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4"
+                               aria-selected="true">Đã từ chối</a>
+
+                            <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5"
+                               aria-selected="false">Đã công bố</a>
+
+                            <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab6"
+                               aria-selected="false">Dừng công bố</a>
+
+                            <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab7"
+                               aria-selected="false">Lưu trữ</a>
+                        </div>
+
+                        <div class="tab-content mt-55" id="faq-tab-content">
+                            <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
+                                <div class="row my-3">
+                                    <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
+                                        <div class="my-btn mt-3 mt-sm-0">
+                                            <a th:href="@{/api/v1/courses/teacher/creation}" class="btn d-inline-block primary-bg f-500 rounded-0">Tạo khóa
+                                                học</a>
+                                        </div><!-- /my-btn -->
+                                    </div>
+                                    <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
+                                        <div class="side-menu-search header-search-content mt-80 pr-15">
+                                            <form action="#" class="position-relative">
+                                                <input class="w-100 rounded-0 pb-2" type="text"  placeholder="Nhập từ khóa">
+<!--                                                       th:value="${requestSearch.name}"-->
+
+                                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div><!-- /row -->
+                                <div class="row mt-3 text-center">
+                                    <div class="col-xl-12 col-lg-12 col-md-12  col-sm-12 col-12 ">
+                                        <h5>Danh sách các khóa học đã tạo mới</h5>
+                                    </div>
+                                </div><!-- /row -->
+                                <div class="row my-3">
+                                    <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Title</th>
+                                                <th>Course Fee</th>
+                                                <th>Course Fee Unit</th>
+                                                <th>Status</th>
+                                                <th>Total Lessons</th>
+                                                <th>Total Video Duration</th>
+                                                <th>Total Test</th>
+                                                <th>Difficulty Level</th>
+                                                <th>Teacher</th>
+                                                <th>Discount Code</th>
+                                                <th>Training Fields</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="course : ${courses}">
+                                                <td th:text="${course.id}"></td>
+                                                <td th:text="${course.title}"></td>
+                                                <td th:text="${course.courseFee}"></td>
+                                                <td th:text="${course.courseFeeUnit}"></td>
+                                                <td th:text="${course.status}"></td>
+                                                <td th:text="${course.totalLessons}"></td>
+                                                <td th:text="${course.totalVideoDuration}"></td>
+                                                <td th:text="${course.totalTest}"></td>
+                                                <td th:text="${course.difficultyLevel}"></td>
+                                                <td th:text="${course.teacher}"></td>
+                                                <td th:text="${course.discountCode}"></td>
+                                                <td th:text="${course.trainingFields}"></td>
+                                                <td>
+                                                    <button class="btn btn-primary btn-sm update-course-btn"
+                                                            th:attr="course-id=${course.id}">
+                                                        <i class="far fa-edit" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm delete-course-btn"
+                                                            th:attr="course-id=${course.id}">
+                                                        <i class="far fa-trash" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!-- /row -->
+<!--                                <div class="row mb-110">-->
+<!--                                    <div class="col-xl-2  col-lg-2  col-md-12  col-sm-12 col-12"-->
+<!--                                         th:text="${'Tổng số ' + totalElement + ' bản ghi'}">-->
+<!--                                    </div>-->
+<!--                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 d-flex justify-content-end align-items-center">-->
+<!--                                        <div class="my-3">-->
+<!--                                            <span>Hiển thị </span>-->
+<!--                                            <select class="mr-1" id="product-page-size">-->
+<!--                                                <option value="6" th:selected="${pageSize==6}">6</option>-->
+<!--                                                <option value="12" th:selected="${pageSize==12}">12</option>-->
+<!--                                            </select>-->
+<!--                                            <span>bản ghi</span>-->
+<!--                                        </div>-->
+<!--                                        <div>-->
+<!--                                            <ul class="pagination justify-content-end mb-0">-->
+<!--                                                <li class="page-item">-->
+<!--                                                    <a class="page-link"-->
+<!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=0'}">-->
+<!--                                                        <i class="fas fa-angle-double-left"></i>-->
+<!--                                                    </a>-->
+<!--                                                </li>-->
+<!--                                                <li class="page-item">-->
+<!--                                                    <a th:class="${'page-link ' + (currentPage == 0 ? 'disabled-page' : '')}"-->
+<!--                                                       th:href="@{${currentPage} != 0 ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage - 1}) : '#'}">-->
+<!--                                                        <i class="fas fa-angle-left"></i>-->
+<!--                                                    </a>-->
+<!--                                                </li>-->
+<!--                                                <th:block th:each="index : ${#numbers.sequence(0, totalPage - 1)}">-->
+<!--                                                    <li th:class="${'page-item ' + (index == currentPage ? 'active' : '')}">-->
+<!--                                                        <a class="page-link"-->
+<!--                                                           th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${index}}"-->
+<!--                                                           th:text="${index + 1}"></a>-->
+<!--                                                    </li>-->
+<!--                                                </th:block>-->
+<!--                                                <li class="page-item">-->
+<!--                                                    <a th:class="${'page-link ' + (currentPage == (totalPage - 1) ? 'disabled-page' : '')}"-->
+<!--                                                       th:href="@{${currentPage} != (${totalPage} - 1) ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage + 1}) : '#'}">-->
+<!--                                                        <i class="fas fa-angle-right"></i>-->
+<!--                                                    </a>-->
+<!--                                                </li>-->
+<!--                                                <li class="page-item">-->
+<!--                                                    <a class="page-link"-->
+<!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${totalPage - 1}}">-->
+<!--                                                        <i class="fas fa-angle-double-right"></i>-->
+<!--                                                    </a>-->
+<!--                                                </li>-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+
+                            <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="tab2">
+                                <div class="row">
+                                    Danh sách các khóa học đang chờ phê duyệt
+                                </div><!-- /row -->
+                            </div>
+
+                            <div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="tab3">
+                                <div class="row">
+                                    Danh sách các khóa học đã được phê duyệt
+                                </div><!-- /row -->
+                            </div>
+
+                            <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="tab4">
+                                <div class="row">
+                                    Danh sách các khóa học đã bị từ chối
+                                </div><!-- /row -->
+                            </div>
+
+                            <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="tab5">
+                                <div class="row">
+                                    Danh sách các khóa học đã được công bố
+                                </div><!-- /row -->
+                            </div>
+
+                            <div class="tab-pane" id="tab6" role="tabpanel" aria-labelledby="tab6">
+                                <div class="row">
+                                    Danh sách các khóa học đã dừng công bố
+                                </div><!-- /row -->
+                            </div>
+
+                            <div class="tab-pane" id="tab7" role="tabpanel" aria-labelledby="tab7">
+                                <div class="row">
+                                    Danh sách các khóa học đang lưu trữ
+                                </div><!-- /row -->
+                            </div>
+
+                        </div>
+                    </div><!-- /faq-wrapper -->
+                </div><!-- /col -->
+            </div><!-- /row -->
+        </div><!-- /container -->
+    </div>
+    <!-- faq-area-end -->
+
+
+</main>
+
+<!-- ====== footer-area-start ============================================ -->
+<footer th:replace="~{fragments/footer-website :: footer-website}"></footer>
+
+<!-- back top -->
+<div id="scroll" class="scroll-up">
+    <div class="top text-center"><span class="white-bg theme-color d-block"><i class="fa fa-arrow-alt-up"></i></span>
+    </div>
+</div>
+
+<div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
+</body>
+</html>

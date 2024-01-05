@@ -3613,3 +3613,7 @@ h3.news-d-title{font-size: 30px;}
 .mobile-subscribe .subscribe-info span {
 	top: 13px;
 }
+
+.error {
+	color: red;
+}
