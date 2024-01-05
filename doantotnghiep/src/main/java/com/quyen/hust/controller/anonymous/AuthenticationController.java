@@ -15,6 +15,7 @@ import com.quyen.hust.service.user.UserService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,18 +36,21 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/authentication")
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationController {
+    @Autowired
+    private final JwtUtils jwtUtils;
 
-    JwtUtils jwtUtils;
+    @Autowired
+    private final UserService userService;
 
-    UserService userService;
+    @Autowired
+    private final UserJpaRepository userJpaRepository;
 
-    UserJpaRepository userJpaRepository;
+    @Autowired
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    RefreshTokenRepository refreshTokenRepository;
-
-    AuthenticationManager authenticationManager;
+    @Autowired
+    private final AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
     public JwtResponse authenticateUser(@Valid @RequestBody LoginRequest request) {

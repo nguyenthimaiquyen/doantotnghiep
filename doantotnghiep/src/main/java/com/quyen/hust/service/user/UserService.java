@@ -22,6 +22,7 @@ import com.quyen.hust.security.JwtUtils;
 import com.quyen.hust.security.SecurityUtils;
 import com.quyen.hust.statics.Roles;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,7 +38,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class UserService {
     private final UserJpaRepository userJpaRepository;
 
@@ -109,7 +109,6 @@ public class UserService {
                             return jwtUtils.generateJwtToken(authentication);
                         }))
                 .orElseThrow(() -> new UsernameNotFoundException("Tài khoản không tồn tại"));
-
 
         if (newToken == null) {
             throw new RefreshTokenNotFoundException();
