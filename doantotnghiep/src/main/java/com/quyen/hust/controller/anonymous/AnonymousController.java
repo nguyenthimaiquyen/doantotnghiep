@@ -61,12 +61,9 @@ public class AnonymousController {
         return "layout/faq";
     }
 
-    @GetMapping("/error")
+    @GetMapping("/showPage403")
     public String getErrorPage(Model model) {
-        return "error/error";
+        return "error/403";
     }
-
-
-
 
 }

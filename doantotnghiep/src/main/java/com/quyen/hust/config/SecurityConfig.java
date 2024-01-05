@@ -62,7 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic()
                 .and()
-                .headers().frameOptions().sameOrigin();
+                .exceptionHandling(
+                        configurer -> configurer.accessDeniedPage("/api/v1/showPage403")
+                ).headers().frameOptions().sameOrigin();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

@@ -80,7 +80,6 @@
                                         <h5 class="mb-20">Các khóa học đã hoàn thành</h5>
 
 
-
                                     </div><!-- /col -->
                                 </div><!-- /row -->
                             </div>
@@ -97,13 +96,38 @@
                                         <div class="shoping-con-area">
                                             <form action="#">
                                                 <div class="my-btn">
-                                                    <a href="#"
-                                                       class="btn d-inline-block primary-bg rounded-0 mt-15">Lên lịch thời gian học</a>
+                                                    <a class="btn d-inline-block primary-bg rounded-0 mt-15 create-reminder-btn">
+                                                        Lên lịch thời gian học</a>
                                                 </div><!-- /my-btn -->
                                             </form>
                                         </div>
                                     </div><!-- /col -->
                                 </div><!-- /row -->
+                                <div class="row my-3" th:each="studyReminder : ${studyReminders}">
+                                    <div class="card w-50">
+                                        <div class="row">
+                                            <div class="col">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                            <div class="col">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Nhắc nhở học tập</h5>
+                                                    <h6 class="card-subtitle mb-2"
+                                                        th:text="${studyReminder.eventName}"></h6>
+                                                    <p class="card-text" th:text="${studyReminder.frequency}"></p>
+                                                    <p class="card-text">vào</p>
+                                                    <p class="card-text" th:text="${studyReminder.time}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <a class="btn btn-primary update-studyReminder-btn"
+                                               th:attr="studyReminder-id=${studyReminder.id}">Cập nhật</a>
+                                            <a class="btn btn-danger delete-studyReminder-btn"
+                                               th:attr="studyReminder-id=${studyReminder.id}">Xóa</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div><!-- /faq-wrapper -->
@@ -125,6 +149,7 @@
     </div>
 </div>
 
+<div th:replace="~{myLearning/reminder-modal :: reminder-modal}"></div>
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>
 </html>

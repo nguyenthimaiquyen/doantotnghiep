@@ -5,7 +5,7 @@
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header-teacher :: header-teacher}"></header>
+<header th:replace="~{fragments/header-admin :: header-admin}"></header>
 <!--  header-area-end  -->
 
 
@@ -28,37 +28,37 @@
                             <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3"
                                aria-selected="false">Đã phê duyệt</a>
 
-                            <a href="#tab1" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4"
+                            <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4"
                                aria-selected="true">Đã từ chối</a>
 
-                            <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5"
+                            <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5"
                                aria-selected="false">Đã công bố</a>
 
-                            <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab6"
+                            <a href="#tab6" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab6"
                                aria-selected="false">Dừng công bố</a>
 
-                            <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab7"
+                            <a href="#tab7" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab7"
                                aria-selected="false">Lưu trữ</a>
                         </div>
 
                         <div class="tab-content mt-55" id="faq-tab-content">
                             <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
-                                <div class="row my-3">
+                                <div class="row my-1 justify-content-center">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                        <form action="#" class="hero-search position-relative mb-10">
+                                            <input class="w-100 rounded-0 pl-3 pr-3 pt-3 pb-3" type="text"
+                                                   placeholder="Nhập từ khóa">
+                                            <a class="position-absolute right-0 top-0 f-500 pt-20 pb-20 pl-45 pr-45 text-uppercase text-white primary-bg2 d-block h-100"
+                                               href="#">Tìm kiếm ngay</a>
+                                        </form>
+                                    </div><!-- /col -->
+                                </div>
+                                <div class="row my-1">
                                     <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
                                         <div class="my-btn mt-3 mt-sm-0">
                                             <a th:href="@{/api/v1/courses/teacher/creation}" class="btn d-inline-block primary-bg f-500 rounded-0">Tạo khóa
                                                 học</a>
                                         </div><!-- /my-btn -->
-                                    </div>
-                                    <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
-                                        <div class="side-menu-search header-search-content mt-80 pr-15">
-                                            <form action="#" class="position-relative">
-                                                <input class="w-100 rounded-0 pb-2" type="text"  placeholder="Nhập từ khóa">
-<!--                                                       th:value="${requestSearch.name}"-->
-
-                                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                                            </form>
-                                        </div>
                                     </div>
                                 </div><!-- /row -->
                                 <div class="row mt-3 text-center">

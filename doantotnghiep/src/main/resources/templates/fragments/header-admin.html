@@ -25,16 +25,19 @@
                                 <li><a th:href="@{/api/v1/courses/admin}">Khóa học</a>
                                 </li><!-- /Course -->
 
-                                <li><a th:href="@{/api/v1/categories}">Thể loại</a>
+<!--                                sec:authorize="hasRole('ADMIN')"-->
+                                <li ><a th:href="@{/api/v1/categories}">Thể loại</a>
                                 </li><!-- /Category -->
 
-                                <li><a th:href="@{/api/v1/accounts}">Tài khoản</a>
+<!--                                sec:authorize="hasRole('ADMIN')"-->
+                                <li ><a th:href="@{/api/v1/accounts}">Tài khoản</a>
                                 </li><!-- /Account -->
 
-                                <li><a th:href="@{/api/v1/mailSending}">Gửi mail</a>
+<!--                                sec:authorize="hasRole('ADMIN')"-->
+                                <li ><a th:href="@{/api/v1/mailSending}">Gửi mail</a>
                                 </li><!-- /Mail Sending -->
-
-                                <li><a th:href="@{/api/v1/discountCodes}">Mã giảm giá</a>
+<!--                                sec:authorize="hasRole('ADMIN')"-->
+                                <li ><a th:href="@{/api/v1/discountCodes}">Mã giảm giá</a>
                                 </li><!-- /Discount Code -->
                             </ul>
                         </div><!-- /main-menu -->

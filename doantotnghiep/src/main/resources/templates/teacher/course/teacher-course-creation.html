@@ -5,7 +5,7 @@
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header-teacher :: header-teacher}"></header>
+<header th:replace="~{fragments/header-admin :: header-admin}"></header>
 <!--  header-area-end  -->
 
 <main>
@@ -54,7 +54,7 @@
 
                                 <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
                                     <div class="country-select mb-3">
-                                        <label for="courseFeeUnit">Đơn vị tính<span class="text-danger">*</span></label>
+                                        <label for="courseFeeUnit">Đơn vị giá<span class="text-danger">*</span></label>
                                         <select class="w-100" id="courseFeeUnit" name="courseFeeUnit">
 
                                         </select>
@@ -105,7 +105,7 @@
                 <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
                     <div class="checkout-coupon-wrapper mt-5 mt-lg-0">
                         <div class="my-btn mt-3 mt-sm-0">
-                            <a th:href="@{}" class="btn d-inline-block primary-bg f-500 rounded-0">Tiếp tục</a>
+                            <a href="#" class="btn d-inline-block primary-bg f-500 rounded-0">Lưu</a>
                         </div><!-- /my-btn -->
                     </div><!-- /checkout-coupon-wrapper -->
                 </div><!-- /col -->

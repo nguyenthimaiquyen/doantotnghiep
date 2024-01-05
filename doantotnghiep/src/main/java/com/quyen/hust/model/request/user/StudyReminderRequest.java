@@ -54,9 +54,4 @@ public class StudyReminderRequest {
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     private LocalDate endDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime createdAt;
-
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime modifiedAt;
 }

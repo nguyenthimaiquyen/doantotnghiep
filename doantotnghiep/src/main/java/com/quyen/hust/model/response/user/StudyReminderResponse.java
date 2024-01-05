@@ -1,5 +1,8 @@
 package com.quyen.hust.model.response.user;
 
+import com.quyen.hust.entity.Course;
+import com.quyen.hust.entity.user.User;
+import com.quyen.hust.model.response.CourseDataResponse;
 import com.quyen.hust.statics.Frequency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,4 +34,8 @@ public class StudyReminderResponse {
     private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;
+
+    private CourseDataResponse course;
+
+    private UserResponse user;
 }
