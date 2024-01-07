@@ -18,32 +18,21 @@
                     </div><!-- /col -->
                     <div class="col-xl-7 col-lg-6 col-md-3 col-sm-3 col-2 pl-lg-4 d-none d-lg-flex position-static">
                         <div class="main-menu">
-                            <nav id="mobile-menu">
+                            <nav id="header-menu">
                                 <ul class="d-block">
-                                    <li><a class="mega-title" th:href="@{/api/v1}">Trang chủ</a>
-                                    </li><!-- /Home -->
-
-                                    <li><a th:href="@{/api/v1/about}">Giới thiệu</a>
-                                    </li><!-- /About -->
-
-                                    <li><a th:href="@{/api/v1/courses}">Khóa học</a>
-                                    </li><!-- /Course -->
-
-                                    <li><a th:href="@{/api/v1/instructors}">Giảng viên</a>
-                                    </li><!-- /Instructor -->
-
-                                    <li><a th:href="@{/api/v1/contact}">Liên hệ</a>
-                                    </li><!-- /Contact -->
-
-                                    <li><a th:href="@{/api/v1/myLearning}">Quá trình học tập</a>
-                                    </li><!-- /My learning -->
+                                    <li><a class="mega-title" th:href="@{/api/v1}">Trang chủ</a></li>
+                                    <li><a th:href="@{/api/v1/about}">Giới thiệu</a></li>
+                                    <li><a th:href="@{/api/v1/courses}">Khóa học</a></li>
+                                    <li><a th:href="@{/api/v1/instructors}">Giảng viên</a></li>
+                                    <li><a th:href="@{/api/v1/contact}">Liên hệ</a></li>
+                                    <li><a th:href="@{/api/v1/myLearning}">Quá trình học tập</a></li>
                                 </ul>
                             </nav>
                         </div><!-- /main-menu -->
                     </div><!-- /col -->
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-5 col-5 pl-lg-0">
-                        <div class="header-right d-flex align-items-center justify-content-end">
-                            <ul class="">
+                        <div class="header-right d-flex align-items-center justify-content-end" id="subHeader">
+                            <ul>
                                 <li class="d-inline-block fa-lg">
                                     <a class="pr-35 d-inline-block transition-3" th:href="@{/api/v1/wishlist}">
                                         <i class="far fa-heart"></i></a>
@@ -55,13 +44,15 @@
                             </ul><!-- social-link -->
 
                             <div class="testi-avatar pr-15 rounded-circle dropdown mr-10">
-                                <img src="/images/avatar/avatar3.jpg" alt="avatar" id="user-avatar" data-toggle="dropdown"
+                                <img src="/images/avatar/avatar3.jpg" alt="avatar" id="user-avatar"
+                                     data-toggle="dropdown"
                                      class="rounded-circle avatar dropdown-toggle">
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-avatar">
                                     <p class="dropdown-item font-weight-bold pt-3" id="user-fullName"></p>
                                     <p class="dropdown-item" id="user-email"></p>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item mb-1" th:href="@{/api/v1/myLearning}">Quá trình học tập của tôi</a>
+                                    <a class="dropdown-item mb-1" th:href="@{/api/v1/myLearning}">Quá trình học tập của
+                                        tôi</a>
                                     <a class="dropdown-item mb-1" th:href="@{/api/v1/cart}">Giỏ hàng của tôi</a>
                                     <a class="dropdown-item" th:href="@{/api/v1/wishlist}">Mong muốn</a>
                                     <div class="dropdown-divider"></div>
@@ -71,11 +62,6 @@
                                     <a class="dropdown-item logout-link" href="#">Đăng xuất</a>
                                 </div>
                             </div>
-
-                            <div class="d-block d-sm-none pl-20">
-                                <a class="mobile-menubar theme-color" href="javascript:void(0);"><i
-                                        class="far fa-bars"></i></a>
-                            </div><!-- /mobile-menubar -->
                         </div><!-- /header-right -->
                     </div><!-- /col -->
                 </div><!-- /row -->

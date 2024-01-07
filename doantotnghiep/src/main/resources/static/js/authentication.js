@@ -71,6 +71,7 @@ $(document).ready(function () {
                 localStorage.setItem("refresh-token", data.refreshToken);
                 console.log("vào hàm rồi")
                 const userInfo = {
+                    role: data.role,
                     email: data.username,
                     fullName: data.fullName,
                     avatar: data.avatar
@@ -193,6 +194,9 @@ $(document).ready(function () {
             type: 'POST',
             url: '/api/v1/authentication/logout',
             success: function () {
+                localStorage.removeItem('access-token');
+                localStorage.removeItem('refresh-token');
+                localStorage.removeItem('user-info');
                 window.location.href = "http://localhost:8080/api/v1";
             },
             error: function (error) {

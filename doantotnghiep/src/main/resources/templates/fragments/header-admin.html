@@ -18,42 +18,26 @@
                     </div><!-- /col -->
                     <div class="col-xl-9 col-lg-8 col-md-3 col-sm-3 col-2 pl-lg-4 d-none d-lg-flex position-static">
                         <div class="main-menu">
-                            <ul class="d-block">
-                                <li><a class="mega-title" th:href="@{/api/v1/courses/analysis}">Dashboard</a>
-                                </li><!-- /Dashboard -->
-
-                                <li><a th:href="@{/api/v1/courses/admin}">Khóa học</a>
-                                </li><!-- /Course -->
-
-<!--                                sec:authorize="hasRole('ADMIN')"-->
-                                <li ><a th:href="@{/api/v1/categories}">Thể loại</a>
-                                </li><!-- /Category -->
-
-<!--                                sec:authorize="hasRole('ADMIN')"-->
-                                <li ><a th:href="@{/api/v1/accounts}">Tài khoản</a>
-                                </li><!-- /Account -->
-
-<!--                                sec:authorize="hasRole('ADMIN')"-->
-                                <li ><a th:href="@{/api/v1/mailSending}">Gửi mail</a>
-                                </li><!-- /Mail Sending -->
-<!--                                sec:authorize="hasRole('ADMIN')"-->
-                                <li ><a th:href="@{/api/v1/discountCodes}">Mã giảm giá</a>
-                                </li><!-- /Discount Code -->
-                            </ul>
+                            <nav id="header-menu">
+                                <ul class="d-block">
+                                    <li><a class="mega-title" th:href="@{/api/v1/courses/analysis}">Dashboard</a></li>
+                                    <li><a th:href="@{/api/v1/courses/admin}">Khóa học</a></li>
+                                    <li ><a th:href="@{/api/v1/categories}">Thể loại</a></li>
+                                    <li ><a th:href="@{/api/v1/accounts}">Tài khoản</a>
+                                    <li ><a th:href="@{/api/v1/mailSending}">Gửi mail</a></li>
+                                    <li ><a th:href="@{/api/v1/discountCodes}">Mã giảm giá</a></li>
+                                </ul>
+                            </nav>
                         </div><!-- /main-menu -->
                     </div><!-- /col -->
-                    <div class="col-xl-1 col-lg-2 col-md-6 col-sm-4 col-4 pl-lg-0">
-                        <div class="header-right d-flex align-items-center justify-content-end">
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-4 pl-lg-0">
+                        <div class="header-right d-flex align-items-center justify-content-end" id="subHeader">
                             <div class="testi-avatar pr-15 rounded-circle">
                                 <a class="d-block" href="#">
                                     <img src="/images/avatar/avatar3.jpg" alt="avatar"
                                          class="rounded-circle">
                                 </a>
                             </div>
-                            <div class="d-block d-sm-none pl-20">
-                                <a class="mobile-menubar theme-color" href="javascript:void(0);"><i
-                                        class="far fa-bars"></i></a>
-                            </div><!-- /mobile-menubar -->
                         </div><!-- /header-right -->
                     </div><!-- /col -->
                 </div><!-- /row -->

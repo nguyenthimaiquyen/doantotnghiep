@@ -42,7 +42,7 @@
                         </div><!-- /main-menu -->
                     </div><!-- /col -->
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-5 col-5 pl-lg-0">
-                        <div class="header-right d-flex align-items-center justify-content-end">
+                        <div class="header-right d-flex align-items-center justify-content-end" id="subHeader">
                             <ul class="header-login mr-15 d-none d-sm-block">
                                 <li>
                                     <a class="d-inline-block main-color" th:href="@{/api/v1/login}"
@@ -51,15 +51,9 @@
                                         Đăng nhập</a>
                                 </li>
                             </ul><!-- /header-login -->
-
                             <div class="my-btn d-none d-sm-block">
                                 <a th:href="@{/api/v1/signup}" class="btn white-bg">Đăng ký</a>
                             </div><!-- /Sign Up -->
-
-                            <div class="d-block d-sm-none pl-20">
-                                <a class="mobile-menubar theme-color" href="javascript:void(0);"><i
-                                        class="far fa-bars"></i></a>
-                            </div><!-- /mobile-menubar -->
                         </div><!-- /header-right -->
                     </div><!-- /col -->
                 </div><!-- /row -->
