@@ -267,6 +267,17 @@ $(document).ready(() => {
         validator.resetForm();
     });
 
-
+    //xử lý sự kiện click vào dấu 3 chấm để hiển thị danh sách các lựa chọn
+    const showMoreReminder = $('#show-more-reminder');
+    const reminderMenu = $('.dropdown-menu');
+    showMoreReminder.click(() => {
+        reminderMenu.toggle();
+    });
+    //tắt menu khi ấn ra ngoài
+    $(document).on('click', function (event) {
+        if (!reminderMenu.is(event.target) && reminderMenu.has(event.target).length === 0 && !showMoreReminder.is(event.target)) {
+            reminderMenu.hide();
+        }
+    });
 
 });

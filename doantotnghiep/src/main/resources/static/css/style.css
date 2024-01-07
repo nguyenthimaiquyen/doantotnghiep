@@ -523,7 +523,7 @@ a:focus,a:hover,.portfolio-cat a:hover,.footer-menu li a:hover {
 }
 .main-menu ul li:last-child{margin-right: 0;}
 .main-menu ul li > a {
-	color: #222222;
+	color: #000;
 	font-size: 16px;
 	display: inline-block;
 	text-transform: uppercase;
@@ -3515,7 +3515,7 @@ h3.news-d-title{font-size: 30px;}
 -------------------------------------------------------------- */
 .login-form label,.login-form .login-check p,.f-get-pass a,.register-form label, .register-form input{
 	font-size: 14px;
-	color: #222222;
+
 }
 .login-register-area input{height: 55px; border-radius:0}
 .login-register-area input.form-control:focus {

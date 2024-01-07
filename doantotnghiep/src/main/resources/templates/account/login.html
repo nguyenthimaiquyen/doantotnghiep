@@ -9,44 +9,25 @@
 <!--  header-area-end  -->
 
 <main>
-    <!-- ======other-page-area-start=========================================== -->
-    <div class="other-page-area">
-        <div class="page-height  primary-overlay d-flex align-items-center position-relative">
-            <div class="other-page-bg position-absolute w-100 h-100 bg-no-repeat bg-cover z-index-1"
-                 data-background="/images/about-page/about-page1.jpg"></div><!-- home2 slider bg -->
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="page-content text-center mt-110">
-                            <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
-                                data-aos-delay="150"><span class="f-700">Tài khoản</span></h1>
-                        </div>
-                    </div><!-- /col -->
-                </div><!-- /row -->
-            </div><!-- /container -->
-        </div>
-    </div>
-    <!-- slider-area-end  -->
-
 
     <!-- ====== login-area-start=========================================== -->
-    <div class="login-register-area mt-160 mb-105">
+    <div class="login-register-area mt-200 mb-60">
         <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
                     <div class="login-area mb-60">
-                        <h4 class="text-capitalize">Đăng nhập</h4>
+                        <h4 class="text-capitalize text-center">Đăng nhập</h4>
                         <div class="login-form mt-40">
-                            <form action="#">
+                            <form id="login-form">
                                 <div class="log-email">
-                                    <input class="email w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
-                                           type="email" name="inputEmail" id="inputEmail" required
+                                    <input class="w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
+                                           type="email" name="email" id="email"
                                            placeholder="quyen@gmail.com">
                                 </div>
                                 <div class="log-pass mt-15">
-                                    <input class="email w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
-                                           type="password" name="l-pass" id="l-pass" required placeholder="mật khẩu">
+                                    <input class="w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
+                                           type="password" name="password" id="password"
+                                           placeholder="Nhập mật khẩu">
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="save-info login-check d-flex align-items-center mt-4">
@@ -58,12 +39,12 @@
                                         <a href="login.html" class="main-color d-inline-block mt-4">Quên mật khẩu?</a>
                                     </div>
                                 </div>
-                                <div class="my-btn mt-4">
-                                    <button class="btn w-100 theme-bg text-uppercase rounded-0" type="submit"
-                                            name="submit">Đăng nhập
-                                    </button>
-                                </div>
                             </form>
+                            <div class="my-btn mt-4">
+                                <button class="btn w-100 theme-bg text-uppercase rounded-0" type="button" id="login-btn">
+                                    Đăng nhập
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div><!-- /col -->

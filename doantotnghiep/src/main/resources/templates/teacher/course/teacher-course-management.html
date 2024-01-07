@@ -43,29 +43,16 @@
 
                         <div class="tab-content mt-55" id="faq-tab-content">
                             <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
-                                <div class="row my-1 justify-content-center">
-                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                        <form action="#" class="hero-search position-relative mb-10">
-                                            <input class="w-100 rounded-0 pl-3 pr-3 pt-3 pb-3" type="text"
-                                                   placeholder="Nhập từ khóa">
-                                            <a class="position-absolute right-0 top-0 f-500 pt-20 pb-20 pl-45 pr-45 text-uppercase text-white primary-bg2 d-block h-100"
-                                               href="#">Tìm kiếm ngay</a>
-                                        </form>
+                                <div class="row my-1">
+                                    <div class="col-lg-12">
+                                        <div class="d-flex justify-content-end mt-3 mt-lg-0">
+                                            <a th:href="@{/api/v1/courses/teacher/creation}" class="btn btn-primary f-500">
+                                                <i class="fas fa-plus mr-2"></i>Tạo khóa học
+                                            </a>
+                                        </div><!-- /my-btn -->
                                     </div><!-- /col -->
                                 </div>
-                                <div class="row my-1">
-                                    <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
-                                        <div class="my-btn mt-3 mt-sm-0">
-                                            <a th:href="@{/api/v1/courses/teacher/creation}" class="btn d-inline-block primary-bg f-500 rounded-0">Tạo khóa
-                                                học</a>
-                                        </div><!-- /my-btn -->
-                                    </div>
-                                </div><!-- /row -->
-                                <div class="row mt-3 text-center">
-                                    <div class="col-xl-12 col-lg-12 col-md-12  col-sm-12 col-12 ">
-                                        <h5>Danh sách các khóa học đã tạo mới</h5>
-                                    </div>
-                                </div><!-- /row -->
+
                                 <div class="row my-3">
                                     <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
                                         <table class="table table-bordered table-hover">
@@ -115,56 +102,56 @@
                                         </table>
                                     </div>
                                 </div><!-- /row -->
-<!--                                <div class="row mb-110">-->
-<!--                                    <div class="col-xl-2  col-lg-2  col-md-12  col-sm-12 col-12"-->
-<!--                                         th:text="${'Tổng số ' + totalElement + ' bản ghi'}">-->
-<!--                                    </div>-->
-<!--                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 d-flex justify-content-end align-items-center">-->
-<!--                                        <div class="my-3">-->
-<!--                                            <span>Hiển thị </span>-->
-<!--                                            <select class="mr-1" id="product-page-size">-->
-<!--                                                <option value="6" th:selected="${pageSize==6}">6</option>-->
-<!--                                                <option value="12" th:selected="${pageSize==12}">12</option>-->
-<!--                                            </select>-->
-<!--                                            <span>bản ghi</span>-->
-<!--                                        </div>-->
-<!--                                        <div>-->
-<!--                                            <ul class="pagination justify-content-end mb-0">-->
-<!--                                                <li class="page-item">-->
-<!--                                                    <a class="page-link"-->
-<!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=0'}">-->
-<!--                                                        <i class="fas fa-angle-double-left"></i>-->
-<!--                                                    </a>-->
-<!--                                                </li>-->
-<!--                                                <li class="page-item">-->
-<!--                                                    <a th:class="${'page-link ' + (currentPage == 0 ? 'disabled-page' : '')}"-->
-<!--                                                       th:href="@{${currentPage} != 0 ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage - 1}) : '#'}">-->
-<!--                                                        <i class="fas fa-angle-left"></i>-->
-<!--                                                    </a>-->
-<!--                                                </li>-->
-<!--                                                <th:block th:each="index : ${#numbers.sequence(0, totalPage - 1)}">-->
-<!--                                                    <li th:class="${'page-item ' + (index == currentPage ? 'active' : '')}">-->
-<!--                                                        <a class="page-link"-->
-<!--                                                           th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${index}}"-->
-<!--                                                           th:text="${index + 1}"></a>-->
-<!--                                                    </li>-->
-<!--                                                </th:block>-->
-<!--                                                <li class="page-item">-->
-<!--                                                    <a th:class="${'page-link ' + (currentPage == (totalPage - 1) ? 'disabled-page' : '')}"-->
-<!--                                                       th:href="@{${currentPage} != (${totalPage} - 1) ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage + 1}) : '#'}">-->
-<!--                                                        <i class="fas fa-angle-right"></i>-->
-<!--                                                    </a>-->
-<!--                                                </li>-->
-<!--                                                <li class="page-item">-->
-<!--                                                    <a class="page-link"-->
-<!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${totalPage - 1}}">-->
-<!--                                                        <i class="fas fa-angle-double-right"></i>-->
-<!--                                                    </a>-->
-<!--                                                </li>-->
-<!--                                            </ul>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <!--                                <div class="row mb-110">-->
+                                <!--                                    <div class="col-xl-2  col-lg-2  col-md-12  col-sm-12 col-12"-->
+                                <!--                                         th:text="${'Tổng số ' + totalElement + ' bản ghi'}">-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 d-flex justify-content-end align-items-center">-->
+                                <!--                                        <div class="my-3">-->
+                                <!--                                            <span>Hiển thị </span>-->
+                                <!--                                            <select class="mr-1" id="product-page-size">-->
+                                <!--                                                <option value="6" th:selected="${pageSize==6}">6</option>-->
+                                <!--                                                <option value="12" th:selected="${pageSize==12}">12</option>-->
+                                <!--                                            </select>-->
+                                <!--                                            <span>bản ghi</span>-->
+                                <!--                                        </div>-->
+                                <!--                                        <div>-->
+                                <!--                                            <ul class="pagination justify-content-end mb-0">-->
+                                <!--                                                <li class="page-item">-->
+                                <!--                                                    <a class="page-link"-->
+                                <!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=0'}">-->
+                                <!--                                                        <i class="fas fa-angle-double-left"></i>-->
+                                <!--                                                    </a>-->
+                                <!--                                                </li>-->
+                                <!--                                                <li class="page-item">-->
+                                <!--                                                    <a th:class="${'page-link ' + (currentPage == 0 ? 'disabled-page' : '')}"-->
+                                <!--                                                       th:href="@{${currentPage} != 0 ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage - 1}) : '#'}">-->
+                                <!--                                                        <i class="fas fa-angle-left"></i>-->
+                                <!--                                                    </a>-->
+                                <!--                                                </li>-->
+                                <!--                                                <th:block th:each="index : ${#numbers.sequence(0, totalPage - 1)}">-->
+                                <!--                                                    <li th:class="${'page-item ' + (index == currentPage ? 'active' : '')}">-->
+                                <!--                                                        <a class="page-link"-->
+                                <!--                                                           th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${index}}"-->
+                                <!--                                                           th:text="${index + 1}"></a>-->
+                                <!--                                                    </li>-->
+                                <!--                                                </th:block>-->
+                                <!--                                                <li class="page-item">-->
+                                <!--                                                    <a th:class="${'page-link ' + (currentPage == (totalPage - 1) ? 'disabled-page' : '')}"-->
+                                <!--                                                       th:href="@{${currentPage} != (${totalPage} - 1) ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage + 1}) : '#'}">-->
+                                <!--                                                        <i class="fas fa-angle-right"></i>-->
+                                <!--                                                    </a>-->
+                                <!--                                                </li>-->
+                                <!--                                                <li class="page-item">-->
+                                <!--                                                    <a class="page-link"-->
+                                <!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${totalPage - 1}}">-->
+                                <!--                                                        <i class="fas fa-angle-double-right"></i>-->
+                                <!--                                                    </a>-->
+                                <!--                                                </li>-->
+                                <!--                                            </ul>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
                             </div>
 
                             <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="tab2">

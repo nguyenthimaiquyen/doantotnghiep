@@ -18,8 +18,12 @@ public class JwtResponse {
 
     Long id;
 
-    String username;
+    String email;
 
     Set<String> roles;
+
+    String fullName;
+
+    String avatar;
 
 }

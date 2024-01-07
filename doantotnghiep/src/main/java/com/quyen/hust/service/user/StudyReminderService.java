@@ -5,6 +5,7 @@ import com.quyen.hust.model.response.CourseDataResponse;
 import com.quyen.hust.model.response.user.FrequencyResponse;
 import com.quyen.hust.model.response.user.StudyReminderResponse;
 import com.quyen.hust.repository.user.StudyReminderJpaRepository;
+import com.quyen.hust.statics.Frequency;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,11 @@ public class StudyReminderService {
     }
 
     public List<FrequencyResponse> getFrequency() {
-        return null;
+        return List.of(
+                FrequencyResponse.builder().code(Frequency.ONCE.getCode()).name(Frequency.ONCE.getName()).build(),
+                FrequencyResponse.builder().code(Frequency.DAILY.getCode()).name(Frequency.DAILY.getName()).build(),
+                FrequencyResponse.builder().code(Frequency.WEEKLY.getCode()).name(Frequency.WEEKLY.getName()).build()
+        );
     }
 
     public List<StudyReminderResponse> getAll() {

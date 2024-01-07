@@ -10,50 +10,30 @@
 
 
 <main>
-    <!-- ======other-page-area-start=========================================== -->
-    <div class="other-page-area">
-        <div class="page-height  primary-overlay d-flex align-items-center position-relative">
-            <div class="other-page-bg position-absolute w-100 h-100 bg-no-repeat bg-cover z-index-1"
-                 data-background="/images/about-page/about-page1.jpg"></div><!-- home2 slider bg -->
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="page-content text-center mt-110">
-                            <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
-                                data-aos-delay="150"><span class="f-700">Tài khoản</span></h1>
-                        </div>
-                    </div><!-- /col -->
-                </div><!-- /row -->
-            </div><!-- /container -->
-        </div>
-    </div>
-    <!-- slider-area-end  -->
-
 
     <!-- ====== login-area-start=========================================== -->
-    <div class="login-register-area mt-160 mb-105">
+    <div class="login-register-area mt-160 mb-60">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
                     <div class="register-area mb-60">
-                        <h4 class="text-capitalize">Đăng ký</h4>
+                        <h4 class="text-capitalize text-center">Đăng ký</h4>
                         <div class="register-form mt-40">
-                            <form action="#">
+                            <form id="signup-form">
                                 <div class="register-email mb-20">
                                     <div class="log-email">
                                         <input class="u-name w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
-                                               type="text" name="u-name" id="u-name" required placeholder="họ và tên">
+                                               type="text" name="fullName" id="fullName" placeholder="Nhập họ và tên">
                                     </div>
                                     <div class="log-email mt-15">
                                         <input class="u-email w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
-                                               type="email" name="u-email" id="u-email" required
+                                               type="email" name="email" id="email"
                                                placeholder="quyen@gmail.com">
                                     </div>
                                     <div class="log-pass mt-15">
                                         <input class="r-pass w-100 primary-border2 pl-20 pt-15 pb-15 pr-10"
-                                               type="password" name="r-pass" id="r-pass" required
-                                               placeholder="mật khẩu">
+                                               type="password" name="password" id="password"
+                                               placeholder="Nhập mật khẩu">
                                     </div>
                                 </div>
                             </form>
@@ -62,7 +42,7 @@
                                 <a href="#" class="theme-color theme-hover">Chính sách về quyền riêng tư</a>
                             </p>
                             <div class="my-btn mt-20">
-                                <button class="btn w-100 theme-bg text-uppercase rounded-0" type="submit" name="submit">
+                                <button class="btn w-100 theme-bg text-uppercase rounded-0" type="button" id="signup-btn">
                                     Đăng ký
                                 </button>
                             </div>

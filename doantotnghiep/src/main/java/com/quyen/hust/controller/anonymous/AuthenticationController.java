@@ -28,6 +28,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,19 +38,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RequestMapping("/api/v1/authentication")
 public class AuthenticationController {
-    @Autowired
     private final JwtUtils jwtUtils;
 
-    @Autowired
     private final UserService userService;
 
-    @Autowired
     private final UserJpaRepository userJpaRepository;
 
-    @Autowired
     private final RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
@@ -73,11 +69,15 @@ public class AuthenticationController {
                 .build();
         refreshTokenRepository.save(refreshTokenEntity);
 
+        User user = userJpaRepository.findById(userDetails.getId()).get();
+
         return JwtResponse.builder()
                 .jwt(jwt)
                 .refreshToken(refreshToken)
                 .id(userDetails.getId())
-                .username(userDetails.getUsername())
+                .email(userDetails.getUsername())
+                .fullName(user.getFullName())
+                .avatar(user.getAvatar())
                 .roles(roles)
                 .build();
     }

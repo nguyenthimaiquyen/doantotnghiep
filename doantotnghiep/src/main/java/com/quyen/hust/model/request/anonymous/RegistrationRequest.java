@@ -12,6 +12,10 @@ import javax.validation.constraints.Size;
 public class RegistrationRequest {
 
     @NotBlank
+    @Size(max = 100)
+    String fullName;
+
+    @NotBlank
     @Size(max = 50)
     String email;
 

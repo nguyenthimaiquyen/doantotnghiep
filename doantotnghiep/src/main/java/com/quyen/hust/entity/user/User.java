@@ -70,7 +70,7 @@ public class User extends BaseEntity {
     @Column(name = "deleted_date_time")
     private LocalDateTime deletedDateTime;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinTable(name = "users_roles",
