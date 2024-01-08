@@ -54,16 +54,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/v1/authentication/login", "/api/v1/authentication/signup").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/authentication/refresh-token", "/api/v1/authentication/logout").authenticated()
-                .antMatchers(HttpMethod.GET, "/api/v1/users", "/api/v1/users/{id}").hasAnyAuthority(Roles.USER.toString(), Roles.ADMIN.toString())
-                .antMatchers(HttpMethod.POST, "/api/v1/users").hasAnyAuthority(Roles.ADMIN.toString())
+                .antMatchers(HttpMethod.POST, "/authentication/login", "/authentication/signup").permitAll()
+                .antMatchers(HttpMethod.POST, "/authentication/refresh-token", "/authentication/logout").authenticated()
+                .antMatchers(HttpMethod.GET, "/users", "/users/{id}").hasAnyAuthority(Roles.USER.toString(), Roles.ADMIN.toString())
+                .antMatchers(HttpMethod.POST, "/users").hasAnyAuthority(Roles.ADMIN.toString())
                 .anyRequest().permitAll()
                 .and()
                 .httpBasic()
                 .and()
                 .exceptionHandling(
-                        configurer -> configurer.accessDeniedPage("/api/v1/showPage403")
+                        configurer -> configurer.accessDeniedPage("/403")
                 ).headers().frameOptions().sameOrigin();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

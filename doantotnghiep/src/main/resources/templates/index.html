@@ -5,7 +5,7 @@
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header-website :: header-website}"></header>
+<header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
 
 
@@ -383,7 +383,7 @@
             <div class="row ">
                 <div class="col-12 d-flex justify-content-center">
                     <div class="btn-2 mb-1 d-block aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
-                        <a th:href="@{/api/v1/courses}"
+                        <a th:href="@{/courses}"
                            class="main-color d-inline-block position-relative f-500 text-uppercase">Xem thêm</a>
                     </div><!-- /btn-2 -->
                 </div><!-- /col -->
@@ -751,7 +751,7 @@
                     <div class="instructor-btn mb-30">
                         <div class="btn-2 mb-1 d-block aos-init aos-animate" data-aos="fade-up"
                              data-aos-duration="1000">
-                            <a th:href="@{/api/v1/instructors}"
+                            <a th:href="@{/instructors}"
                                class="main-color d-inline-block position-relative f-500 text-uppercase">Xem thêm</a>
                         </div><!-- /btn-2 -->
                     </div>

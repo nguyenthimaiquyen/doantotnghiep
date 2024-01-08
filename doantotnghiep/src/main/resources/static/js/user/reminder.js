@@ -6,7 +6,7 @@ $(document).ready(() => {
 
     function getCourses() {
         $.ajax({
-            url: "/api/v1/reminders/courses",
+            url: "/reminders/courses",
             type: 'GET',
             contentUnit: "application/json; charset=utf-8",
             success: function (data) {
@@ -31,7 +31,7 @@ $(document).ready(() => {
 
     function getFrequency() {
         $.ajax({
-            url: "/api/v1/reminders/frequency",
+            url: "/reminders/frequency",
             type: 'GET',
             contentUnit: "application/json; charset=utf-8",
             success: function (data) {
@@ -163,7 +163,7 @@ $(document).ready(() => {
         const updateReminderId = parseInt($(event.currentTarget).attr("reminder-id"));
         let reminder = null;
         await $.ajax({
-            url: "/api/v1/reminders/" + updateReminderId,
+            url: "/reminders/" + updateReminderId,
             type: "GET",
             success: function (data) {
                 reminder = data;
@@ -217,7 +217,7 @@ $(document).ready(() => {
         }
         //call api lên backend
         $.ajax({
-            url: "/api/v1/reminders",
+            url: "/reminders",
             type: method,
             data: JSON.stringify(reminderRequestBody),
             contentUnit: "application/json; charset=utf-8",
@@ -244,7 +244,7 @@ $(document).ready(() => {
     //delete a reminder
     $('#delete-reminder-btn').click(function () {
         $.ajax({
-            url: "/api/v1/reminders/" + deleteReminderId,
+            url: "/reminders/" + deleteReminderId,
             type: "DELETE",
             success: function (data) {
                 toastr.success("Xóa sự kiện nhắc nhở học tập thành công!");

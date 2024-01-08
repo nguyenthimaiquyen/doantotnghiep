@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/files")
+@RequestMapping("/files")
 public class FileController {
 
     @GetMapping("/{fileName}")

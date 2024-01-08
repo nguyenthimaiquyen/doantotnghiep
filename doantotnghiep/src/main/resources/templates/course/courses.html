@@ -5,7 +5,7 @@
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header-website :: header-website}"></header>
+<header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
 
 
@@ -31,23 +31,23 @@
 
     <!--    search-->
     <div class="other-page-area">
-        <div class="container mt-45">
-            <div class="row justify-content-center">
-                <div class="col-xl-8 col-lg-8 col-md-9 col-sm-12 col-12">
-                    <form action="#" class="hero-search position-relative mt-40 mb-30">
-                        <input class="w-100 rounded-0 pl-20 pr-20 pt-20 pb-20" type="text"
-                               placeholder="Type your keyword">
-                        <a class="position-absolute right-0 top-0 f-500 pt-20 pb-20 pl-45 pr-45 text-uppercase text-white primary-bg2 d-block h-100"
-                           href="#">Tìm kiếm ngay</a>
-                    </form>
-                </div><!-- /col -->
+        <div class="container mt-55">
+            <div class="row justify-content-end">
+                <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control rounded-0" placeholder="Nhập từ khóa">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary text-uppercase" type="button">Tìm kiếm ngay</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 
     <!-- ====== course-header-area-start=============================================== -->
-    <div class="course-header-area mt-100">
+    <div class="course-header-area mt-70">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12 d-flex align-items-center">
@@ -89,7 +89,7 @@
 
                     <div class="course-sort2">
                         <form action="#" class="ml-md-3 ml-0 mb-10 course-filter">
-                            <select class="bg-transparent secondary-color border-0 pl-0 rounded-0 text-right"
+                            <select class="bg-transparent secondary-color border-0 pl-0 rounded-0 text-left"
                                     id="exampleFormControlSelect2">
                                 <option value="menu_order" selected="selected">Sắp xếp theo</option>
                                 <option value="popularity">Phổ biến</option>
@@ -148,7 +148,7 @@
 
                                         <div class="single-popular-course-content primary-border-bottom pb-6">
                                             <h3>
-                                                <a th:href="@{/api/v1/courses/details}">Design for the web with Abobe Illustrator
+                                                <a th:href="@{/courses/details}">Design for the web with Abobe Illustrator
                                                     and photoshop</a>
                                             </h3>
                                             <p class="admin mb-2">

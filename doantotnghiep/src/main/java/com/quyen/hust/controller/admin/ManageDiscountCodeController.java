@@ -14,7 +14,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/api/v1/discountCodes")
+@RequestMapping("/discountCodes")
 public class ManageDiscountCodeController {
     private final DiscountCodeService discountCodeService;
 

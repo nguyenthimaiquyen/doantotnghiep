@@ -66,19 +66,18 @@ $(document).ready(function () {
             data: JSON.stringify(RequestBody),
             success: function (data) {
                 toastr.success("Đăng nhập thành công!");
-                console.log(data);
                 localStorage.setItem("access-token", data.jwt);
                 localStorage.setItem("refresh-token", data.refreshToken);
-                console.log("vào hàm rồi")
                 const userInfo = {
-                    role: data.role,
-                    email: data.username,
+                    roles: data.roles,
+                    email: data.email,
                     fullName: data.fullName,
                     avatar: data.avatar
                 };
-                console.log(data.username)
                 localStorage.setItem("user-info", JSON.stringify(userInfo));
-                window.location.href = "http://localhost:8080/api/v1";
+                setTimeout(() => {
+                    window.location.href = "http://localhost:8080";
+                }, 1500);
             },
             error: function (error) {
                 toastr.error("Đã có lỗi xảy ra, vui lòng thử lại sau!");
@@ -164,6 +163,9 @@ $(document).ready(function () {
             success: function (data) {
                 toastr.success("Đăng ký tài khoản thành công!");
                 console.log(data);
+                setTimeout(() => {
+                    window.location.href = "http://localhost:8080/information";
+                }, 1500);
             },
             error: function (error) {
                 toastr.error("Đã có lỗi xảy ra, vui lòng thử lại sau!");
@@ -184,20 +186,22 @@ $(document).ready(function () {
             userMenu.hide();
         }
     });
-
     //gọi api đăng xuất
-    $('.dropdown-menu').on('click', '.logout-link', function (event) {
-        event.preventDefault();
-
+    $('#logout-btn').click(function () {
+        console.log("vào hàm log out rồi")
         // Gọi API logout và xử lý kết quả
         $.ajax({
             type: 'POST',
             url: '/api/v1/authentication/logout',
-            success: function () {
+            success: function (data) {
+                toastr.success("Đăng xuất thành công!");
                 localStorage.removeItem('access-token');
                 localStorage.removeItem('refresh-token');
                 localStorage.removeItem('user-info');
-                window.location.href = "http://localhost:8080/api/v1";
+                console.log("đăng xuất rồi đó")
+                setTimeout(() => {
+                    window.location.href = "http://localhost:8080";
+                }, 1500);
             },
             error: function (error) {
                 console.log(error);

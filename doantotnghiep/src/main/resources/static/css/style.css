@@ -504,7 +504,7 @@ a:focus,a:hover,.portfolio-cat a:hover,.footer-menu li a:hover {
 	-o-transition: .3s;
 }
 .sticky-menu .header{
-	background: #f0f6fb;
+	background: rgb(247,112,98);
 	-webkit-box-shadow: 0 8px 4px -7px rgba(115,115,115,0.3);
 	-moz-box-shadow: 0 8px 4px -7px rgba(115,115,115,0.3);
 	box-shadow: 0 8px 4px -7px rgba(115,115,115,0.3);
@@ -523,7 +523,7 @@ a:focus,a:hover,.portfolio-cat a:hover,.footer-menu li a:hover {
 }
 .main-menu ul li:last-child{margin-right: 0;}
 .main-menu ul li > a {
-	color: #000;
+	color: #fff;
 	font-size: 16px;
 	display: inline-block;
 	text-transform: uppercase;

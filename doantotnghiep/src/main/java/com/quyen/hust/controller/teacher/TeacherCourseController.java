@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/api/v1/courses/teacher")
+@RequestMapping("/courses/teacher")
 public class TeacherCourseController {
 
     @GetMapping

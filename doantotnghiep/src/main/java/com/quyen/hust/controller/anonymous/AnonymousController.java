@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/api/v1")
 public class AnonymousController {
 
-    @GetMapping
+    @GetMapping("/")
     public String getHomePage(Model model) {
         return "index";
     }
@@ -56,12 +54,17 @@ public class AnonymousController {
         return "account/signup";
     }
 
+    @GetMapping("/information")
+    public String getInformationPage(Model model) {
+        return "error/403";
+    }
+
     @GetMapping("/faq")
     public String getFAQPage(Model model) {
         return "layout/faq";
     }
 
-    @GetMapping("/showPage403")
+    @GetMapping("/403")
     public String getErrorPage(Model model) {
         return "error/403";
     }

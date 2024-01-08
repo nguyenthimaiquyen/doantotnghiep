@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/v1/reminders")
+@RequestMapping("/reminders")
 @AllArgsConstructor
 public class StudyReminderController {
     private final StudyReminderService studyReminderService;

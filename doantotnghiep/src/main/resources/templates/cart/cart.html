@@ -5,7 +5,7 @@
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header-login :: header-login}"></header>
+<header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
 
 
@@ -34,7 +34,7 @@
 
 
     <!-- ====== cart-area-start=============================================== -->
-    <div class="cart-area mt-165 mb-165">
+    <div class="cart-area mt-100 mb-100">
         <div class="container">
             <h3 class="mb-40 cart-title">1 khóa học trong giỏ hàng</h3>
             <div class="cart-table table-responsive">
@@ -132,7 +132,7 @@
                         <div class="shoping-con-area">
                             <form action="#">
                                 <div class="my-btn">
-                                    <a th:href="@{/api/v1/courses}"
+                                    <a th:href="@{/courses}"
                                        class="btn d-inline-block primary-bg rounded-0 mt-15">Xem các khóa học khác</a>
                                 </div><!-- /my-btn -->
                             </form>
@@ -173,7 +173,7 @@
                                 </li>
                             </ul>
                             <div class="my-btn">
-                                <a th:href="@{/api/v1/payments}" class="btn d-block theme-bg f-500 rounded-0 px-1">
+                                <a th:href="@{/payments}" class="btn d-block theme-bg f-500 rounded-0 px-1">
                                    Tiến hành thanh toán</a>
                             </div><!-- /my-btn -->
                         </div>
