@@ -1,17 +1,18 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Học tập - Larna')}"></head>
+<head th:replace="~{fragments/head :: html_head(pageTitle = 'Học tập - Larna')}"></head>
 
 <body>
 
 <!--  ====== header-area-start=======================================  -->
 <header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
+<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý khóa học')}"></div>
 
 <main>
 
     <!-- ====== checkout-area-start ============================================= -->
-    <div class="checkout-area mt-170 mb-100">
+    <div class="checkout-area mt-80 mb-100">
         <div class="container">
             <div class="row">
                 <div class="col-xl-10  col-lg-10  col-md-12  col-sm-12 col-12">
@@ -79,7 +80,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
+                                <div sec:authorize="hasRole('ADMIN')" class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
                                     <div class="country-select mt-3">
                                         <label for="teacherID">Giảng viên<span class="text-danger">*</span></label>
                                         <select class="w-100" id="teacherID" name="teacherID">
@@ -88,7 +89,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
+                                <div sec:authorize="hasRole('ADMIN')" class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
                                     <div class="country-select mt-3">
                                         <label for="discountID">Mã giảm giá</label>
                                         <select class="w-100" id="discountID" name="discountID">
@@ -105,7 +106,7 @@
                 <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
                     <div class="checkout-coupon-wrapper mt-5 mt-lg-0">
                         <div class="my-btn mt-3 mt-sm-0">
-                            <a href="#" class="btn d-inline-block primary-bg f-500 rounded-0">Lưu</a>
+                            <a th:href="@{/courses/teacher/section}" class="btn d-inline-block primary-bg f-500 rounded-0">Tiếp tục</a>
                         </div><!-- /my-btn -->
                     </div><!-- /checkout-coupon-wrapper -->
                 </div><!-- /col -->

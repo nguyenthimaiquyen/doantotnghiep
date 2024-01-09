@@ -1,4 +1,4 @@
-package com.quyen.hust.model.response;
+package com.quyen.hust.model.response.course;
 
 import com.quyen.hust.statics.DifficultyLevel;
 import com.quyen.hust.statics.CourseStatus;

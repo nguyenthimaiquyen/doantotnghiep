@@ -1,18 +1,18 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Học tập - Larna')}"></head>
+<head th:replace="~{fragments/head :: html_head(pageTitle = 'Học tập - Larna')}"></head>
 
 <body>
 
 <!--  ====== header-area-start=======================================  -->
 <header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
-
+<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý khóa học')}"></div>
 
 <main>
 
     <!-- ====== faq-page-area-start============================================ -->
-    <div class="faq-page-area faq-page2 pt-140 mb-115 over-hidden">
+    <div class="faq-page-area faq-page2 pt-80 mb-115 over-hidden">
         <div class="container" style="max-width: 1400px;">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -53,24 +53,21 @@
                                     </div><!-- /col -->
                                 </div>
 
-                                <div class="row my-3">
+                                <div class="row my-4">
                                     <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
                                         <table class="table table-bordered table-hover">
                                             <thead>
                                             <tr>
-                                                <th>No.</th>
-                                                <th>Title</th>
-                                                <th>Course Fee</th>
-                                                <th>Course Fee Unit</th>
-                                                <th>Status</th>
-                                                <th>Total Lessons</th>
-                                                <th>Total Video Duration</th>
-                                                <th>Total Test</th>
-                                                <th>Difficulty Level</th>
-                                                <th>Teacher</th>
-                                                <th>Discount Code</th>
-                                                <th>Training Fields</th>
-                                                <th>Action</th>
+                                                <th>STT</th>
+                                                <th>Tên khóa học</th>
+                                                <th>Giá</th>
+                                                <th>Đơn vị giá</th>
+                                                <th>Trạng thái</th>
+                                                <th>Cấp độ</th>
+                                                <th>Giảng viên</th>
+                                                <th>Mã giảm giá</th>
+                                                <th>Lĩnh vực</th>
+                                                <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -80,9 +77,6 @@
                                                 <td th:text="${course.courseFee}"></td>
                                                 <td th:text="${course.courseFeeUnit}"></td>
                                                 <td th:text="${course.status}"></td>
-                                                <td th:text="${course.totalLessons}"></td>
-                                                <td th:text="${course.totalVideoDuration}"></td>
-                                                <td th:text="${course.totalTest}"></td>
                                                 <td th:text="${course.difficultyLevel}"></td>
                                                 <td th:text="${course.teacher}"></td>
                                                 <td th:text="${course.discountCode}"></td>

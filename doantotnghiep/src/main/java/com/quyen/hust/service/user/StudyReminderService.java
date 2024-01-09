@@ -1,7 +1,7 @@
 package com.quyen.hust.service.user;
 
 import com.quyen.hust.model.request.user.StudyReminderRequest;
-import com.quyen.hust.model.response.CourseDataResponse;
+import com.quyen.hust.model.response.course.CourseDataResponse;
 import com.quyen.hust.model.response.user.FrequencyResponse;
 import com.quyen.hust.model.response.user.StudyReminderResponse;
 import com.quyen.hust.repository.user.StudyReminderJpaRepository;

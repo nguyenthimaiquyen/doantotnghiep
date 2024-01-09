@@ -1,4 +1,4 @@
-package com.quyen.hust.model.request;
+package com.quyen.hust.model.request.course;
 
 import com.quyen.hust.entity.admin.TrainingField;
 import com.quyen.hust.statics.DifficultyLevel;

@@ -1,13 +1,13 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Học tập - Larna')}"></head>
+<head th:replace="~{fragments/head :: html_head(pageTitle = 'Học tập - Larna')}"></head>
 
 <body>
 
 <!--  ====== header-area-start=======================================  -->
 <header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
-
+<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý mã giảm giá')}"></div>
 
 <main>
 
@@ -17,7 +17,7 @@
             <div class="row my-1">
                 <div class="col-lg-12">
                     <div class="d-flex justify-content-end mt-3 mt-lg-0">
-                        <a th:href="@{/courses/teacher/creation}" class="btn btn-primary f-500">
+                        <a class="btn btn-primary f-500 create-discountCode-btn">
                             <i class="fas fa-plus mr-2"></i>Tạo mã giảm giá</a>
                     </div><!-- /my-btn -->
                 </div><!-- /col -->
@@ -32,16 +32,16 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Code Name</th>
-                            <th>Discount Value</th>
-                            <th>Discount Unit</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Usage Limitation Count</th>
-                            <th>Used Count</th>
-                            <th>Activated</th>
-                            <th>Actions</th>
+                            <th>STT</th>
+                            <th>Tên mã</th>
+                            <th>Giá trị giảm giá</th>
+                            <th>Đơn vị giá</th>
+                            <th>Ngày hiệu lực</th>
+                            <th>Ngày kết thúc</th>
+                            <th>Giới hạn sử dụng</th>
+                            <th>Số lần đã sử dụng</th>
+                            <th>Đã kích hoạt</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>

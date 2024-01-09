@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Học tập - Larna')}"></head>
+<head th:replace="~{fragments/head :: html_head(pageTitle = 'Học tập - Larna')}"></head>
 
 <body>
 
@@ -8,8 +8,9 @@
 <header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
 
-
 <main>
+
+    <div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Dashboard')}"></div>
 
     <!-- ====== faq-page-area-start============================================ -->
     <div class="faq-page-area faq-page2 pt-140 mb-115 over-hidden">

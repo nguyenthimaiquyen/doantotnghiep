@@ -1,5 +1,6 @@
-package com.quyen.hust.entity;
+package com.quyen.hust.entity.course;
 
+import com.quyen.hust.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,12 +14,17 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "lessons")
-public class LessonUrl extends BaseEntity {
+public class Lesson extends BaseEntity {
 
-    @Column(name = "resource_url")
-    private String resourceUrl;
+    @Column
+    private String title;
+
+    @Column
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "lesson_id", nullable = false)
-    private Lesson lesson;
+    @JoinColumn(name = "section_id", nullable = false)
+    private Section section;
+
+
 }

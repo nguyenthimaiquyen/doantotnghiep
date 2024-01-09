@@ -1,8 +1,6 @@
 package com.quyen.hust.model.response.user;
 
-import com.quyen.hust.entity.Course;
-import com.quyen.hust.entity.user.User;
-import com.quyen.hust.model.response.CourseDataResponse;
+import com.quyen.hust.model.response.course.CourseDataResponse;
 import com.quyen.hust.statics.Frequency;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

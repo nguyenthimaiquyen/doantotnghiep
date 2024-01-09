@@ -1,6 +1,6 @@
-package com.quyen.hust.service;
+package com.quyen.hust.service.course;
 
-import com.quyen.hust.repository.LessonJpaRepository;
+import com.quyen.hust.repository.course.LessonJpaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,13 +1,13 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Học tập - Larna')}"></head>
+<head th:replace="~{fragments/head :: html_head(pageTitle = 'Học tập - Larna')}"></head>
 
 <body>
 
 <!--  ====== header-area-start=======================================  -->
 <header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
-
+<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý khóa học')}"></div>
 
 <main>
 

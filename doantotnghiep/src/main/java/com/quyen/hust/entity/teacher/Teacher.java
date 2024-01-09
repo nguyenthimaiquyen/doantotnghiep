@@ -1,7 +1,6 @@
 package com.quyen.hust.entity.teacher;
 
 import com.quyen.hust.entity.BaseEntity;
-import com.quyen.hust.entity.Course;
 import com.quyen.hust.entity.admin.TrainingField;
 import com.quyen.hust.entity.user.User;
 import lombok.AllArgsConstructor;

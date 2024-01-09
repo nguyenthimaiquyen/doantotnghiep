@@ -1,14 +1,13 @@
 package com.quyen.hust.entity.user;
 
 import com.quyen.hust.entity.BaseEntity;
-import com.quyen.hust.entity.Lesson;
+import com.quyen.hust.entity.course.Lesson;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data

@@ -9,6 +9,7 @@ import com.quyen.hust.service.user.UserService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -57,5 +58,7 @@ public class UserController {
         modelAndView.addObject("userData", userService.searchUser(request));
         return modelAndView;
     }
+
+
 
 }

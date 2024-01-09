@@ -1,4 +1,4 @@
-package com.quyen.hust.model.response;
+package com.quyen.hust.model.response.course;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

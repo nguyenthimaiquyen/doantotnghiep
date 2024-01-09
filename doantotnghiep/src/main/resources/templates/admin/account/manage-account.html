@@ -1,24 +1,19 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head-css :: html_head(pageTitle = 'Học tập - Larna')}"></head>
+<head th:replace="~{fragments/head :: html_head(pageTitle = 'Học tập - Larna')}"></head>
 
 <body>
 
 <!--  ====== header-area-start=======================================  -->
 <header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
-
+<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý tài khoản')}"></div>
 
 <main>
 
     <!-- ====== faq-page-area-start============================================ -->
     <div class="faq-page-area faq-page2 pt-140 mb-115 over-hidden">
         <div class="container">
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h4>Quản lý tài khoản</h4>
-                </div><!-- /col -->
-            </div><!-- /row -->
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 

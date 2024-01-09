@@ -1,5 +1,6 @@
-package com.quyen.hust.entity;
+package com.quyen.hust.entity.course;
 
+import com.quyen.hust.entity.BaseEntity;
 import com.quyen.hust.entity.admin.DiscountCode;
 import com.quyen.hust.entity.admin.TrainingField;
 import com.quyen.hust.entity.teacher.Teacher;

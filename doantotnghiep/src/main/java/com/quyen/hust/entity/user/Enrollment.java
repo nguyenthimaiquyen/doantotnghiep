@@ -1,8 +1,8 @@
 package com.quyen.hust.entity.user;
 
 import com.quyen.hust.entity.BaseEntity;
-import com.quyen.hust.entity.Course;
-import com.quyen.hust.entity.Lesson;
+import com.quyen.hust.entity.course.Course;
+import com.quyen.hust.entity.course.Lesson;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

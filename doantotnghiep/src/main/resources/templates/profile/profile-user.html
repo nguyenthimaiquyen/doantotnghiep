@@ -1,0 +1,237 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: html_head(pageTitle = 'Học tập - Larna')}"></head>
+
+<body>
+
+<!--  ====== header-area-start=======================================  -->
+<header th:replace="~{fragments/header :: header}"></header>
+<!--  header-area-end  -->
+<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Thiết lập hồ sơ cá nhân')}"></div>
+
+<main>
+
+    <!-- ====== faq-page-area-start============================================ -->
+    <div class="faq-page-area faq-page2 pt-50 mb-100 over-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="faq2-wrapper pl-xl-4 pl-lg-3">
+                        <div class="nav faq-nav justify-content-center" id="faq-tabs" role="tablist"
+                             aria-orientation="vertical">
+                            <a href="#tab1" class="nav-link active" data-toggle="pill" role="tab" aria-controls="tab1"
+                               aria-selected="true">Hồ sơ Larna</a>
+                            <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab2"
+                               aria-selected="false">Ảnh hồ sơ</a>
+                            <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3"
+                               aria-selected="false">Đổi mật khẩu</a>
+                        </div>
+
+                        <div class="tab-content mt-55" id="faq-tab-content">
+                            <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
+                                <div class="row">
+                                    <div class="col-xl-10  col-lg-10  col-md-12  col-sm-12 col-12">
+                                        <div class="checkbox-form">
+                                            <form action="#">
+                                                <div class="row">
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-fullName" class="f-600">Họ và
+                                                                tên</label>
+                                                            <input type="text" placeholder="Nhập họ và tên"
+                                                                   class="form-control w-100"
+                                                                   id="profile-fullName" name="profile-fullName">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-dateOfBirth">Ngày sinh</label>
+                                                            <input type="date" placeholder="Nhập ngày sinh"
+                                                                   class="w-100 form-control"
+                                                                   id="profile-dateOfBirth" name="profile-dateOfBirth">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-phone">Số điện thoại</label>
+                                                            <input type="text" placeholder="Nhập số điện thoại"
+                                                                   class="form-control w-100"
+                                                                   id="profile-phone" name="profile-phone">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="row">
+                                                            <div class="col-xl-3  col-lg-3  col-md-3  col-sm-3 col-12">
+                                                                <label>Giới tính</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12">
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input"
+                                                                               name="profile-gender"
+                                                                               id="profile-male-gender">Nam
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check-inline">
+                                                                    <label class="form-check-label">
+                                                                        <input type="radio" class="form-check-input"
+                                                                               name="profile-gender"
+                                                                               id="profile-female-gender">Nữ
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-address">Địa chỉ</label>
+                                                            <textarea placeholder="Nhập địa chỉ"
+                                                                      name="profile-address" id="profile-address"
+                                                                      class="primary-border2 w-100 pl-15"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-facebook-url" class="form-label">Facebook</label>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">https://www.facebook.com/</span>
+                                                                </div>
+                                                                <input type="text" class="form-control" placeholder="tên người dùng" name="profile-facebook-url"
+                                                                       id="profile-facebook-url" aria-describedby="basic-addon3"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-instagram-url" class="form-label">Instagram</label>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">https://www.instagram.com/</span>
+                                                                </div>
+                                                                <input type="text" class="form-control" placeholder="tên người dùng"
+                                                                       id="profile-instagram-url" name="profile-instagram-url" aria-describedby="basic-addon3"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-youtube-url" class="form-label">Youtube</label>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">https://www.youtube.com/</span>
+                                                                </div>
+                                                                <input type="text" class="form-control" placeholder="tên người dùng" name="profile-youtube-url"
+                                                                       id="profile-youtube-url" aria-describedby="basic-addon3"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-twitter-url" class="form-label">Twitter</label>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">https://www.twitter.com/</span>
+                                                                </div>
+                                                                <input type="text" class="form-control" placeholder="tên người dùng"
+                                                                       id="profile-twitter-url" name="profile-twitter-url" aria-describedby="basic-addon3"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /row -->
+                                            </form>
+                                        </div>
+                                    </div><!-- /col -->
+                                </div><!-- /row -->
+                                <div class="row mt-50">
+                                    <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
+                                        <div class="checkout-coupon-wrapper mt-5 mt-lg-0">
+                                            <div class="my-btn mt-3 mt-sm-0">
+                                                <a href="#"
+                                                   class="btn d-inline-block primary-bg f-500 rounded-0">Lưu</a>
+                                            </div><!-- /my-btn -->
+                                        </div><!-- /checkout-coupon-wrapper -->
+                                    </div><!-- /col -->
+                                </div><!-- /row -->
+                            </div>
+                            <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="tab2">
+                                <div class="row">
+                                    <div class="col-xl-6  col-lg-6  col-md-10  col-sm-12 col-12">
+                                        <h6 class="my-3">Xem trước hình ảnh</h6>
+                                        <div class="border border-dark pb-70 pt-70 ">
+                                            <div class="bg-white">
+                                                <img src="/images/avatar/default-image.png" alt="avatar"
+                                                     class="rounded-circle justify-content-center">
+                                            </div>
+                                        </div>
+                                        <div class="custom-file pmd-custom-file-filled mt-4 mb-60">
+                                            <input type="file" class="custom-file-input" id="profile-avatar">
+                                            <label class="custom-file-label" for="profile-avatar">Không có file nào được chọn</label>
+                                        </div>
+                                        <div class="checkout-coupon-wrapper mt-25 mt-lg-0">
+                                            <div class="my-btn mt-25 mt-sm-0">
+                                                <a href="#"
+                                                   class="btn d-inline-block primary-bg f-500 rounded-0">Lưu</a>
+                                            </div><!-- /my-btn -->
+                                        </div><!-- /checkout-coupon-wrapper -->
+                                    </div>
+                                </div><!-- /row -->
+                            </div>
+                            <div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="tab3">
+                                <div class="row">
+                                    <div class="col-xl-6  col-lg-6  col-md-10  col-sm-12 col-12">
+                                        <div class="checkout-form-list mb-4">
+                                            <label for="profile-old-password">Mật khẩu cũ<span class="text-danger">*</span></label>
+                                            <input type="text" placeholder="Nhập mật khẩu cũ"
+                                                   class="form-control w-100"
+                                                   id="profile-old-password" name="profile-old-password">
+                                        </div>
+                                        <div class="checkout-form-list mb-4">
+                                            <label for="profile-new-password">Mật khẩu mới<span class="text-danger">*</span></label>
+                                            <input type="text" placeholder="Nhập mật khẩu mới"
+                                                   class="form-control w-100"
+                                                   id="profile-new-password" name="profile-new-password">
+                                        </div>
+                                        <div class="checkout-form-list mb-4">
+                                            <label for="profile-renew-password">Nhập lại mật khẩu mới<span class="text-danger">*</span></label>
+                                            <input type="text" placeholder="Nhập lại mật khẩu mới"
+                                                   class="form-control w-100"
+                                                   id="profile-renew-password" name="profile-renew-password">
+                                        </div>
+                                    </div>
+                                </div><!-- /row -->
+                                <div class="row mt-30">
+                                    <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
+                                        <div class="checkout-coupon-wrapper mt-5 mt-lg-0">
+                                            <div class="my-btn mt-3 mt-sm-0">
+                                                <a href="#"
+                                                   class="btn d-inline-block primary-bg f-500 rounded-0">Lưu</a>
+                                            </div><!-- /my-btn -->
+                                        </div><!-- /checkout-coupon-wrapper -->
+                                    </div><!-- /col -->
+                                </div><!-- /row -->
+                            </div>
+                        </div>
+                    </div><!-- /faq-wrapper -->
+                </div><!-- /col -->
+            </div><!-- /row -->
+        </div><!-- /container -->
+    </div>
+    <!-- faq-area-end -->
+
+</main>
+
+<!-- ====== footer-area-start ============================================ -->
+<footer th:replace="~{fragments/footer-website :: footer-website}"></footer>
+
+<!-- back top -->
+<div id="scroll" class="scroll-up">
+    <div class="top text-center"><span class="white-bg theme-color d-block"><i class="fa fa-arrow-alt-up"></i></span>
+    </div>
+</div>
+
+<div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
+</body>
+</html>

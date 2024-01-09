@@ -1,4 +1,4 @@
-package com.quyen.hust.model.response;
+package com.quyen.hust.model.response.course;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,13 +11,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LessonResponse {
+public class SectionResponse {
 
     private Long id;
 
     private String title;
-
-    private String content;
 
     private LocalDateTime createdAt;
 

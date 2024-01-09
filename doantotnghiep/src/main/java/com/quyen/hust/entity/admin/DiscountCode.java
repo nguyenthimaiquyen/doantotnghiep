@@ -1,7 +1,6 @@
 package com.quyen.hust.entity.admin;
 
 import com.quyen.hust.entity.BaseEntity;
-import com.quyen.hust.entity.Course;
 import com.quyen.hust.statics.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Data

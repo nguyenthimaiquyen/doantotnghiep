@@ -1,4 +1,4 @@
-package com.quyen.hust.model.request;
+package com.quyen.hust.model.request.course;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
