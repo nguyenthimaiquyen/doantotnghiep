@@ -19,7 +19,5 @@ public class TrainingFieldResponse {
 
     private String description;
 
-    private LocalDateTime createdAt;
 
-    private LocalDateTime modifiedAt;
 }

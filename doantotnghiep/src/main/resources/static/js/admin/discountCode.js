@@ -168,13 +168,17 @@ $(document).ready(() => {
             toastr.error("Đã có lỗi xảy ra, vui lòng thử lại!")
             return;
         }
-
+        console.log(discountCode)
+        const startDate = discountCode.startDate[0] + "-" + discountCode.startDate[1] + '-' + discountCode.startDate[2];
+        const endDate = discountCode.endDate[0] + "-" + discountCode.endDate[1] + '-' + discountCode.endDate[2];
+        console.log(startDate)
+        console.log(endDate)
         //đổ dữ liệu vào form
         $('#discountCode-form #codeName').val(discountCode.codeName);
         $('#discountCode-form #discountValue').val(discountCode.discountValue);
         $('#discountCode-form #discountUnit').val(discountCode.discountUnit);
-        $('#discountCode-form #startDate').val(discountCode.startDate);
-        $('#discountCode-form #endDate').val(discountCode.endDate);
+        $('#discountCode-form #startDate').val(startDate);
+        $('#discountCode-form #endDate').val(endDate);
         $('#discountCode-form #usageLimitationCount').val(discountCode.usageLimitationCount);
 
         $('#discountCode-modal #save-discountCode-btn').attr('action-type', "UPDATE");
@@ -196,11 +200,13 @@ $(document).ready(() => {
         if (!formDiscountCodeData || formDiscountCodeData.length === 0) {
             return;
         }
+        console.log(formDiscountCodeData)
         //chuyển dữ liệu từ object sang json
         const discountCodeRequestBody = {};
         for (let i = 0; i < formDiscountCodeData.length; i++) {
             discountCodeRequestBody[formDiscountCodeData[i].name] = formDiscountCodeData[i].value;
         }
+        console.log(discountCodeRequestBody)
         const method = actionType === "CREATE" ? "POST" : "PUT";
         if (method === "PUT") {
             discountCodeRequestBody["id"] = discountCodeId;
@@ -210,7 +216,7 @@ $(document).ready(() => {
             url: "/discountCodes",
             type: method,
             data: JSON.stringify(discountCodeRequestBody),
-            contentUnit: "application/json; charset=utf-8",
+            contentType: "application/json; charset=utf-8",
             success: function (data) {
                 toastr.success((method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công mã giảm giá!");
                 setTimeout(() => {

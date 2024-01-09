@@ -77,12 +77,10 @@ public class DiscountCodeService {
             dc.setStartDate(request.getStartDate());
             dc.setEndDate(request.getEndDate());
             dc.setUsageLimitationCount(request.getUsageLimitationCount());
-            dc.setLastModifiedDateTime(LocalDateTime.now());
             return;
         }
         //create a discount code
         discountCode.setActivated(true);
-        discountCode.setCreatedDateTime(LocalDateTime.now());
         discountCodeJpaRepository.save(discountCode);
     }
 

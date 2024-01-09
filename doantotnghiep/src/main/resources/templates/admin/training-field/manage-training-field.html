@@ -12,16 +12,29 @@
 <main>
 
     <!-- ====== faq-page-area-start============================================ -->
-    <div class="faq-page-area faq-page2 pt-140 mb-115 over-hidden">
+    <div class="faq-page-area faq-page2 pt-60 mb-100 over-hidden">
         <div class="container">
-            <div class="row">
-                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-12 col-12">
+            <div class="row my-1">
+                <div class="col-lg-12">
+                    <div class="d-flex justify-content-end mt-3 mt-lg-0">
+                        <a class="btn btn-primary f-500 create-trainingField-btn">
+                            <i class="fas fa-plus mr-2"></i>Tạo lĩnh vực</a>
+                    </div><!-- /my-btn -->
+                </div><!-- /col -->
+            </div>
+            <div class="row text-center">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h5>Danh sách lĩnh vực đào tạo</h5>
+                </div><!-- /col -->
+            </div><!-- /row -->
+            <div class="row text-center mt-4">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
                             <th>STT</th>
                             <th>Tên lĩnh vực</th>
-                            <th>Mô tả</th>
+                            <th class="w-60">Mô tả</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -29,7 +42,7 @@
                         <tr th:each="trainingField : ${trainingFields}">
                             <td th:text="${trainingField.id}"></td>
                             <td th:text="${trainingField.fieldName}"></td>
-                            <td th:text="${trainingField.description}"></td>
+                            <td th:text="${trainingField.description}" class=" text-left"></td>
                             <td>
                                 <button class="btn btn-primary btn-sm update-trainingField-btn"
                                         th:attr="trainingField-id=${trainingField.id}">
@@ -61,6 +74,9 @@
     <div class="top text-center"><span class="white-bg theme-color d-block"><i class="fa fa-arrow-alt-up"></i></span>
     </div>
 </div>
+
+<div th:replace="~{admin/training-field/training-field-modal :: trainingField-modal}"></div>
+<div th:replace="~{admin/training-field/training-field-delete-modal :: trainingField-delete-modal}"></div>
 
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>

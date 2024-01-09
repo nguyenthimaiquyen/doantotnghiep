@@ -5,7 +5,6 @@ $(document).ready(() => {
     const userRole = userInfo ? userInfo.roles : null;
     const fullName = userInfo ? userInfo.fullName : null;
     const email = userInfo ? userInfo.email : null;
-    console.log(userRole)
 
     let manageSubHeader = `
                             <div class="testi-avatar pr-15 rounded-circle dropdown mr-10">
@@ -30,24 +29,22 @@ $(document).ready(() => {
             headerMenu = `
                                 <ul class="d-block">
                                     <li><a class="mega-title" href="/courses/analysis/admin">Dashboard</a></li>
-                                    <li><a href="/courses/admin">Khóa học</a></li>
-                                    <li ><a href="/categories">Thể loại</a></li>
+                                    <li><a href="/courses/management">Khóa học</a></li>
+                                    <li ><a href="/training-fields">Lĩnh vực</a></li>
                                     <li ><a href="/accounts">Tài khoản</a>
                                     <li ><a href="/mailSending">Gửi mail</a></li>
                                     <li ><a href="/discountCodes">Mã giảm giá</a></li>
                                 </ul>
             `;
             subHeader = manageSubHeader;
-            console.log("vào admin rồi")
         } else if (userRole == 'TEACHER') {
             headerMenu = `
                                 <ul class="d-block">
                                     <li><a class="mega-title" href="/courses/analysis/teacher">Dashboard</a></li>
-                                    <li><a href="/courses/teacher">Khóa học</a></li>         
+                                    <li><a href="/courses/management">Khóa học</a></li>         
                                 </ul>
             `;
             subHeader = manageSubHeader;
-            console.log("vào teacher rồi")
         } else {
             headerMenu = `
                 <ul class="d-block">
@@ -91,7 +88,6 @@ $(document).ready(() => {
                             </div>            
             `;
             subHeader = subHeader.replace("[full-name]", fullName).replace("[email]", email);
-            console.log("vào user rồi")
         }
     } else {
         headerMenu = `
@@ -114,7 +110,6 @@ $(document).ready(() => {
                  <a href="/signup" class="btn white-bg">Đăng ký</a>
             </div><!-- /Sign Up -->
         `;
-        console.log("vào vô danh rồi")
     }
 
     $("#header-sticky #header-menu").html(headerMenu);

@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "courses")
+@Table(name = "discount_codes")
 public class DiscountCode extends BaseEntity {
 
     @Column(length = 50, name = "code_name")

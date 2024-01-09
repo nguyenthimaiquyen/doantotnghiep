@@ -1,4 +1,4 @@
-package com.quyen.hust.controller.teacher;
+package com.quyen.hust.controller.course;
 
 import com.quyen.hust.service.course.CourseService;
 import lombok.AllArgsConstructor;
@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/courses/teacher")
-public class TeacherCourseController {
+@RequestMapping("/courses/management")
+public class CourseManagementController {
     private final CourseService courseService;
 
     @GetMapping
     public String getCourseManagementPage(Model model) {
-        return "teacher/course/teacher-course-management";
+        return "course/course-management";
     }
 
     @GetMapping("creation")
     public String getCourseCreationPage(Model model) {
-        return "teacher/course/teacher-course-creation";
+        return "course/course-creation";
     }
 
     @GetMapping("section")
     public String getSectionCreationPage(Model model) {
-        return "teacher/course/teacher-section-creation";
+        return "course/section-creation";
     }
 
     @GetMapping("/courseFeeUnit")
@@ -37,6 +37,16 @@ public class TeacherCourseController {
     @GetMapping("/difficultyLevel")
     public ResponseEntity<?> getDifficultyLevel() {
         return ResponseEntity.ok(courseService.getDifficultyLevel());
+    }
+
+    @GetMapping("/trainingField")
+    public ResponseEntity<?> getTrainingField() {
+        return ResponseEntity.ok(courseService.getTrainingField());
+    }
+
+    @GetMapping("/discountCode")
+    public ResponseEntity<?> getDiscountCode() {
+        return ResponseEntity.ok(courseService.getDiscountCode());
     }
 
 

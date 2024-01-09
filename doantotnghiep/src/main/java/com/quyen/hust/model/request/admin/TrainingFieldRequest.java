@@ -20,14 +20,11 @@ public class TrainingFieldRequest {
     private Long id;
 
     @NotBlank(message = "Field name is required")
-    @Length(max = 255, message = "Field name must be less than 255 characters")
+    @Length(max = 100, message = "Field name must be less than 100 characters")
     private String fieldName;
 
+    @Length(max = 255, message = "Field name must be less than 255 characters")
     private String description;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime createdAt;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime modifiedAt;
 }

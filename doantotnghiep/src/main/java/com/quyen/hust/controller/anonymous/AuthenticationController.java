@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/authentication")
+@RequestMapping("/authentication")
 public class AuthenticationController {
     private final JwtUtils jwtUtils;
 

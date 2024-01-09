@@ -1,0 +1,31 @@
+<!-- Modal -->
+<div class="modal fade" id="trainingField-modal" tabindex="-1" role="dialog"
+     aria-hidden="true" th:fragment="trainingField-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Lĩnh vực đào tạo</h5>
+                <button type="button" class="close close-modal" aria-label="Close">
+                    <span aria-hidden="true" data-dismiss="modal">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="trainingField-form">
+                    <div class="form-group">
+                        <label for="fieldName">Tên lĩnh vực<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="fieldName" placeholder="Nhập tên lĩnh vực" name="fieldName">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Mô tả</label>
+                        <textarea type="text" class="form-control" id="description" placeholder="Nhập mô tả lĩnh vực"
+                               name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="save-trainingField-btn">Lưu</button>
+                <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

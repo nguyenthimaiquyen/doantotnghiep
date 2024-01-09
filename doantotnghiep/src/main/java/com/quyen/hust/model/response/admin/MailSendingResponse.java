@@ -19,5 +19,5 @@ public class MailSendingResponse {
 
     private String content;
 
-    private LocalDateTime createdAt;
+
 }

@@ -34,7 +34,5 @@ public class DiscountCodeResponse {
 
     private Boolean activated;
 
-    private LocalDateTime createdAt;
 
-    private LocalDateTime modifiedAt;
 }

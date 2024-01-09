@@ -65,8 +65,6 @@ $(document).ready(() => {
         if (this.optional(element)) {
             return true;
         }
-        console.log("value : " + value)
-        console.log("element : " + element)
         const myDate = new Date(value);
         myDate.setHours(0);
         myDate.setMinutes(0);
@@ -84,8 +82,6 @@ $(document).ready(() => {
         if (this.optional(element)) {
             return true;
         }
-        console.log("value : " + value)
-        console.log("element : " + element)
         const myDate = new Date(value);
         myDate.setHours(0);
         myDate.setMinutes(0);
@@ -96,7 +92,6 @@ $(document).ready(() => {
         today.setMinutes(0);
         today.setSeconds(0);
         today.setMilliseconds(0);
-        console.log(myDate - today)
         return this.optional(element) || myDate - today > 0;
     }, "Date must be a future date");
 

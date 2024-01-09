@@ -61,7 +61,7 @@ $(document).ready(function () {
         //call api lên backend
         await $.ajax({
             type: "POST",
-            url: "/api/v1/authentication/login",
+            url: "/authentication/login",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
@@ -157,14 +157,14 @@ $(document).ready(function () {
         //call api lên backend
         $.ajax({
             type: "POST",
-            url: "/api/v1/authentication/signup",
+            url: "/authentication/signup",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
                 toastr.success("Đăng ký tài khoản thành công!");
                 console.log(data);
                 setTimeout(() => {
-                    window.location.href = "http://localhost:8080/information";
+                    window.location.href = "http://localhost:8080/login";
                 }, 1500);
             },
             error: function (error) {
@@ -192,7 +192,7 @@ $(document).ready(function () {
         // Gọi API logout và xử lý kết quả
         $.ajax({
             type: 'POST',
-            url: '/api/v1/authentication/logout',
+            url: '/authentication/logout',
             success: function (data) {
                 toastr.success("Đăng xuất thành công!");
                 localStorage.removeItem('access-token');

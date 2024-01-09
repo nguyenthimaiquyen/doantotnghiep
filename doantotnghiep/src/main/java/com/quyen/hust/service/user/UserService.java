@@ -21,6 +21,7 @@ import com.quyen.hust.security.CustomUserDetails;
 import com.quyen.hust.security.JwtUtils;
 import com.quyen.hust.security.SecurityUtils;
 import com.quyen.hust.statics.Roles;
+import com.quyen.hust.statics.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -77,6 +78,7 @@ public class UserService {
                 .email(registrationRequest.getEmail())
                 .password(passwordEncoder.encode(registrationRequest.getPassword()))
                 .roles(roles)
+                .userStatus(UserStatus.CREATED)
                 .build();
         userJpaRepository.save(user);
     }
