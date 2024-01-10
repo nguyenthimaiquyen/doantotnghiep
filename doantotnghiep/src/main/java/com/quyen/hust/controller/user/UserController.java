@@ -1,7 +1,10 @@
 package com.quyen.hust.controller.user;
 
 import com.quyen.hust.exception.ExistedUserException;
+import com.quyen.hust.exception.PasswordNotMatchedException;
+import com.quyen.hust.exception.UserNotFoundException;
 import com.quyen.hust.model.request.anonymous.CreateUserRequest;
+import com.quyen.hust.model.request.user.PasswordRequest;
 import com.quyen.hust.model.request.user.UserSearchRequest;
 import com.quyen.hust.model.response.CommonResponse;
 import com.quyen.hust.model.response.user.UserResponse;
@@ -18,19 +21,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
 
-    UserService userService;
-
+    private final UserService userService;
+//
 //    @GetMapping
 //    public List<UserResponse> getAll() {
 //        return userService.getAll();
 //    }
+
 
     @GetMapping("/{id}")
     public UserResponse getDetail(@PathVariable Long id) throws ClassNotFoundException {
@@ -58,6 +62,7 @@ public class UserController {
         modelAndView.addObject("userData", userService.searchUser(request));
         return modelAndView;
     }
+
 
 
 

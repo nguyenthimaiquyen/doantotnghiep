@@ -83,7 +83,7 @@ $(document).ready(() => {
                                     <a class="dropdown-item mb-1" href="#">Phương thức thanh toán</a>
                                     <a class="dropdown-item" href="/profiles">Chỉnh sửa hồ sơ</a>
                                     <div class="dropdown-divider"></div>
-                                    <button class="dropdown-item" type="button" id="logout-btn">Đăng xuất</button>
+                                    <button class="dropdown-item" type="button" onclick="logout()">Đăng xuất</button>
                                 </div>
                             </div>            
             `;

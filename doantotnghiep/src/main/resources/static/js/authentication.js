@@ -23,7 +23,7 @@ $(document).ready(function () {
             },
             'password': {
                 required: true,
-                passwordFormat: true
+                passwordFormat: true,
             }
         },
         messages: {
@@ -34,7 +34,7 @@ $(document).ready(function () {
             },
             'password': {
                 required: "Mật khẩu bắt buộc",
-                passwordFormat: "Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt"
+                passwordFormat: "Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt",
             }
         }
     });
@@ -51,13 +51,11 @@ $(document).ready(function () {
         if (!loginData || loginData.length === 0) {
             return;
         }
-        console.log(loginData)
         //chuyển dữ liệu từ object sang json
         const RequestBody = {};
         for (let i = 0; i < loginData.length; i++) {
             RequestBody[loginData[i].name] = loginData[i].value;
         }
-        console.log(RequestBody)
         //call api lên backend
         await $.ajax({
             type: "POST",
@@ -84,19 +82,6 @@ $(document).ready(function () {
                 console.log(error);
             }
         });
-
-        //hiển thị thông tin user lên header
-        const userInfo = JSON.parse(localStorage.getItem("user-info"));
-        console.log(userInfo)
-        if (userInfo) {
-            const fullName = userInfo.fullName;
-            const email = userInfo.email;
-            const avatar = userInfo.avatar;
-
-            $('#user-fullName').innerText = fullName;
-            $('#user-avatar').src = avatar;
-            $('#user-email').innerText = email;
-        }
 
     });
 
@@ -187,9 +172,7 @@ $(document).ready(function () {
         }
     });
     //gọi api đăng xuất
-    $('#logout-btn').click(function () {
-        console.log("vào hàm log out rồi")
-        // Gọi API logout và xử lý kết quả
+    function logout() {
         $.ajax({
             type: 'POST',
             url: '/authentication/logout',
@@ -208,7 +191,9 @@ $(document).ready(function () {
                 alert('Đã có lỗi xảy ra khi đăng xuất. Vui lòng thử lại sau.');
             }
         });
-    });
+    }
+
+
 
 
 

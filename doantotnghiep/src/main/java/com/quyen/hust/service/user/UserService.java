@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.quyen.hust.entity.admin.Role;
 import com.quyen.hust.entity.user.User;
 import com.quyen.hust.exception.ExistedUserException;
+import com.quyen.hust.exception.PasswordNotMatchedException;
 import com.quyen.hust.exception.RefreshTokenNotFoundException;
+import com.quyen.hust.exception.UserNotFoundException;
 import com.quyen.hust.model.request.RefreshTokenRequest;
 import com.quyen.hust.model.request.anonymous.CreateUserRequest;
 import com.quyen.hust.model.request.anonymous.RegistrationRequest;
+import com.quyen.hust.model.request.user.PasswordRequest;
 import com.quyen.hust.model.request.user.UserSearchRequest;
 import com.quyen.hust.model.response.CommonResponse;
 import com.quyen.hust.model.response.JwtResponse;
@@ -161,5 +164,20 @@ public class UserService {
                 .data(users)
                 .build();
     }
+
+    public void changePassword(PasswordRequest request) throws UserNotFoundException, PasswordNotMatchedException {
+        User user = userJpaRepository.findByEmail(request.getEmail());
+        if (ObjectUtils.isEmpty(user)) {
+            throw new UserNotFoundException("User could not be found");
+        }
+        if (!request.getNewPassword().equals(request.getRenewPassword())) {
+            throw new PasswordNotMatchedException("Password don't matched");
+        }
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userJpaRepository.save(user);
+    }
+
+
+
 
 }

@@ -2,6 +2,7 @@ package com.quyen.hust.model.request.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.quyen.hust.statics.Gender;
+import com.quyen.hust.statics.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,7 +46,7 @@ public class UserRequest {
     @NotBlank(message = "Password is required")
     private String password;
 
-    private Boolean activated;
+    private UserStatus userStatus;
 
     @Length(max = 255, message = "Avatar must be less than 255 characters")
     private String avatar;
@@ -65,11 +66,6 @@ public class UserRequest {
     @Length(max = 255, message = "Twitter url must be less than 255 characters")
     private String twitterUrl;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime createdAt;
-
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime modifiedAt;
 
 
 }

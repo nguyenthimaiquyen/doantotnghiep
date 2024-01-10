@@ -200,13 +200,11 @@ $(document).ready(() => {
         if (!formDiscountCodeData || formDiscountCodeData.length === 0) {
             return;
         }
-        console.log(formDiscountCodeData)
         //chuyển dữ liệu từ object sang json
         const discountCodeRequestBody = {};
         for (let i = 0; i < formDiscountCodeData.length; i++) {
             discountCodeRequestBody[formDiscountCodeData[i].name] = formDiscountCodeData[i].value;
         }
-        console.log(discountCodeRequestBody)
         const method = actionType === "CREATE" ? "POST" : "PUT";
         if (method === "PUT") {
             discountCodeRequestBody["id"] = discountCodeId;
