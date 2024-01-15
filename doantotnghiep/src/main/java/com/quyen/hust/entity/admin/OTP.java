@@ -21,7 +21,7 @@ public class OTP extends BaseEntity {
     private String otp;
 
     @Column(name = "live_time")
-    private Long liveTime;
+    private LocalDateTime liveTime;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,

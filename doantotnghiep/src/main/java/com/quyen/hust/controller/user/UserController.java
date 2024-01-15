@@ -1,27 +1,18 @@
 package com.quyen.hust.controller.user;
 
 import com.quyen.hust.exception.ExistedUserException;
-import com.quyen.hust.exception.PasswordNotMatchedException;
-import com.quyen.hust.exception.UserNotFoundException;
 import com.quyen.hust.model.request.anonymous.CreateUserRequest;
-import com.quyen.hust.model.request.user.PasswordRequest;
 import com.quyen.hust.model.request.user.UserSearchRequest;
 import com.quyen.hust.model.response.CommonResponse;
 import com.quyen.hust.model.response.user.UserResponse;
 import com.quyen.hust.service.user.UserService;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")

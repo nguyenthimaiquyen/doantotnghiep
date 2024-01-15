@@ -1,22 +1,22 @@
 package com.quyen.hust.service.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.quyen.hust.entity.admin.OTP;
 import com.quyen.hust.entity.admin.Role;
 import com.quyen.hust.entity.user.User;
-import com.quyen.hust.exception.ExistedUserException;
-import com.quyen.hust.exception.PasswordNotMatchedException;
-import com.quyen.hust.exception.RefreshTokenNotFoundException;
-import com.quyen.hust.exception.UserNotFoundException;
+import com.quyen.hust.exception.*;
 import com.quyen.hust.model.request.RefreshTokenRequest;
 import com.quyen.hust.model.request.anonymous.CreateUserRequest;
 import com.quyen.hust.model.request.anonymous.RegistrationRequest;
-import com.quyen.hust.model.request.user.PasswordRequest;
+import com.quyen.hust.model.request.user.ChangePasswordRequest;
+import com.quyen.hust.model.request.user.ForgetPasswordRequest;
 import com.quyen.hust.model.request.user.UserSearchRequest;
 import com.quyen.hust.model.response.CommonResponse;
 import com.quyen.hust.model.response.JwtResponse;
 import com.quyen.hust.model.response.user.UserResponse;
 import com.quyen.hust.model.response.user.UserSearchResponse;
 import com.quyen.hust.repository.RefreshTokenRepository;
+import com.quyen.hust.repository.admin.OTPJpaRepository;
 import com.quyen.hust.repository.admin.RoleJpaRepository;
 import com.quyen.hust.repository.user.UserCustomRepository;
 import com.quyen.hust.repository.user.UserJpaRepository;
@@ -25,8 +25,6 @@ import com.quyen.hust.security.JwtUtils;
 import com.quyen.hust.security.SecurityUtils;
 import com.quyen.hust.statics.Roles;
 import com.quyen.hust.statics.UserStatus;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,25 +42,21 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private final UserJpaRepository userJpaRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final RoleJpaRepository roleJpaRepository;
-
     private final ObjectMapper objectMapper;
-
     private final RefreshTokenRepository refreshTokenRepository;
-
     private final UserCustomRepository userCustomRepository;
-
     private final JwtUtils jwtUtils;
+    private final OTPJpaRepository otpJpaRepository;
+
 
     @Value("${application.security.refreshToken.tokenValidityMilliseconds}")
     private long refreshTokenValidityMilliseconds;
 
-    public UserService(PasswordEncoder passwordEncoder, UserJpaRepository userJpaRepository,
-                       RoleJpaRepository roleJpaRepository, ObjectMapper objectMapper,
-                       RefreshTokenRepository refreshTokenRepository, UserCustomRepository userCustomRepository, JwtUtils jwtUtils) {
+    public UserService(PasswordEncoder passwordEncoder, UserJpaRepository userJpaRepository, RoleJpaRepository roleJpaRepository,
+                       ObjectMapper objectMapper, RefreshTokenRepository refreshTokenRepository,
+                       UserCustomRepository userCustomRepository, JwtUtils jwtUtils, OTPJpaRepository otpJpaRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userJpaRepository = userJpaRepository;
         this.roleJpaRepository = roleJpaRepository;
@@ -70,12 +64,20 @@ public class UserService {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userCustomRepository = userCustomRepository;
         this.jwtUtils = jwtUtils;
+        this.otpJpaRepository = otpJpaRepository;
     }
 
-    public void registerUser(RegistrationRequest registrationRequest) {
-        Optional<Role> optionalRole = roleJpaRepository.findByName(Roles.USER);
+    public User registerUser(RegistrationRequest registrationRequest) {
         Set<Role> roles = new HashSet<>();
-        roles.add(optionalRole.get());
+        if (registrationRequest.getRole().equals("TEACHER")) {
+            //đăng ký với role là teacher
+            Optional<Role> optionalRole = roleJpaRepository.findByName(Roles.TEACHER);
+            roles.add(optionalRole.get());
+        } else {
+            //đăng ký với role là user
+            Optional<Role> optionalRole = roleJpaRepository.findByName(Roles.USER);
+            roles.add(optionalRole.get());
+        }
         User user = User.builder()
                 .fullName(registrationRequest.getFullName())
                 .email(registrationRequest.getEmail())
@@ -84,6 +86,7 @@ public class UserService {
                 .userStatus(UserStatus.CREATED)
                 .build();
         userJpaRepository.save(user);
+        return user;
     }
 
 
@@ -165,7 +168,8 @@ public class UserService {
                 .build();
     }
 
-    public void changePassword(PasswordRequest request) throws UserNotFoundException, PasswordNotMatchedException {
+    @Transactional
+    public void changePassword(ChangePasswordRequest request) throws UserNotFoundException, PasswordNotMatchedException {
         User user = userJpaRepository.findByEmail(request.getEmail());
         if (ObjectUtils.isEmpty(user)) {
             throw new UserNotFoundException("User could not be found");
@@ -177,6 +181,42 @@ public class UserService {
         userJpaRepository.save(user);
     }
 
+    public String getUserName(String email) {
+         return userJpaRepository.findByEmail(email).getFullName();
+    }
+
+    public Long getUserId(String email) {
+        return userJpaRepository.findByEmail(email).getId();
+    }
+
+    @Transactional
+    public void forgetPassword(ForgetPasswordRequest request) throws UserNotFoundException, OTPNotMatchedException,
+            PasswordNotMatchedException, OTPNotFoundException, OTPExpiredException {
+        OTP otp = otpJpaRepository.findByOtp(request.getOtp());
+        if (ObjectUtils.isEmpty(otp)) {
+            throw new OTPNotFoundException("OTP "+ request.getOtp() + " could not be found" );
+        }
+        if (!request.getNewPassword().equals(request.getRenewPassword())) {
+            throw new PasswordNotMatchedException("Password don't matched");
+        }
+        //kiểm tra otp còn trong thời gian sống hay không
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime expirationTime = otpJpaRepository.findByOtp(request.getOtp()).getLiveTime();
+        if (currentTime.isAfter(expirationTime)) {
+            throw new OTPExpiredException("OTP " + request.getOtp() + " has already expired");
+        }
+        User user = otp.getUser();
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userJpaRepository.save(user);
+    }
+
+
+    public void verifyAccount(Long id) {
+        System.out.println(id);
+        Optional<User> user = userJpaRepository.findById(id);
+        user.get().setUserStatus(UserStatus.ACTIVATED);
+        userJpaRepository.save(user.get());
+    }
 
 
 

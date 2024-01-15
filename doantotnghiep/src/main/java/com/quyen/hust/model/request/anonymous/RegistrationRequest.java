@@ -22,4 +22,6 @@ public class RegistrationRequest {
     @NotBlank
     String password;
 
+    String role;
+
 }

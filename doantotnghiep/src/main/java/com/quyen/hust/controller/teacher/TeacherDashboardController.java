@@ -13,8 +13,9 @@ public class TeacherDashboardController {
 
     @GetMapping
     public String getDashboardPage(Model model) {
-        return "teacher/dashboard/teacher-dashboard-management";
+        return "teacher/teacher-dashboard-management";
     }
+
 
 
 }

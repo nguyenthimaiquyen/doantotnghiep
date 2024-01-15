@@ -19,7 +19,7 @@ public class AnonymousController {
         return "layout/about";
     }
 
-    @GetMapping("/courses")
+    @GetMapping("/courses-page")
     public String getCoursePage(Model model) {
         return "course/courses";
     }
@@ -29,9 +29,9 @@ public class AnonymousController {
         return "course/course-details";
     }
 
-    @GetMapping("/instructors")
+    @GetMapping("/teachers")
     public String getInstructorPage(Model model) {
-        return "instructor/instructors";
+        return "teacher/teachers";
     }
 
     @GetMapping("/myLearning")
@@ -56,7 +56,7 @@ public class AnonymousController {
 
     @GetMapping("/information")
     public String getInformationPage(Model model) {
-        return "error/403";
+        return "layout/information";
     }
 
     @GetMapping("/faq")

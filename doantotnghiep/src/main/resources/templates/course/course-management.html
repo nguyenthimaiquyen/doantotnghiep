@@ -46,7 +46,7 @@
                                 <div class="row my-1">
                                     <div class="col-lg-12">
                                         <div class="d-flex justify-content-end mt-3 mt-lg-0">
-                                            <a th:href="@{/courses/management/creation}" class="btn btn-primary f-500">
+                                            <a th:href="@{/courses/creation}" class="btn btn-primary f-500 create-course-btn">
                                                 <i class="fas fa-plus mr-2"></i>Tạo khóa học
                                             </a>
                                         </div><!-- /my-btn -->
@@ -81,6 +81,7 @@
                                                 <td th:text="${course.teacher}"></td>
                                                 <td th:text="${course.discountCode}"></td>
                                                 <td th:text="${course.trainingFields}"></td>
+                                                <td><a href="#">Chi tiết khóa học</a></td>
                                                 <td>
                                                     <button class="btn btn-primary btn-sm update-course-btn"
                                                             th:attr="course-id=${course.id}">
@@ -204,6 +205,7 @@
     </div>
 </div>
 
+<div th:replace="~{course/course-delete-modal :: course-delete-modal}"></div>
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>
 </html>

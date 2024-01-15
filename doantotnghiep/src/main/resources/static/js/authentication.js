@@ -74,7 +74,13 @@ $(document).ready(function () {
                 };
                 localStorage.setItem("user-info", JSON.stringify(userInfo));
                 setTimeout(() => {
-                    window.location.href = "http://localhost:8080";
+                    if (data.roles == 'ADMIN') {
+                        window.location.href = "http://localhost:8080/courses/analysis/admin";
+                    } else if (data.roles == 'TEACHER') {
+                        window.location.href = "http://localhost:8080/courses/analysis/teacher";
+                    } else {
+                        window.location.href = "http://localhost:8080";
+                    }
                 }, 1500);
             },
             error: function (error) {
@@ -139,6 +145,9 @@ $(document).ready(function () {
         for (let i = 0; i < signupData.length; i++) {
             RequestBody[signupData[i].name] = signupData[i].value;
         }
+        const role = $('#teacherCheckbox').prop('checked') ? 'TEACHER' : 'USER'
+        console.log(role);
+        RequestBody['role'] = role;
         //call api lên backend
         $.ajax({
             type: "POST",
@@ -149,7 +158,7 @@ $(document).ready(function () {
                 toastr.success("Đăng ký tài khoản thành công!");
                 console.log(data);
                 setTimeout(() => {
-                    window.location.href = "http://localhost:8080/login";
+                    window.location.replace("http://localhost:8080/information");
                 }, 1500);
             },
             error: function (error) {
@@ -165,36 +174,45 @@ $(document).ready(function () {
     userAvatar.click(() => {
         userMenu.toggle();
     });
+
     //tắt menu khi ấn ra ngoài
     $(document).on('click', function (event) {
         if (!userMenu.is(event.target) && userMenu.has(event.target).length === 0 && !userAvatar.is(event.target)) {
             userMenu.hide();
         }
     });
-    //gọi api đăng xuất
-    function logout() {
-        $.ajax({
-            type: 'POST',
-            url: '/authentication/logout',
-            success: function (data) {
-                toastr.success("Đăng xuất thành công!");
-                localStorage.removeItem('access-token');
-                localStorage.removeItem('refresh-token');
-                localStorage.removeItem('user-info');
-                console.log("đăng xuất rồi đó")
-                setTimeout(() => {
-                    window.location.href = "http://localhost:8080";
-                }, 1500);
-            },
-            error: function (error) {
-                console.log(error);
-                alert('Đã có lỗi xảy ra khi đăng xuất. Vui lòng thử lại sau.');
-            }
-        });
-    }
-
-
-
 
 
 });
+
+//gọi api đăng xuất
+function logout() {
+    $.ajax({
+        type: 'POST',
+        url: '/authentication/logout',
+        beforeSend: function (xhr) {
+            const token = localStorage.getItem("access-token");
+            if (!token || token.trim() === "") {
+                return;
+            }
+            xhr.setRequestHeader('Authorization', "Bearer " + token);
+        },
+        success: function (data) {
+            toastr.success("Đăng xuất thành công!");
+            localStorage.removeItem('access-token');
+            localStorage.removeItem('refresh-token');
+            localStorage.removeItem('user-info');
+            console.log("đăng xuất rồi đó")
+            setTimeout(() => {
+                window.location.href = "http://localhost:8080";
+            }, 1500);
+        },
+        error: function (error) {
+            console.log(error);
+            alert('Đã có lỗi xảy ra khi đăng xuất. Vui lòng thử lại sau.');
+        }
+    });
+
+
+}
+

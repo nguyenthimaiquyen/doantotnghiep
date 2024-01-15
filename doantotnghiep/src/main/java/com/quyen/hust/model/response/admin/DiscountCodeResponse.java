@@ -1,5 +1,6 @@
 package com.quyen.hust.model.response.admin;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.quyen.hust.statics.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,8 +25,10 @@ public class DiscountCodeResponse {
 
     private Unit discountUnit;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     private Integer usageLimitationCount;

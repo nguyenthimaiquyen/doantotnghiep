@@ -6,22 +6,6 @@ $(document).ready(() => {
     const fullName = userInfo ? userInfo.fullName : null;
     const email = userInfo ? userInfo.email : null;
 
-    let manageSubHeader = `
-                            <div class="testi-avatar pr-15 rounded-circle dropdown mr-10">
-                                <img src="/images/avatar/avatar3.jpg" alt="avatar" id="user-avatar"
-                                     data-toggle="dropdown"
-                                     class="rounded-circle avatar dropdown-toggle">
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-avatar">
-                                    <p class="dropdown-item font-weight-bold pt-3" id="user-fullName">[full-name]</p>
-                                    <p class="dropdown-item" id="user-email">[email]</p>
-                                    <div class="dropdown-divider"></div>                                   
-                                    <a class="dropdown-item" href="#">Chỉnh sửa hồ sơ</a>
-                                    <div class="dropdown-divider"></div>
-                                    <button class="dropdown-item" type="button" id="logout-btn">Đăng xuất</button>
-                                </div>
-                            </div>   
-            `;
-    manageSubHeader = manageSubHeader.replace("[full-name]", fullName).replace("[email]", email);
     let headerMenu, subHeader;
 
     if (isLoggedIn) {
@@ -36,7 +20,19 @@ $(document).ready(() => {
                                     <li ><a href="/discountCodes">Mã giảm giá</a></li>
                                 </ul>
             `;
-            subHeader = manageSubHeader;
+            subHeader = `
+                            <div class="testi-avatar pr-15 rounded-circle dropdown mr-10">
+                                <img src="/images/avatar/avatar3.jpg" alt="avatar" id="user-avatar"
+                                     data-toggle="dropdown"
+                                     class="rounded-circle avatar dropdown-toggle">
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-avatar">
+                                    <p class="dropdown-item font-weight-bold pt-3" id="user-fullName">[full-name]</p>
+                                    <p class="dropdown-item" id="user-email">[email]</p>                               
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dropdown-item" type="button" onclick="logout()">Đăng xuất</button>
+                                </div>
+                            </div>
+            `;
         } else if (userRole == 'TEACHER') {
             headerMenu = `
                                 <ul class="d-block">
@@ -44,14 +40,28 @@ $(document).ready(() => {
                                     <li><a href="/courses/management">Khóa học</a></li>         
                                 </ul>
             `;
-            subHeader = manageSubHeader;
+            subHeader = `
+                            <div class="testi-avatar pr-15 rounded-circle dropdown mr-10">
+                                <img src="/images/avatar/avatar3.jpg" alt="avatar" id="user-avatar"
+                                     data-toggle="dropdown"
+                                     class="rounded-circle avatar dropdown-toggle">
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-avatar">
+                                    <p class="dropdown-item font-weight-bold pt-3" id="user-fullName">[full-name]</p>
+                                    <p class="dropdown-item" id="user-email">[email]</p>
+                                    <div class="dropdown-divider"></div>                                   
+                                    <a class="dropdown-item" href="/profile">Chỉnh sửa hồ sơ</a>
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dropdown-item" type="button" onclick="logout()">Đăng xuất</button>
+                                </div>
+                            </div>
+            `;
         } else {
             headerMenu = `
                 <ul class="d-block">
                     <li><a class="mega-title" href="/">Trang chủ</a></li>
                     <li><a href="/about">Giới thiệu</a></li>
-                    <li><a href="/courses">Khóa học</a></li>
-                    <li><a href="/instructors">Giảng viên</a></li>
+                    <li><a href="/courses-page">Khóa học</a></li>
+                    <li><a href="/teachers">Giảng viên</a></li>
                     <li><a href="/contact">Liên hệ</a></li>
                     <li><a href="/myLearning">Quá trình học tập</a></li>                                                                                               
                 </ul>
@@ -80,22 +90,20 @@ $(document).ready(() => {
                                     <a class="dropdown-item mb-1" href="/cart">Giỏ hàng của tôi</a>
                                     <a class="dropdown-item" href="/wishlist">Mong muốn</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item mb-1" href="#">Phương thức thanh toán</a>
-                                    <a class="dropdown-item" href="/profiles">Chỉnh sửa hồ sơ</a>
+                                    <a class="dropdown-item" href="/profile">Chỉnh sửa hồ sơ</a>
                                     <div class="dropdown-divider"></div>
                                     <button class="dropdown-item" type="button" onclick="logout()">Đăng xuất</button>
                                 </div>
                             </div>            
             `;
-            subHeader = subHeader.replace("[full-name]", fullName).replace("[email]", email);
         }
     } else {
         headerMenu = `
                 <ul class="d-block">
                     <li><a class="mega-title" href="/">Trang chủ</a></li>
                     <li><a href="/about">Giới thiệu</a></li>
-                    <li><a href="/courses">Khóa học</a></li>
-                    <li><a href="/instructors">Giảng viên</a></li>
+                    <li><a href="/courses-page">Khóa học</a></li>
+                    <li><a href="/teachers">Giảng viên</a></li>
                     <li><a href="/contact">Liên hệ</a></li>                                                                                          
                 </ul>
             `;
@@ -111,7 +119,7 @@ $(document).ready(() => {
             </div><!-- /Sign Up -->
         `;
     }
-
+    subHeader = subHeader.replace("[full-name]", fullName).replace("[email]", email);
     $("#header-sticky #header-menu").html(headerMenu);
     $('#header-sticky #subHeader').html(subHeader);
 

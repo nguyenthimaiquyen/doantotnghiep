@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/mailSending")
-public class ManageEmailSendingController {
+public class EmailSendingController {
 
 
     @GetMapping

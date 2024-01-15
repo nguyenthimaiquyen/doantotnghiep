@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/training-fields")
-public class ManageTrainingFieldController {
+public class TrainingFieldController {
     private final TrainingFieldService trainingFieldService;
 
     @GetMapping

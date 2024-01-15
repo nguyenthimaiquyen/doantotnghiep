@@ -10,12 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/discountCodes")
-public class ManageDiscountCodeController {
+public class DiscountCodeController {
     private final DiscountCodeService discountCodeService;
 
     @GetMapping
@@ -36,13 +37,13 @@ public class ManageDiscountCodeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createDiscountCode(@RequestBody DiscountCodeRequest request) {
+    public ResponseEntity<?> createDiscountCode(@RequestBody @Valid DiscountCodeRequest request) {
         discountCodeService.saveDiscountCode(request);
         return ResponseEntity.ok(null);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateDiscountCode(@RequestBody DiscountCodeRequest request) {
+    public ResponseEntity<?> updateDiscountCode(@RequestBody @Valid DiscountCodeRequest request) {
         discountCodeService.saveDiscountCode(request);
         return ResponseEntity.ok(null);
     }
