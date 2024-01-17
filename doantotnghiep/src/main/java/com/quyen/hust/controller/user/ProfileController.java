@@ -19,28 +19,14 @@ import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/profile")
+@RequestMapping("/api/v1/profile")
 public class ProfileController {
     private final UserService userService;
     private final EmailService emailService;
     private final OTPService otpService;
 
-    @GetMapping
-    public String getProfilePage(Model model) {
-        return "profile/profile";
-    }
 
-    @GetMapping("/otp-sending")
-    public String getOtpSendingPage(Model model) {
-        return "profile/otp-sending";
-    }
-
-    @GetMapping("/forget-password")
-    public String getForgetPasswordPage(Model model) {
-        return "profile/forget-password";
-    }
-
-    @PutMapping("/changePassword")
+    @PutMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody @Valid ChangePasswordRequest request)
             throws UserNotFoundException, PasswordNotMatchedException {
         userService.changePassword(request);
@@ -55,7 +41,7 @@ public class ProfileController {
         return ResponseEntity.ok(null);
     }
 
-    @PutMapping("/forgetPassword")
+    @PutMapping("/forget-password")
     public ResponseEntity<?> forgetPassword(@RequestBody @Valid ForgetPasswordRequest request) throws UserNotFoundException,
             OTPNotMatchedException, PasswordNotMatchedException, OTPNotFoundException, OTPExpiredException {
         userService.forgetPassword(request);

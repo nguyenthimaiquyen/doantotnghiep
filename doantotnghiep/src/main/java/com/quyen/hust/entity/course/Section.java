@@ -19,7 +19,9 @@ public class Section extends BaseEntity {
     @Column
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 

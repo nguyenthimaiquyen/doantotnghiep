@@ -12,46 +12,46 @@ $(document).ready(() => {
         if (userRole == 'ADMIN') {
             headerMenu = `
                                 <ul class="d-block">
-                                    <li><a class="mega-title" href="/courses/analysis/admin">Dashboard</a></li>
-                                    <li><a href="/courses/management">Khóa học</a></li>
-                                    <li ><a href="/training-fields">Lĩnh vực</a></li>
-                                    <li ><a href="/accounts">Tài khoản</a>
-                                    <li ><a href="/mailSending">Gửi mail</a></li>
-                                    <li ><a href="/discountCodes">Mã giảm giá</a></li>
+                                    <li><a class="mega-title text-dark" href="/courses/analysis/admin">Dashboard</a></li>
+                                    <li><a class="text-dark" href="/courses/management">Khóa học</a></li>
+                                    <li ><a class="text-dark" href="/training-fields">Lĩnh vực</a></li>
+                                    <li ><a class="text-dark" href="/accounts">Tài khoản</a>
+                                    <li ><a class="text-dark" href="/mail-sending">Gửi mail</a></li>
+                                    <li ><a class="text-dark" href="/discount-codes">Mã giảm giá</a></li>
                                 </ul>
             `;
             subHeader = `
                             <div class="testi-avatar pr-15 rounded-circle dropdown mr-10">
                                 <img src="/images/avatar/avatar3.jpg" alt="avatar" id="user-avatar"
                                      data-toggle="dropdown"
-                                     class="rounded-circle avatar dropdown-toggle">
+                                     class="rounded-circle avatar dropdown-toggle cursor-pointer">
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-avatar">
                                     <p class="dropdown-item font-weight-bold pt-3" id="user-fullName">[full-name]</p>
                                     <p class="dropdown-item" id="user-email">[email]</p>                               
                                     <div class="dropdown-divider"></div>
-                                    <button class="dropdown-item" type="button" onclick="logout()">Đăng xuất</button>
+                                    <button class="dropdown-item cursor-pointer" type="button" onclick="logout()">Đăng xuất</button>
                                 </div>
                             </div>
             `;
         } else if (userRole == 'TEACHER') {
             headerMenu = `
-                                <ul class="d-block">
-                                    <li><a class="mega-title" href="/courses/analysis/teacher">Dashboard</a></li>
-                                    <li><a href="/courses/management">Khóa học</a></li>         
+                                <ul class="d-block text-dark">
+                                    <li><a class="mega-title text-dark" href="/courses/analysis/teacher">Dashboard</a></li>
+                                    <li><a class="text-dark" href="/courses/management">Khóa học</a></li>         
                                 </ul>
             `;
             subHeader = `
                             <div class="testi-avatar pr-15 rounded-circle dropdown mr-10">
                                 <img src="/images/avatar/avatar3.jpg" alt="avatar" id="user-avatar"
                                      data-toggle="dropdown"
-                                     class="rounded-circle avatar dropdown-toggle">
+                                     class="rounded-circle avatar dropdown-toggle cursor-pointer">
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-avatar">
                                     <p class="dropdown-item font-weight-bold pt-3" id="user-fullName">[full-name]</p>
                                     <p class="dropdown-item" id="user-email">[email]</p>
                                     <div class="dropdown-divider"></div>                                   
-                                    <a class="dropdown-item" href="/profile">Chỉnh sửa hồ sơ</a>
+                                    <a class="dropdown-item cursor-pointer" href="/profile">Chỉnh sửa hồ sơ</a>
                                     <div class="dropdown-divider"></div>
-                                    <button class="dropdown-item" type="button" onclick="logout()">Đăng xuất</button>
+                                    <button class="dropdown-item cursor-pointer" type="button" onclick="logout()">Đăng xuất</button>
                                 </div>
                             </div>
             `;
@@ -60,7 +60,7 @@ $(document).ready(() => {
                 <ul class="d-block">
                     <li><a class="mega-title" href="/">Trang chủ</a></li>
                     <li><a href="/about">Giới thiệu</a></li>
-                    <li><a href="/courses-page">Khóa học</a></li>
+                    <li><a href="/courses">Khóa học</a></li>
                     <li><a href="/teachers">Giảng viên</a></li>
                     <li><a href="/contact">Liên hệ</a></li>
                     <li><a href="/myLearning">Quá trình học tập</a></li>                                                                                               
@@ -80,19 +80,19 @@ $(document).ready(() => {
                             <div class="testi-avatar pr-15 rounded-circle dropdown mr-10">
                                 <img src="/images/avatar/avatar3.jpg" alt="avatar" id="user-avatar"
                                      data-toggle="dropdown"
-                                     class="rounded-circle avatar dropdown-toggle">
+                                     class="rounded-circle avatar dropdown-toggle cursor-pointer">
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user-avatar">
                                     <p class="dropdown-item font-weight-bold pt-3" id="user-fullName">[full-name]</p>
                                     <p class="dropdown-item" id="user-email">[email]</p>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item mb-1" href="/myLearning">Quá trình học tập của
+                                    <a class="dropdown-item mb-1 cursor-pointer" href="/myLearning">Quá trình học tập của
                                         tôi</a>
-                                    <a class="dropdown-item mb-1" href="/cart">Giỏ hàng của tôi</a>
-                                    <a class="dropdown-item" href="/wishlist">Mong muốn</a>
+                                    <a class="dropdown-item mb-1 cursor-pointer" href="/cart">Giỏ hàng của tôi</a>
+                                    <a class="dropdown-item cursor-pointer" href="/wishlist">Mong muốn</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="/profile">Chỉnh sửa hồ sơ</a>
+                                    <a class="dropdown-item cursor-pointer" href="/profile">Chỉnh sửa hồ sơ</a>
                                     <div class="dropdown-divider"></div>
-                                    <button class="dropdown-item" type="button" onclick="logout()">Đăng xuất</button>
+                                    <button class="dropdown-item cursor-pointer" type="button" onclick="logout()">Đăng xuất</button>
                                 </div>
                             </div>            
             `;
@@ -102,7 +102,7 @@ $(document).ready(() => {
                 <ul class="d-block">
                     <li><a class="mega-title" href="/">Trang chủ</a></li>
                     <li><a href="/about">Giới thiệu</a></li>
-                    <li><a href="/courses-page">Khóa học</a></li>
+                    <li><a href="/courses">Khóa học</a></li>
                     <li><a href="/teachers">Giảng viên</a></li>
                     <li><a href="/contact">Liên hệ</a></li>                                                                                          
                 </ul>

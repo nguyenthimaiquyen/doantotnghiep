@@ -7,13 +7,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CourseStatus {
 
-    DRAFT("DRAFT", "phác thảo"),
-    WAITING_FOR_REVIEW( "WAITING_FOR_REVIEW", "chờ xem xét"),
-    APPROVED("APPROVED", "chấp thuận"),
-    REJECTED("REJECTED", "bị từ chối"),
-    PUBLISH("PUBLISH", "đã công bố"),
-    UNPUBLISHED("UNPUBLISHED", "hủy công bố"),
-    ARCHIVED("ARCHIVED", "lưu trữ");
+    DRAFT("DRAFT", "Phác thảo"),
+    WAITING_FOR_REVIEW( "WAITING_FOR_REVIEW", "Chờ xem xét"),
+    APPROVED("APPROVED", "Chấp thuận"),
+    REJECTED("REJECTED", "Bị từ chối"),
+    PUBLISHED("PUBLISHED", "Đã công bố"),
+    UNPUBLISHED("UNPUBLISHED", "Hủy công bố"),
+    ARCHIVED("ARCHIVED", "Lưu trữ");
 
     public String code;
     public String name;

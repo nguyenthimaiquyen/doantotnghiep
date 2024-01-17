@@ -25,7 +25,7 @@ public class Teacher extends BaseEntity {
     @Column(name = "years_of_experience")
     private Integer yearsOfExperience;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = {
+    @OneToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "user_id", nullable = false)

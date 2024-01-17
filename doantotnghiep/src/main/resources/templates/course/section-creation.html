@@ -4,93 +4,92 @@
 
 <body>
 
-<!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header :: header}"></header>
-<!--  header-area-end  -->
-<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý khóa học')}"></div>
+<header>
+    <div id="header-sticky" class="transparent-header header-area home2 home4 white-color-header pt-3 pb-2 bg-primary">
+        <div>
+            <div class="container-wrapper">
+                <div class="row align-items-center justify-content-between position-relative">
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-5">
+                        <div class="logo">
+                            <a th:href="@{/courses/management}" class="d-block"><i class="fas fa-less-than"></i> Quay
+                                lại</a>
+                        </div>
+                    </div><!-- /col -->
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-5 col-5 pl-lg-0">
+                        <div class="header-right d-flex align-items-center justify-content-end" id="subHeader">
+
+                        </div><!-- /header-right -->
+                    </div><!-- /col -->
+                </div><!-- /row -->
+            </div><!-- /container -->
+        </div>
+    </div><!-- /header-bottom -->
+</header>
 
 <main>
 
-    <div class="checkout-area mt-80 mb-100">
-        <div class="container">
-            <h3 class="cart-title pb-10 mb-20">Thêm mới nội dung khóa học</h3>
-            <div class="row my-2">
-                <div class="col-xl-11  col-lg-11  col-md-11  col-sm-11 col-11">
-                    <div class="d-flex justify-content-start mt-3 mt-lg-0">
-                        <a class="btn btn-primary f-500" onclick="addSection()">
-                            <i class="fas fa-plus mr-2"></i>Thêm chương</a>
-                    </div><!-- /my-btn -->
-                </div><!-- /col -->
+    <div class="container mt-5">
+        <div class="row mx-0 my-0 px-0 py-0">
+            <!-- Cột bên trái -->
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9 mr-0" id="left-section-content">
+                <!-- Form thêm bài giảng -->
+
             </div>
 
-            <div class="faq-wrapper course-Curriculam-accordion mt-40 mb-30">
-                <div class="accordion mt-10" id="accordion-tab-1">
-                    <div class="card border-0 mb-2">
-                        <div class="card-header border-bottom-0 p-0" id="accordion-tab-1-heading-1">
-                            <div class="row">
-                                <div class="col-xl-11  col-lg-11  col-md-11  col-sm-11 col-11">
-                                    <h6 class="mb-0">
-                                        <a href="#"
-                                           class="btn btn-link main-color f-500 d-block text-left rounded-0 position-relative d-flex align-items-center justify-content-between"
-                                           data-toggle="collapse" data-target="#accordion-tab-1-content-1"
-                                           aria-expanded="false" aria-controls="accordion-tab-1-content-1">Nội dung chương
-                                        </a>
-                                    </h6>
+            <!-- Cột bên phải -->
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 ml-0 border-left"
+                 style="border-left: 4px solid #dee2e6; min-height: 100vh;">
+                <h6 class="mb-3 mt-40" th:text="${courseTitle}"></h6>
+                <!-- Nút thêm chương -->
+                <div class="mt-4 ml-100 mb-4">
+                    <a class="btn btn-primary f-500 create-section-btn">
+                        <i class="fas fa-plus mr-2"></i>Thêm chương
+                    </a>
+                </div>
+
+                <!-- Danh sách chương -->
+                <div class="list-group">
+                    <div th:each="section : ${sections}">
+                        <a href="#" class="list-group-item list-group-item-action" data-toggle="collapse"
+                           th:data-target="'#chapter' + ${section.id}">
+                            <span th:text="${section.title}" class="h6"></span>
+                            <div class="dropdown float-right">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button class="dropdown-item update-section-btn focused cursor-pointer"
+                                            th:attr="section-id=${section.id}">Cập nhật chương
+                                    </button>
+                                    <button class="dropdown-item add-lesson-btn focused cursor-pointer"
+                                            th:attr="section-id=${section.id}, section-title=${section.title}">Thêm bài học
+                                    </button>
+                                    <button class="dropdown-item hide-lesson-btn focused cursor-pointer"
+                                            th:attr="section-id=${section.id}">Ẩn nội dung chương
+                                    </button>
+                                    <button class="dropdown-item delete-section-btn focused cursor-pointer"
+                                            th:attr="section-id=${section.id}">Xóa chương
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="collapse show" id="accordion-tab-1-content-1"
-                             aria-labelledby="accordion-tab-1-heading-1" data-parent="#accordion-tab-1">
-                            <div class="col-xl-11  col-lg-11  col-md-11  col-sm-11 col-11">
-                                <div class="checkout-form-list mt-4 mb-3">
-                                    <label for="section-title-1">Tiêu đề chương<span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" placeholder="Nhập tiêu đề" class="w-100" id="section-title-1"
-                                           name="section-title">
-                                </div>
-                            </div>
-                            <div class="col-lg-12 my-4">
-                                <div class="row">
-                                    <div class="col-xl-3  col-lg-3  col-md-6  col-sm-6 col-12">
-                                        <div class="d-flex justify-content-start mt-3 mt-lg-0 ml-5">
-                                            <a class="btn btn-primary f-500" onclick="addLessonContent('accordion-tab-1-content-1')">
-                                                <i class="fas fa-plus mr-2"></i>Thêm bài học</a>
-                                        </div><!-- /my-btn -->
-                                    </div>
-                                    <div class="col-xl-3  col-lg-3  col-md-6  col-sm-6 col-12">
-                                        <div class="d-flex justify-content-end mt-3 mt-lg-0">
-                                            <a class="btn btn-primary f-500" onclick="addTestContent('accordion-tab-1-content-1')">
-                                                <i class="fas fa-plus mr-2"></i>Thêm bài kiểm tra</a>
-                                        </div><!-- /my-btn -->
-                                    </div>
-                                </div>
-                            </div><!-- /col -->
+                        </a>
+                        <div class="collapse" th:id="'section' + ${section.id}">
+                            <!-- Danh sách bài học trong chương -->
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mt-60">
-                <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
-                    <div class="checkout-coupon-wrapper mt-5 mt-lg-0">
-                        <div class="my-btn mt-3 mt-sm-0">
-                            <a href="#" class="btn d-inline-block primary-bg f-500 rounded-0">Lưu</a>
-                        </div><!-- /my-btn -->
-                    </div><!-- /checkout-coupon-wrapper -->
-                </div><!-- /col -->
-            </div><!-- /row -->
-        </div><!-- /container -->
+        </div>
     </div>
+
 
 </main>
 
-<!-- ====== footer-area-start ============================================ -->
-<footer th:replace="~{fragments/footer-website :: footer-website}"></footer>
-
-<!-- back top -->
-<div id="scroll" class="scroll-up">
-    <div class="top text-center"><span class="white-bg theme-color d-block"><i class="fa fa-arrow-alt-up"></i></span>
-    </div>
-</div>
+<div th:replace="~{course/section-modal :: section-modal}"></div>
+<div th:replace="~{course/section-delete-modal :: section-delete-modal}"></div>
 
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>

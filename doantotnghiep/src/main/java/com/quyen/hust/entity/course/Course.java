@@ -56,25 +56,23 @@ public class Course extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private DifficultyLevel difficultyLevel;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "teacher_id", nullable = false)
+    @JoinColumn(name = "teacher_id", nullable = true)
     private Teacher teacher;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "discount_id", nullable = false)
+    @JoinColumn(name = "discount_id")
     private DiscountCode discountCode;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinTable(name = "courses_training_fields",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "training_field_id"))
-    private List<TrainingField> trainingFields;
+    @JoinColumn(name = "training_field_id")
+    private TrainingField trainingField;
 
 
 

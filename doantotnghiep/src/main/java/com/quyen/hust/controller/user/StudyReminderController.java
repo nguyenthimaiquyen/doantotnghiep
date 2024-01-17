@@ -13,17 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/reminders")
+@RequestMapping("/api/v1/reminders")
 @AllArgsConstructor
 public class StudyReminderController {
     private final StudyReminderService studyReminderService;
-
-    @GetMapping
-    public String getReminderPage(Model model) {
-        List<StudyReminderResponse> studyReminders = studyReminderService.getAll();
-        model.addAttribute("studyReminders", studyReminders);
-        return "myLearning/myLearning";
-    }
 
     @GetMapping("/courses")
     public ResponseEntity<?> getCourses() {

@@ -1,6 +1,7 @@
-package com.quyen.hust.controller.anonymous;
+package com.quyen.hust.controller;
 
 import com.quyen.hust.entity.RefreshToken;
+import com.quyen.hust.entity.teacher.Teacher;
 import com.quyen.hust.entity.user.User;
 import com.quyen.hust.exception.RefreshTokenNotFoundException;
 import com.quyen.hust.exception.UnauthorizedException;
@@ -13,6 +14,7 @@ import com.quyen.hust.repository.user.UserJpaRepository;
 import com.quyen.hust.security.CustomUserDetails;
 import com.quyen.hust.security.JwtUtils;
 import com.quyen.hust.service.admin.EmailService;
+import com.quyen.hust.service.teacher.TeacherService;
 import com.quyen.hust.service.user.UserService;
 import com.quyen.hust.statics.UserStatus;
 import lombok.AccessLevel;
@@ -41,7 +43,7 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RestController
 @AllArgsConstructor
-@RequestMapping("/authentication")
+@RequestMapping("/api/v1/authentication")
 public class AuthenticationController {
     private final JwtUtils jwtUtils;
     private final UserService userService;
@@ -49,6 +51,7 @@ public class AuthenticationController {
     private final RefreshTokenRepository refreshTokenRepository;
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
+    private final TeacherService teacherService;
 
     @PostMapping("/login")
     public JwtResponse authenticateUser(@Valid @RequestBody LoginRequest request) throws UnauthorizedException {
@@ -94,13 +97,18 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationRequest request) throws MessagingException {
+    public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequest request) throws MessagingException {
         User user = userJpaRepository.findByEmail(request.getEmail());
         if (!ObjectUtils.isEmpty(user)) {
             return new ResponseEntity<>("Username is existed", HttpStatus.BAD_REQUEST);
         } else {
-            User newUser = userService.registerUser(request);
-            emailService.verifyAccount(newUser.getId(), request.getFullName(), request.getEmail(), request.getRole());
+            if (request.getRole().equals("TEACHER")) {
+                Teacher newTeacher = teacherService.registerTeacher(request);
+                emailService.verifyAccount(newTeacher.getId(), request.getFullName(), request.getEmail(), request.getRole());
+            } else {
+                User newUser = userService.registerUser(request);
+                emailService.verifyAccount(newUser.getId(), request.getFullName(), request.getEmail(), request.getRole());
+            }
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         }
     }

@@ -8,11 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/payments")
+@RequestMapping("/api/v1/payments")
 public class CheckoutController {
 
-    @GetMapping
-    public String getHomePage(Model model) {
-        return "cart/checkout";
-    }
+
 }

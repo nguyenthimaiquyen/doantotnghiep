@@ -4,10 +4,35 @@ $(document).ready(() => {
 
     let deleteCourseId = -1;
 
+    //thêm nội dung nếu role là admin
+    let adminData = `
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                    <div class="country-select mt-3">
+                                        <label for="teacherID">Giảng viên</label>
+                                        <select class="w-100" id="teacherID" name="teacherID">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div  class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12" >
+                                    <div class="country-select mt-3">
+                                        <label for="discountID">Mã giảm giá</label>
+                                        <select class="w-100" id="discountID" name="discountID">
+
+                                        </select>
+                                    </div>
+                                </div>`;
+
+    const userInfo = JSON.parse(localStorage.getItem('user-info'));
+    const userRole = userInfo ? userInfo.roles : null;
+    if (userRole == 'ADMIN') {
+        $('#course-common-data').append(adminData);
+    }
+
     //lấy dữ liệu đầu vào
     function getCourseFeeUnit() {
         $.ajax({
-            url: "/courses/courseFeeUnit",
+            url: "/api/v1/courses/courseFeeUnit",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -31,7 +56,7 @@ $(document).ready(() => {
 
     function getDifficultyLevel() {
         $.ajax({
-            url: "/courses/difficultyLevel",
+            url: "/api/v1/courses/difficultyLevel",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -55,11 +80,11 @@ $(document).ready(() => {
 
     function getTrainingFields() {
         $.ajax({
-            url: "/courses/trainingField",
+            url: "/api/v1/courses/trainingField",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                if ($('#trainingFields').children().length === 0) {
+                if ($('#trainingFieldID').children().length === 0) {
                     if (!data || data.length === 0) {
                         return;
                     }
@@ -67,7 +92,7 @@ $(document).ready(() => {
                     for (let i = 0; i < data.length; i++) {
                         trainingFieldOptions += "<option value='" + data[i].id + "'>" + data[i].fieldName + "</option>";
                     }
-                    $('#trainingFields').append($(trainingFieldOptions));
+                    $('#trainingFieldID').append($(trainingFieldOptions));
                 }
             },
             error: function (data) {
@@ -79,7 +104,7 @@ $(document).ready(() => {
 
     function getDiscountCodes() {
         $.ajax({
-            url: "/courses/discountCode",
+            url: "/api/v1/courses/discountCode",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -103,7 +128,7 @@ $(document).ready(() => {
 
     function getTeachers() {
         $.ajax({
-            url: "/courses/teachers",
+            url: "/api/v1/courses/teachers",
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -113,7 +138,7 @@ $(document).ready(() => {
                     }
                     let teachersOptions = "<option value=''>--</option>";
                     for (let i = 0; i < data.length; i++) {
-                        teachersOptions += "<option value='" + data[i].user.id + "'>" + data[i].user.fullName + "</option>";
+                        teachersOptions += "<option value='" + data[i].id + "'>" + data[i].user.fullName + "</option>";
                     }
                     $('#teacherID').append($(teachersOptions));
                 }
@@ -138,6 +163,8 @@ $(document).ready(() => {
         getDiscountCodes();
         getTeachers();
     }, 900000); // 15p chạy 1 lần
+
+//1. chức năng thêm sửa xóa thông tin chung của khóa học
 
     //validate form thông tin chung của khóa học
     const validator = $('#course-form').validate({
@@ -182,23 +209,33 @@ $(document).ready(() => {
         }
     });
 
+    //xử lý ấn menu của course
     $('.create-course-btn').click(function () {
-        $('#continue-course-btn').attr("action-type", "CREATE");
+        localStorage.setItem('action-type', 'CREATE');
+        window.location.replace("http://localhost:8080/courses/creation");
     });
 
+    $('.add-section-btn').click(function (event) {
+        const courseId = $(event.currentTarget).attr("course-id");
+        localStorage.setItem('course-id', courseId);
+        window.location.replace("http://localhost:8080/courses/"+ courseId + "/sections");
+    });
+
+
     //lấy dữ liệu từ backend và đổ lên form để update khóa học
-    $('.update-course-btn').click(async function (event) {
+    $('.update-course-btn').click(function (event) {
         //call api lên backend để lấy dữ liệu
         const updateCourseId = parseInt($(event.currentTarget).attr("course-id"));
         let course = null;
-        await $.ajax({
-            url: "/courses/" + updateCourseId,
+        $.ajax({
+            url: "/api/v1/courses/" + updateCourseId,
             type: "GET",
             success: function (data) {
                 course = data;
+                console.log(data)
             },
             error: function (err) {
-                toastr.warning(data.responseJSON.error);
+                console.log(err.responseText);
                 toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
             }
         });
@@ -207,65 +244,78 @@ $(document).ready(() => {
             toastr.error("Đã có lỗi xảy ra, vui lòng thử lại!")
             return;
         }
-
+        localStorage.setItem('course-data', course);
+        localStorage.setItem('action-type', 'UPDATE');
+        localStorage.setItem('course-id', JSON.stringify(updateCourseId));
+        window.location.replace("http://localhost:8080/courses/creation");
+        let courseData = JSON.parse(localStorage.getItem('course-data'));
         //đổ dữ liệu vào form
-        $('#course-form #title').val(course.title);
-        $('#course-form #description').val(course.description);
-        $('#course-form #learningObjectives').val(course.learningObjectives);
-        $('#course-form #courseFee').val(course.courseFee);
-        $('#course-form #courseFeeUnit').val(course.courseFeeUnit);
-        $('#course-form #difficultyLevel').val(course.difficultyLevel);
-        $('#course-form #trainingFields').val(course.trainingFields);
-        $('#course-form #teacherID').val(course.teacherID);
-        $('#course-form #discountID').val(course.discountID);
+        $('#course-form #title').val(courseData.title);
+        $('#course-form #description').val(courseData.description);
+        $('#course-form #learningObjectives').val(courseData.learningObjectives);
+        $('#course-form #courseFee').val(courseData.courseFee);
+        $('#course-form #courseFeeUnit').val(courseData.courseFeeUnit);
+        $('#course-form #difficultyLevel').val(courseData.difficultyLevel.name);
+        $('#course-form #trainingFields').val(courseData.trainingFields.fieldName);
+        $('#course-form #teacherID').val(courseData.teacherName);
+        $('#course-form #discountID').val(courseData.discountCode.codeName);
 
-        $('#continue-course-btn').attr('action-type', "UPDATE");
-        $('#continue-course-btn').attr("course-id", updateCourseId);
     });
 
     //create or update a course
-    $('#continue-course-btn').click(function (event) {
+    $('#save-course-btn').click(function (event) {
         //validate
         const isValidForm = $('#course-form').valid();
         if (!isValidForm) {
             return;
         }
-        const actionType = $(event.currentTarget).attr("action-type");
-        const courseId = $(event.currentTarget).attr("course-id");
         //lấy dữ liệu từ form
         const formCourseData = $('#course-form').serializeArray();
         if (!formCourseData || formCourseData.length === 0) {
             return;
         }
-        console.log(formCourseData)
         //chuyển dữ liệu từ object sang json
         const courseRequestBody = {};
         for (let i = 0; i < formCourseData.length; i++) {
             courseRequestBody[formCourseData[i].name] = formCourseData[i].value;
         }
-        const method = actionType === "CREATE" ? "POST" : "PUT";
-        if (method === "PUT") {
+        const actionType = localStorage.getItem('action-type');
+        console.log(actionType)
+        const courseId = localStorage.getItem('course-id');
+        console.log(courseId)
+        const method = actionType == "CREATE" ? "POST" : "PUT";
+        if (method == "PUT") {
             courseRequestBody["id"] = courseId;
         }
+        console.log(method)
         console.log(courseRequestBody)
         //call api lên backend
         $.ajax({
-            url: "/courses",
+            url: "/api/v1/courses",
             type: method,
             data: JSON.stringify(courseRequestBody),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 toastr.success((method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công khóa học!");
                 setTimeout(() => {
-                    location.reload();
+                    window.location.replace("http://localhost:8080/courses/management");
                 }, 1000);
             },
             error: function (error) {
+                console.log(error.responseText);
                 toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
             }
         });
-        // $("#continue-course-btn").attr("action-type", "");
-        // $('#continue-course-btn').attr("course-id", "");
+        localStorage.removeItem("action-type");
+        localStorage.removeItem("course-id");
+    });
+
+    //quay lại trang quản lý khóa học
+    $('#get-back-btn').click(() => {
+        localStorage.removeItem("action-type");
+        localStorage.removeItem("course-id");
+        window.location.replace("http://localhost:8080/courses/management");
+
     });
 
     //show modal to delete a course
@@ -277,7 +327,7 @@ $(document).ready(() => {
     //delete a course
     $('#delete-course-btn').click(function () {
         $.ajax({
-            url: "/courses/" + deleteCourseId,
+            url: "/api/v1/courses/" + deleteCourseId,
             type: "DELETE",
             success: function (data) {
                 toastr.success("Xóa khóa học thành công!");
@@ -290,7 +340,6 @@ $(document).ready(() => {
             }
         });
     });
-
 
 
 

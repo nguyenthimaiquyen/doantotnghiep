@@ -71,7 +71,7 @@ $(document).ready(() => {
         //call api lên backend
         await $.ajax({
             type: "PUT",
-            url: "/profile/changePassword",
+            url: "/api/v1/profile/change-password",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
@@ -129,7 +129,7 @@ $(document).ready(() => {
         //call api lên backend
         await $.ajax({
             type: "POST",
-            url: "/profile/otp-sending",
+            url: "/api/v1/profile/otp-sending",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
@@ -201,7 +201,7 @@ $(document).ready(() => {
         //call api lên backend
         await $.ajax({
             type: "PUT",
-            url: "/profile/forgetPassword",
+            url: "/api/v1/profile/forget-password",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {

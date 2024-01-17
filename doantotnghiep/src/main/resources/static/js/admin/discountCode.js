@@ -6,7 +6,7 @@ $(document).ready(() => {
 
     function getDiscountCodeUnit() {
         $.ajax({
-            url: "/discountCodes/unit",
+            url: "/api/v1/discount-codes/unit",
             type: 'GET',
             contentUnit: "application/json; charset=utf-8",
             success: function (data) {
@@ -153,7 +153,7 @@ $(document).ready(() => {
         const updateDiscountCodeId = parseInt($(event.currentTarget).attr("discountCode-id"));
         let discountCode = null;
         await $.ajax({
-            url: "/discountCodes/" + updateDiscountCodeId,
+            url: "/api/v1/discount-codes/" + updateDiscountCodeId,
             type: "GET",
             success: function (data) {
                 discountCode = data;
@@ -207,7 +207,7 @@ $(document).ready(() => {
         }
         //call api lên backend
         $.ajax({
-            url: "/discountCodes",
+            url: "/api/v1/discount-codes",
             type: method,
             data: JSON.stringify(discountCodeRequestBody),
             contentType: "application/json; charset=utf-8",
@@ -234,7 +234,7 @@ $(document).ready(() => {
     //delete a discountCode
     $('#delete-discountCode-btn').click(function () {
         $.ajax({
-            url: "/discountCodes/" + deleteDiscountCodeId,
+            url: "/api/v1/discount-codes/" + deleteDiscountCodeId,
             type: "DELETE",
             success: function (data) {
                 toastr.success("Xóa mã giảm giá thành công!");

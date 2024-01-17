@@ -3,6 +3,7 @@ package com.quyen.hust.service.user;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.quyen.hust.entity.admin.OTP;
 import com.quyen.hust.entity.admin.Role;
+import com.quyen.hust.entity.teacher.Teacher;
 import com.quyen.hust.entity.user.User;
 import com.quyen.hust.exception.*;
 import com.quyen.hust.model.request.RefreshTokenRequest;
@@ -18,6 +19,7 @@ import com.quyen.hust.model.response.user.UserSearchResponse;
 import com.quyen.hust.repository.RefreshTokenRepository;
 import com.quyen.hust.repository.admin.OTPJpaRepository;
 import com.quyen.hust.repository.admin.RoleJpaRepository;
+import com.quyen.hust.repository.teacher.TeacherJpaRepository;
 import com.quyen.hust.repository.user.UserCustomRepository;
 import com.quyen.hust.repository.user.UserJpaRepository;
 import com.quyen.hust.security.CustomUserDetails;
@@ -49,13 +51,14 @@ public class UserService {
     private final UserCustomRepository userCustomRepository;
     private final JwtUtils jwtUtils;
     private final OTPJpaRepository otpJpaRepository;
+    private final TeacherJpaRepository teacherJpaRepository;
 
 
     @Value("${application.security.refreshToken.tokenValidityMilliseconds}")
     private long refreshTokenValidityMilliseconds;
 
     public UserService(PasswordEncoder passwordEncoder, UserJpaRepository userJpaRepository, RoleJpaRepository roleJpaRepository,
-                       ObjectMapper objectMapper, RefreshTokenRepository refreshTokenRepository,
+                       ObjectMapper objectMapper, RefreshTokenRepository refreshTokenRepository, TeacherJpaRepository teacherJpaRepository,
                        UserCustomRepository userCustomRepository, JwtUtils jwtUtils, OTPJpaRepository otpJpaRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userJpaRepository = userJpaRepository;
@@ -65,19 +68,14 @@ public class UserService {
         this.userCustomRepository = userCustomRepository;
         this.jwtUtils = jwtUtils;
         this.otpJpaRepository = otpJpaRepository;
+        this.teacherJpaRepository = teacherJpaRepository;
     }
 
     public User registerUser(RegistrationRequest registrationRequest) {
         Set<Role> roles = new HashSet<>();
-        if (registrationRequest.getRole().equals("TEACHER")) {
-            //đăng ký với role là teacher
-            Optional<Role> optionalRole = roleJpaRepository.findByName(Roles.TEACHER);
-            roles.add(optionalRole.get());
-        } else {
-            //đăng ký với role là user
-            Optional<Role> optionalRole = roleJpaRepository.findByName(Roles.USER);
-            roles.add(optionalRole.get());
-        }
+        //đăng ký với role là user
+        Optional<Role> optionalRole = roleJpaRepository.findByName(Roles.USER);
+        roles.add(optionalRole.get());
         User user = User.builder()
                 .fullName(registrationRequest.getFullName())
                 .email(registrationRequest.getEmail())

@@ -17,16 +17,9 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/training-fields")
+@RequestMapping("/api/v1/training-fields")
 public class TrainingFieldController {
     private final TrainingFieldService trainingFieldService;
-
-    @GetMapping
-    public String getTrainingFieldManagementPage(Model model) {
-        List<TrainingFieldResponse> trainingFields = trainingFieldService.getAll();
-        model.addAttribute("trainingFields", trainingFields);
-        return "admin/training-field/manage-training-field";
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getTrainingFieldDetails(@PathVariable Long id) throws TrainingFieldNotFoundException {

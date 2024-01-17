@@ -8,11 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/cart")
+@RequestMapping("/api/v1/cart")
 public class CartController {
 
-    @GetMapping
-    public String getCartPage(Model model) {
-        return "cart/cart";
-    }
+
 }

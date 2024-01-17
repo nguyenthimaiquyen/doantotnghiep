@@ -1,6 +1,8 @@
 package com.quyen.hust.controller.course;
 
+import com.quyen.hust.exception.CourseNotFoundException;
 import com.quyen.hust.model.request.course.CourseRequest;
+import com.quyen.hust.model.response.course.CourseResponse;
 import com.quyen.hust.model.response.teacher.TeacherResponse;
 import com.quyen.hust.service.course.CourseService;
 import com.quyen.hust.service.teacher.TeacherService;
@@ -16,25 +18,10 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/courses")
+@RequestMapping("/api/v1/courses")
 public class CourseController {
     private final CourseService courseService;
     private final TeacherService teacherService;
-
-    @GetMapping("/management")
-    public String getCourseManagementPage(Model model) {
-        return "course/course-management";
-    }
-
-    @GetMapping("/creation")
-    public String getCourseCreationPage(Model model) {
-        return "course/course-creation";
-    }
-
-    @GetMapping("/section")
-    public String getSectionCreationPage(Model model) {
-        return "course/section-creation";
-    }
 
     @GetMapping("/courseFeeUnit")
     public ResponseEntity<?> getCourseFeeUnit() {
@@ -73,7 +60,12 @@ public class CourseController {
         return ResponseEntity.ok(null);
     }
 
-    @DeleteMapping
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCourseDetails(@PathVariable Long id) throws CourseNotFoundException {
+        return ResponseEntity.ok(courseService.getCourseDetails(id));
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
         return ResponseEntity.ok(null);

@@ -32,7 +32,6 @@ public class DiscountCodeRequest {
     private Double discountValue;
 
     @NotNull(message = "Discount unit is required")
-    @Length(max = 50, message = "Discount unit must be less than 50 characters")
     private Unit discountUnit;
 
     @NotNull(message = "Start date is required")
@@ -47,16 +46,5 @@ public class DiscountCodeRequest {
     @Min(value = 1, message = "Usage limitation must be greater than 1")
     private Integer usageLimitationCount;
 
-//    @NotNull(message = "Used count is required")
-//    @Min(value = 1, message = "Used count must be greater than 1")
-//    private Integer usedCount;
-//
-//    private Boolean activated;
-
-//    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-//    private LocalDateTime createdAt;
-//
-//    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-//    private LocalDateTime modifiedAt;
 
 }

@@ -1,4 +1,4 @@
-package com.quyen.hust.Util;
+package com.quyen.hust.util;
 
 import org.springframework.util.StringUtils;
 

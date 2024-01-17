@@ -20,12 +20,6 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-//
-//    @GetMapping
-//    public List<UserResponse> getAll() {
-//        return userService.getAll();
-//    }
-
 
     @GetMapping("/{id}")
     public UserResponse getDetail(@PathVariable Long id) throws ClassNotFoundException {

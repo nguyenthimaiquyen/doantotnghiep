@@ -5,21 +5,21 @@
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header :: header}"></header>
+<header th:replace="~{admin/fragments/admin-header :: admin-header}"></header>
 <!--  header-area-end  -->
-<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý khóa học')}"></div>
+
 
 <main>
 
     <!-- ====== checkout-area-start ============================================= -->
-    <div class="checkout-area mt-80 mb-100">
+    <div class="checkout-area mt-160 mb-100">
         <div class="container">
             <div class="row">
                 <div class="col-xl-10  col-lg-10  col-md-12  col-sm-12 col-12">
                     <div class="checkbox-form">
                         <h3 class="cart-title pb-10 mb-20">Tạo mới khóa học</h3>
                         <form id="course-form">
-                            <div class="row">
+                            <div class="row" id="course-common-data">
                                 <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
                                     <div class="checkout-form-list mb-3">
                                         <label for="title">Tiêu đề<span class="text-danger">*</span></label>
@@ -32,7 +32,7 @@
                                     <div class="checkout-form-list mb-3">
                                         <label for="description">Mô tả</label>
                                         <textarea id="description" placeholder="Nhập mô tả" name="description"
-                                                  class="primary-border2 w-100 pl-15"></textarea>
+                                                  class="primary-border2 w-100 pl-15 py-10"></textarea>
                                     </div>
                                 </div>
 
@@ -41,7 +41,7 @@
                                         <label for="learningObjectives">Mục tiêu học tập</label>
                                         <textarea id="learningObjectives" placeholder="Nhập mục tiêu học tập"
                                                   name="learningObjectives"
-                                                  class="primary-border2 w-100 pl-15"></textarea>
+                                                  class="primary-border2 w-100 pl-15 py-10"></textarea>
                                     </div>
                                 </div>
 
@@ -73,26 +73,8 @@
 
                                 <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
                                     <div class="country-select mb-3">
-                                        <label for="trainingFields">Lĩnh vực<span class="text-danger">*</span></label>
-                                        <select class="w-100" id="trainingFields" name="trainingFields">
-
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                    <div class="country-select mt-3">
-                                        <label for="teacherID">Giảng viên</label>
-                                        <select class="w-100" id="teacherID" name="teacherID">
-
-                                        </select>
-                                    </div>
-                                </div>
-<!--                                sec:authorize="hasRole('ADMIN')"-->
-                                <div  class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12" >
-                                    <div class="country-select mt-3">
-                                        <label for="discountID">Mã giảm giá</label>
-                                        <select class="w-100" id="discountID" name="discountID">
+                                        <label for="trainingFieldID">Lĩnh vực<span class="text-danger">*</span></label>
+                                        <select class="w-100" id="trainingFieldID" name="trainingFieldID">
 
                                         </select>
                                     </div>
@@ -102,16 +84,24 @@
                     </div>
                 </div><!-- /col -->
             </div>
-            <div class="mt-50">
-                <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
-                    <div class="checkout-coupon-wrapper mt-5 mt-lg-0">
-                        <div class="my-btn mt-3 mt-sm-0">
-                            <a th:href="@{/courses/section}" class="btn d-inline-block primary-bg f-500 rounded-0"
-                            id="continue-course-btn">Tiếp tục</a>
-                        </div><!-- /my-btn -->
-                    </div><!-- /checkout-coupon-wrapper -->
-                </div><!-- /col -->
-            </div><!-- /row -->
+            <div class="mt-50 mb-150">
+                <div class="d-flex">
+                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-2">
+                        <div class="checkout-coupon-wrapper mt-5 mt-lg-0">
+                            <div class="my-btn mt-3 mt-sm-0">
+                                <button class="btn d-inline-block primary-bg f-500 rounded-0" id="save-course-btn">Lưu</button>
+                            </div><!-- /my-btn -->
+                        </div><!-- /checkout-coupon-wrapper -->
+                    </div><!-- /col -->
+                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-3 ml-2">
+                        <div class="checkout-coupon-wrapper mt-5 mt-lg-0">
+                            <div class="my-btn mt-3 mt-sm-0">
+                                <button class="btn d-inline-block bg-secondary f-500 rounded-0" id="get-back-btn">Quay lại</button>
+                            </div><!-- /my-btn -->
+                        </div><!-- /checkout-coupon-wrapper -->
+                    </div><!-- /col -->
+                </div><!-- /d-flex justify-content-between -->
+            </div><!-- /mt-50 mb-150 -->
         </div><!-- /container -->
     </div>
     <!-- checkout-area-end -->
@@ -119,7 +109,7 @@
 </main>
 
 <!-- ====== footer-area-start ============================================ -->
-<footer th:replace="~{fragments/footer-website :: footer-website}"></footer>
+<footer th:replace="~{admin/fragments/admin-footer :: admin-footer}"></footer>
 
 <!-- back top -->
 <div id="scroll" class="scroll-up">

@@ -19,7 +19,11 @@ public class LessonUrl extends BaseEntity {
     @Column(name = "resource_url")
     private String resourceUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "lesson_id", nullable = false)
     private Lesson lesson;
+
+
 }

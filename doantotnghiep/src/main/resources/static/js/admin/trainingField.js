@@ -41,7 +41,7 @@ $(document).ready(() => {
         const updateTrainingFieldId = parseInt($(event.currentTarget).attr("trainingField-id"));
         let trainingField = null;
         await $.ajax({
-            url: "/training-fields/" + updateTrainingFieldId,
+            url: "/api/v1/training-fields/" + updateTrainingFieldId,
             type: "GET",
             success: function (data) {
                 trainingField = data;
@@ -90,7 +90,7 @@ $(document).ready(() => {
         }
         //call api lên backend
         $.ajax({
-            url: "/training-fields",
+            url: "/api/v1/training-fields",
             type: method,
             data: JSON.stringify(trainingFieldRequestBody),
             contentType: "application/json; charset=utf-8",
@@ -116,7 +116,7 @@ $(document).ready(() => {
     //delete a trainingField
     $('#delete-trainingField-btn').click(function () {
         $.ajax({
-            url: "/training-fields/" + deleteTrainingFieldId,
+            url: "/api/v1/training-fields/" + deleteTrainingFieldId,
             type: "DELETE",
             success: function (data) {
                 toastr.success("Xóa lĩnh vực đào tạo thành công!");

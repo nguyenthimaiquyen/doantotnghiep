@@ -59,7 +59,7 @@ $(document).ready(function () {
         //call api lên backend
         await $.ajax({
             type: "POST",
-            url: "/authentication/login",
+            url: "/api/v1/authentication/login",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
@@ -84,8 +84,19 @@ $(document).ready(function () {
                 }, 1500);
             },
             error: function (error) {
-                toastr.error("Đã có lỗi xảy ra, vui lòng thử lại sau!");
                 console.log(error);
+                if (error.status === 401) {
+                    $('#login-error-msg').html("Sai email hoặc mật khẩu, vui lòng thử lại");
+                    return;
+                } else if (error.status === 403) {
+                    $('#login-error-msg').html("Bạn không được phép truy cập, vui lòng quay lại trang chủ");
+                    return;
+                } else if (error.status === 404) {
+                    $('#login-error-msg').html("Không thể tìm thấy trang web, vui lòng thử lại");
+                    return;
+                } else {
+                    toastr.error("Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                }
             }
         });
 
@@ -151,7 +162,7 @@ $(document).ready(function () {
         //call api lên backend
         $.ajax({
             type: "POST",
-            url: "/authentication/signup",
+            url: "/api/v1/authentication/signup",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
@@ -189,7 +200,7 @@ $(document).ready(function () {
 function logout() {
     $.ajax({
         type: 'POST',
-        url: '/authentication/logout',
+        url: '/api/v1/authentication/logout',
         beforeSend: function (xhr) {
             const token = localStorage.getItem("access-token");
             if (!token || token.trim() === "") {
@@ -198,20 +209,19 @@ function logout() {
             xhr.setRequestHeader('Authorization', "Bearer " + token);
         },
         success: function (data) {
-            toastr.success("Đăng xuất thành công!");
-            localStorage.removeItem('access-token');
-            localStorage.removeItem('refresh-token');
-            localStorage.removeItem('user-info');
-            console.log("đăng xuất rồi đó")
-            setTimeout(() => {
-                window.location.href = "http://localhost:8080";
-            }, 1500);
         },
         error: function (error) {
             console.log(error);
-            alert('Đã có lỗi xảy ra khi đăng xuất. Vui lòng thử lại sau.');
         }
     });
+    toastr.success("Đăng xuất thành công!");
+    localStorage.removeItem('access-token');
+    localStorage.removeItem('refresh-token');
+    localStorage.removeItem('user-info');
+    console.log("đăng xuất rồi đó")
+    setTimeout(() => {
+        window.location.href = "http://localhost:8080";
+    }, 1500);
 
 
 }

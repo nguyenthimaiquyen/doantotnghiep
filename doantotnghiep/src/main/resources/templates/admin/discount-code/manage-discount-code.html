@@ -5,14 +5,14 @@
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header :: header}"></header>
+<header th:replace="~{admin/fragments/admin-header :: admin-header}"></header>
 <!--  header-area-end  -->
-<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý mã giảm giá')}"></div>
+
 
 <main>
 
     <!-- ====== faq-page-area-start============================================ -->
-    <div class="faq-page-area faq-page2 pt-60 mb-115 over-hidden">
+    <div class="faq-page-area faq-page2 pt-160 mb-115 over-hidden">
         <div class="container" style="max-width: 1400px;">
             <div class="row my-1">
                 <div class="col-lg-12">
@@ -76,7 +76,7 @@
 </main>
 
 <!-- ====== footer-area-start ============================================ -->
-<footer th:replace="~{fragments/footer-website :: footer-website}"></footer>
+<footer th:replace="~{admin/fragments/admin-footer :: admin-footer}"></footer>
 
 <!-- back top -->
 <div id="scroll" class="scroll-up">

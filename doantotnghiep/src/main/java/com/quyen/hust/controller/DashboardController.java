@@ -1,4 +1,4 @@
-package com.quyen.hust.controller.admin;
+package com.quyen.hust.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,13 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/courses/analysis/admin")
+@RequestMapping("/api/v1/courses/analysis")
 public class DashboardController {
 
-    @GetMapping
-    public String getDashboardPage(Model model) {
-        return "admin/dashboard/admin-dashboard-management";
-    }
+
+
 
 
 }

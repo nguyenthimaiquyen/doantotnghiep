@@ -15,16 +15,9 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/discountCodes")
+@RequestMapping("/api/v1/discount-codes")
 public class DiscountCodeController {
     private final DiscountCodeService discountCodeService;
-
-    @GetMapping
-    public String getDiscountCodeManagementPage(Model model) {
-        List<DiscountCodeResponse> discountCodes = discountCodeService.getAll();
-        model.addAttribute("discountCodes", discountCodes);
-        return "admin/discount-code/manage-discount-code";
-    }
 
     @GetMapping("/unit")
     public ResponseEntity<?> getDiscountCodeUnit() {

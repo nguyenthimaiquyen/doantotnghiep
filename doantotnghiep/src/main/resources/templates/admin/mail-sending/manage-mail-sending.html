@@ -5,9 +5,9 @@
 <body>
 
 <!--  ====== header-area-start=======================================  -->
-<header th:replace="~{fragments/header :: header}"></header>
+<header th:replace="~{admin/fragments/admin-header :: admin-header}"></header>
 <!--  header-area-end  -->
-<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý gửi mail')}"></div>
+
 
 <main>
 
@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h4>Quản lý gửi mail</h4>
+                    <h6>Quản lý gửi mail</h6>
                 </div><!-- /col -->
             </div><!-- /row -->
             <div class="row">
@@ -34,7 +34,7 @@
 </main>
 
 <!-- ====== footer-area-start ============================================ -->
-<footer th:replace="~{fragments/footer-website :: footer-website}"></footer>
+<footer th:replace="~{admin/fragments/admin-footer :: admin-footer}"></footer>
 
 <!-- back top -->
 <div id="scroll" class="scroll-up">

@@ -7,12 +7,12 @@
 <!--  ====== header-area-start=======================================  -->
 <header th:replace="~{fragments/header :: header}"></header>
 <!--  header-area-end  -->
-<div th:replace="~{fragments/other-page-area :: other_page(pageContent = 'Quản lý khóa học')}"></div>
+<div th:replace="~{admin/fragments/admin-header :: admin-header}"></div>
 
 <main>
 
     <!-- ====== faq-page-area-start============================================ -->
-    <div class="faq-page-area faq-page2 pt-80 mb-115 over-hidden">
+    <div class="faq-page-area faq-page2 pt-160 mb-115 over-hidden">
         <div class="container" style="max-width: 1400px;">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -41,14 +41,14 @@
                                aria-selected="false">Lưu trữ</a>
                         </div>
 
-                        <div class="tab-content mt-55" id="faq-tab-content">
+                        <div class="tab-content mt-55 mb-100" id="faq-tab-content">
                             <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
                                 <div class="row my-1">
                                     <div class="col-lg-12">
                                         <div class="d-flex justify-content-end mt-3 mt-lg-0">
-                                            <a th:href="@{/courses/creation}" class="btn btn-primary f-500 create-course-btn">
+                                            <button class="btn btn-primary f-500 create-course-btn">
                                                 <i class="fas fa-plus mr-2"></i>Tạo khóa học
-                                            </a>
+                                            </button>
                                         </div><!-- /my-btn -->
                                     </div><!-- /col -->
                                 </div>
@@ -57,40 +57,56 @@
                                     <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
                                         <table class="table table-bordered table-hover">
                                             <thead>
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th>STT</th>
                                                 <th>Tên khóa học</th>
                                                 <th>Giá</th>
                                                 <th>Đơn vị giá</th>
-                                                <th>Trạng thái</th>
                                                 <th>Cấp độ</th>
                                                 <th>Giảng viên</th>
                                                 <th>Mã giảm giá</th>
                                                 <th>Lĩnh vực</th>
+                                                <th>Trạng thái</th>
                                                 <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="course : ${courses}">
-                                                <td th:text="${course.id}"></td>
+                                                <td class="text-center" th:text="${course.id}"></td>
                                                 <td th:text="${course.title}"></td>
                                                 <td th:text="${course.courseFee}"></td>
                                                 <td th:text="${course.courseFeeUnit}"></td>
-                                                <td th:text="${course.status}"></td>
-                                                <td th:text="${course.difficultyLevel}"></td>
-                                                <td th:text="${course.teacher}"></td>
-                                                <td th:text="${course.discountCode}"></td>
-                                                <td th:text="${course.trainingFields}"></td>
-                                                <td><a href="#">Chi tiết khóa học</a></td>
+                                                <td th:text="${course.difficultyLevel.name}"></td>
+                                                <td th:text="${course.teacherName}"></td>
+                                                <td th:text="${course.discountCode.codeName}"></td>
+                                                <td th:text="${course.trainingField.fieldName}"></td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm update-course-btn"
-                                                            th:attr="course-id=${course.id}">
-                                                        <i class="far fa-edit" aria-hidden="true"></i>
-                                                    </button>
-                                                    <button class="btn btn-danger btn-sm delete-course-btn"
-                                                            th:attr="course-id=${course.id}">
-                                                        <i class="far fa-trash" aria-hidden="true"></i>
-                                                    </button>
+                                                    <span class="badge badge-success mr-1" th:each="type: ${course.courseStatus}">
+                                                        <span th:text="${type.name}"></span>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown" id="common-course-menu">
+                                                        <button class="btn btn-primary dropdown-toggle" type="button"
+                                                                id="dropdownMenuButton" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <button class="dropdown-item update-course-btn focused cursor-pointer"
+                                                                    th:attr="course-id=${course.id}">Cập nhật khóa học
+                                                            </button>
+                                                            <button class="dropdown-item add-section-btn focused cursor-pointer"
+                                                                    th:attr="course-id=${course.id}">Thêm chương trình học
+                                                            </button>
+                                                            <button class="dropdown-item review-course-btn focused cursor-pointer"
+                                                                    th:attr="course-id=${course.id}">Yêu cầu phê duyệt
+                                                            </button>
+                                                            <button class="dropdown-item delete-course-btn focused cursor-pointer"
+                                                                    th:attr="course-id=${course.id}">Xóa khóa học
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -197,7 +213,7 @@
 </main>
 
 <!-- ====== footer-area-start ============================================ -->
-<footer th:replace="~{fragments/footer-website :: footer-website}"></footer>
+<footer th:replace="~{admin/fragments/admin-footer :: admin-footer}"></footer>
 
 <!-- back top -->
 <div id="scroll" class="scroll-up">

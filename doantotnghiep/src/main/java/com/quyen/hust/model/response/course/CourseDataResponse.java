@@ -1,7 +1,11 @@
 package com.quyen.hust.model.response.course;
 
+import com.quyen.hust.entity.admin.DiscountCode;
+import com.quyen.hust.entity.admin.TrainingField;
+import com.quyen.hust.model.response.teacher.TeacherResponse;
 import com.quyen.hust.statics.DifficultyLevel;
 import com.quyen.hust.statics.CourseStatus;
+import com.quyen.hust.statics.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,9 +29,15 @@ public class CourseDataResponse {
 
     private Double courseFee;
 
-    private String courseFeeUnit;
+    private Unit courseFeeUnit;
+
+    private TrainingField trainingField;
 
     private CourseStatus courseStatus;
+
+    private DiscountCode discountCode;
+
+    private String teacherName;
 
     private Integer totalLessons;
 

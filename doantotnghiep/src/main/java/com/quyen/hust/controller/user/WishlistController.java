@@ -8,11 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/wishlist")
+@RequestMapping("/api/v1/wishlist")
 public class WishlistController {
 
-    @GetMapping
-    public String getCartPage(Model model) {
-        return "wishlist/wishlist";
-    }
+
 }

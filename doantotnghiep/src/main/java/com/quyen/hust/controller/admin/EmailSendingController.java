@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/mailSending")
+@RequestMapping("/api/v1/email-sending")
 public class EmailSendingController {
 
 
-    @GetMapping
-    public String getMailSendingManagementPage(Model model) {
-        return "admin/mail-sending/manage-mail-sending";
-    }
+
 }

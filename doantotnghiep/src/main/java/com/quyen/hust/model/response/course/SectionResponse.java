@@ -17,7 +17,5 @@ public class SectionResponse {
 
     private String title;
 
-    private LocalDateTime createdAt;
 
-    private LocalDateTime modifiedAt;
 }
