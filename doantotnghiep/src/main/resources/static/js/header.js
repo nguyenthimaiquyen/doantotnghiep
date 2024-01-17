@@ -1,5 +1,4 @@
-$(document).ready(() => {
-
+function setHeader() {
     const isLoggedIn = localStorage.getItem('access-token') !== null;
     const userInfo = JSON.parse(localStorage.getItem('user-info'));
     const userRole = userInfo ? userInfo.roles : null;
@@ -122,5 +121,6 @@ $(document).ready(() => {
     subHeader = subHeader.replace("[full-name]", fullName).replace("[email]", email);
     $("#header-sticky #header-menu").html(headerMenu);
     $('#header-sticky #subHeader').html(subHeader);
+}
 
-});
+setHeader();
