@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,6 +76,7 @@ public class DiscountCodeService {
             dc.setStartDate(request.getStartDate());
             dc.setEndDate(request.getEndDate());
             dc.setUsageLimitationCount(request.getUsageLimitationCount());
+            discountCodeJpaRepository.save(dc);
             return;
         }
         //create a discount code

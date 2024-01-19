@@ -1,6 +1,5 @@
 $(document).ready(() => {
 
-    toastr.options.timeOut = 2500; // 2.5s
 
     let deleteReminderId = -1;
 
@@ -22,9 +21,8 @@ $(document).ready(() => {
                     courseSelection.append($(courseOptions));
                 }
             },
-            error: function (data) {
-                console.log("lỗi load dữ liệu")
-                toastr.warning(data.responseJSON.error);
+            error: function (error) {
+                console.log(error);
             }
         });
     }
@@ -48,8 +46,7 @@ $(document).ready(() => {
                 }
             },
             error: function (data) {
-                console.log("lỗi load dữ liệu")
-                toastr.warning(data.responseJSON.error);
+                console.log(error);
             }
         });
     }
@@ -164,13 +161,29 @@ $(document).ready(() => {
                 reminder = data;
             },
             error: function (err) {
-                toastr.warning(data.responseJSON.error);
-                toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
+                console.log(err)
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                })
             }
         });
 
         if (!reminder) {
-            toastr.error("Đã có lỗi xảy ra, vui lòng thử lại!")
+            $.toast({
+                heading: 'Lỗi',
+                text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                icon: 'error',
+                showHideTransition: 'fade',
+                position: 'top-right',
+                loader: false,
+                bgColor: '#FF0000'
+            })
             return;
         }
 
@@ -217,13 +230,29 @@ $(document).ready(() => {
             data: JSON.stringify(reminderRequestBody),
             contentUnit: "application/json; charset=utf-8",
             success: function (data) {
-                toastr.success((method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công sự kiện nhắc nhở học tập!");
+                $.toast({
+                    heading: 'Thành công',
+                    text: (method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công sự kiện nhắc nhở học tập!",
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                })
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
             },
             error: function (error) {
-                toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                })
             }
         });
         $("#reminder-modal #save-reminder-btn").attr("action-type", "");
@@ -242,13 +271,29 @@ $(document).ready(() => {
             url: "/api/v1/reminders/" + deleteReminderId,
             type: "DELETE",
             success: function (data) {
-                toastr.success("Xóa sự kiện nhắc nhở học tập thành công!");
+                $.toast({
+                    heading: 'Thành công',
+                    text: 'Xóa sự kiện nhắc nhở học tập thành công!',
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                })
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
             },
             error: function (err) {
-                toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                })
             }
         });
     });

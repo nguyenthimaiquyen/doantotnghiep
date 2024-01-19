@@ -39,24 +39,7 @@ public class TeacherService {
     }
 
 
-    public Teacher registerTeacher(RegistrationRequest registrationRequest) {
-        //đăng ký với role là teacher
-        Set<Role> roles = new HashSet<>();
-        Optional<Role> optionalRole = roleJpaRepository.findByName(Roles.TEACHER);
-        roles.add(optionalRole.get());
-        User user = User.builder()
-                .fullName(registrationRequest.getFullName())
-                .email(registrationRequest.getEmail())
-                .password(passwordEncoder.encode(registrationRequest.getPassword()))
-                .roles(roles)
-                .userStatus(UserStatus.CREATED)
-                .build();
-        Teacher teacher = Teacher.builder()
-                .user(user)
-                .build();
-        teacherJpaRepository.save(teacher);
-        return teacher;
-    }
+
 
 
 

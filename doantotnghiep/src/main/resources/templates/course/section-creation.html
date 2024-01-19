@@ -28,20 +28,20 @@
 
 <main>
 
-    <div class="container-fluid mt-5">
+    <div class="container-fluid mt-50 p-0">
         <div class="row m-0 p-0">
             <!-- Cột bên trái -->
-            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9 mx-0" id="left-section-content">
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9 m-0 p-0" id="left-section-content">
                 <!-- Form thêm bài giảng -->
 
             </div>
 
             <!-- Cột bên phải -->
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 mx-0 border-left"
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 m-0 p-0 border-left"
                  style="border-left: 4px solid #dee2e6; min-height: 100vh;">
-                <h6 class="mb-3 mt-40" th:text="${courseTitle}"></h6>
+                <h6 class="mt-40 ml-30" th:text="${courseTitle}"></h6>
                 <!-- Nút thêm chương -->
-                <div class="mt-4 ml-100 mb-4">
+                <div class="mt-4 ml-150 mb-4">
                     <a class="btn btn-primary f-500 create-section-btn">
                         <i class="fas fa-plus mr-2"></i>Thêm chương
                     </a>
@@ -50,13 +50,10 @@
                 <!-- Danh sách chương -->
                 <div class="list-group">
                     <div th:each="section : ${sections}">
-                        <a href="#" class="list-group-item list-group-item-action" data-toggle="collapse"
-                           th:data-target="'#chapter' + ${section.id}">
+                        <a class="list-group-item list-group-item-action" data-toggle="collapse" th:data-target="'#section' + ${section.id}">
                             <span th:text="${section.title}" class="h6"></span>
-                            <div class="dropdown float-right">
-                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
-                                        id="dropdownMenuButton" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
+                            <div class="dropdown float-right dropleft">
+                                <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="dropdown">
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -64,7 +61,8 @@
                                             th:attr="section-id=${section.id}">Cập nhật chương
                                     </button>
                                     <button class="dropdown-item add-lesson-btn focused cursor-pointer"
-                                            th:attr="section-id=${section.id}, section-title=${section.title}">Thêm bài học
+                                            th:attr="section-id=${section.id}, section-title=${section.title}">Thêm bài
+                                        học
                                     </button>
                                     <button class="dropdown-item hide-lesson-btn focused cursor-pointer"
                                             th:attr="section-id=${section.id}">Ẩn nội dung chương
@@ -75,9 +73,31 @@
                                 </div>
                             </div>
                         </a>
-                        <div class="collapse" th:id="'section' + ${section.id}">
-                            <!-- Danh sách bài học trong chương -->
-
+                        <div th:if="${not #lists.isEmpty(section.lessons)}" class="collapse" th:id="'section' + ${section.id}">
+                            <!-- Kiểm tra và hiển thị danh sách bài học -->
+                            <div class="list-group mt-2">
+                                <a th:each="lesson : ${section.lessons}" class="list-group-item list-group-item-action"
+                                   data-toggle="collapse" th:data-target="'#lesson' + ${lesson.id}">
+                                    <span th:text="${lesson.title}" class="h6"></span>
+                                    <div class="dropdown float-right dropleft">
+                                        <button class="btn btn-sm btn-outline-secondary" type="button"
+                                                data-toggle="dropdown">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <button class="dropdown-item update-section-btn focused cursor-pointer"
+                                                    th:attr="section-id=${lesson.id}">Cập nhật bài học
+                                            </button>
+                                            <button class="dropdown-item hide-lesson-btn focused cursor-pointer"
+                                                    th:attr="section-id=${lesson.id}">Ẩn nội dung bài học
+                                            </button>
+                                            <button class="dropdown-item delete-section-btn focused cursor-pointer"
+                                                    th:attr="section-id=${lesson.id}">Xóa bài học
+                                            </button>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

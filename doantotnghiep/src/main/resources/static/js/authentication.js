@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    toastr.options.timeOut = 2500; // 2.5s
 
     //validate form đăng nhập
     $.validator.addMethod("emailFormat", function (value, element) {
@@ -63,7 +62,15 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
-                toastr.success("Đăng nhập thành công!");
+                $.toast({
+                    heading: 'Thành công',
+                    text: 'Đăng nhập thành công.',
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                })
                 localStorage.setItem("access-token", data.jwt);
                 localStorage.setItem("refresh-token", data.refreshToken);
                 const userInfo = {
@@ -95,7 +102,15 @@ $(document).ready(function () {
                     $('#login-error-msg').html("Không thể tìm thấy trang web, vui lòng thử lại");
                     return;
                 } else {
-                    toastr.error("Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                    $.toast({
+                        heading: 'Lỗi',
+                        text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                        icon: 'error',
+                        showHideTransition: 'fade',
+                        position: 'top-right',
+                        loader: false,
+                        bgColor: '#FF0000'
+                    })
                 }
             }
         });
@@ -166,15 +181,35 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
-                toastr.success("Đăng ký tài khoản thành công!");
-                console.log(data);
+                $.toast({
+                    heading: 'Thành công',
+                    text: 'Đăng ký tài khoản thành công.',
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                })
                 setTimeout(() => {
                     window.location.replace("http://localhost:8080/information");
                 }, 1500);
             },
             error: function (error) {
-                toastr.error("Đã có lỗi xảy ra, vui lòng thử lại sau!");
                 console.log(error);
+                //xử lý khi error là 400
+                if (error.status === 400) {
+                    $('#signup-error-msg').html("Email này đã tồn tại, vui lòng đăng nhập");
+                } else {
+                    $.toast({
+                        heading: 'Lỗi',
+                        text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                        icon: 'error',
+                        showHideTransition: 'fade',
+                        position: 'top-right',
+                        loader: false,
+                        bgColor: '#FF0000'
+                    })
+                }
             }
         });
     });
@@ -214,11 +249,18 @@ function logout() {
             console.log(error);
         }
     });
-    toastr.success("Đăng xuất thành công!");
+    $.toast({
+        heading: 'Thành công',
+        text: 'Đăng xuất thành công.',
+        icon: 'success',
+        showHideTransition: 'fade',
+        position: 'top-right',
+        bgColor: '#4CAF50',
+        loader: false,
+    })
     localStorage.removeItem('access-token');
     localStorage.removeItem('refresh-token');
     localStorage.removeItem('user-info');
-    console.log("đăng xuất rồi đó")
     setTimeout(() => {
         window.location.href = "http://localhost:8080";
     }, 1500);

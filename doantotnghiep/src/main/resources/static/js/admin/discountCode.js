@@ -1,7 +1,5 @@
 $(document).ready(() => {
 
-    toastr.options.timeOut = 2500; // 2.5s
-
     let deleteDiscountCodeId = -1;
 
     function getDiscountCodeUnit() {
@@ -24,7 +22,6 @@ $(document).ready(() => {
             },
             error: function (data) {
                 console.log("lỗi load dữ liệu")
-                toastr.warning(data.responseJSON.error);
             }
         });
     }
@@ -107,7 +104,6 @@ $(document).ready(() => {
                 futureDate: true
             },
             "usageLimitationCount": {
-                required: true,
                 digits: true,
                 discountCustom: true
             }
@@ -134,7 +130,6 @@ $(document).ready(() => {
                 futureDate: "Ngày hết hiệu lực là ngày tương lai"
             },
             "usageLimitationCount": {
-                required: "Giới hạn số lần sử dụng bắt buộc",
                 digits: "Giới hạn số lần sử dụng là số",
                 discountCustom: "Giới hạn số lần sử dụng lớn hơn 0"
             }
@@ -159,13 +154,28 @@ $(document).ready(() => {
                 discountCode = data;
             },
             error: function (err) {
-                toastr.warning(data.responseJSON.error);
-                toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                });
             }
         });
 
         if (!discountCode) {
-            toastr.error("Đã có lỗi xảy ra, vui lòng thử lại!")
+            $.toast({
+                heading: 'Lỗi',
+                text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                icon: 'error',
+                showHideTransition: 'fade',
+                position: 'top-right',
+                loader: false,
+                bgColor: '#FF0000'
+            });
             return;
         }
 
@@ -212,13 +222,29 @@ $(document).ready(() => {
             data: JSON.stringify(discountCodeRequestBody),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                toastr.success((method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công mã giảm giá!");
+                $.toast({
+                    heading: 'Thành công',
+                    text: (method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công mã giảm giá!",
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                })
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
             },
             error: function (error) {
-                toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                });
             }
         });
         $("#discountCode-modal #save-discountCode-btn").attr("action-type", "");
@@ -237,13 +263,29 @@ $(document).ready(() => {
             url: "/api/v1/discount-codes/" + deleteDiscountCodeId,
             type: "DELETE",
             success: function (data) {
-                toastr.success("Xóa mã giảm giá thành công!");
+                $.toast({
+                    heading: 'Thành công',
+                    text: "Xóa mã giảm giá thành công!",
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                });
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
             },
             error: function (err) {
-                toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                });
             }
         });
     });

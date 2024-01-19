@@ -1,6 +1,5 @@
 $(document).ready(() => {
 
-    toastr.options.timeOut = 2500; // 2.5s
 
     let deleteTrainingFieldId = -1;
 
@@ -47,13 +46,28 @@ $(document).ready(() => {
                 trainingField = data;
             },
             error: function (err) {
-                toastr.warning(data.responseJSON.error);
-                toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                });
             }
         });
 
         if (!trainingField) {
-            toastr.error("Đã có lỗi xảy ra, vui lòng thử lại!")
+            $.toast({
+                heading: 'Lỗi',
+                text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                icon: 'error',
+                showHideTransition: 'fade',
+                position: 'top-right',
+                loader: false,
+                bgColor: '#FF0000'
+            });
             return;
         }
         //đổ dữ liệu vào form
@@ -95,13 +109,29 @@ $(document).ready(() => {
             data: JSON.stringify(trainingFieldRequestBody),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                toastr.success((method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công lĩnh vực đào tạo!");
+                $.toast({
+                    heading: 'Thành công',
+                    text: (method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công lĩnh vực đào tạo!",
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                });
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
             },
             error: function (error) {
-                toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                });
             }
         });
         $("#trainingField-modal #save-trainingField-btn").attr("action-type", "");
@@ -119,13 +149,29 @@ $(document).ready(() => {
             url: "/api/v1/training-fields/" + deleteTrainingFieldId,
             type: "DELETE",
             success: function (data) {
-                toastr.success("Xóa lĩnh vực đào tạo thành công!");
+                $.toast({
+                    heading: 'Thành công',
+                    text: "Xóa lĩnh vực đào tạo thành công!",
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                });
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
             },
             error: function (err) {
-                toastr.warning("Đã có lỗi xảy ra, vui lòng thử lại!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                });
             }
         });
     });

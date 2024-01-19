@@ -51,7 +51,6 @@ public class AuthenticationController {
     private final RefreshTokenRepository refreshTokenRepository;
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
-    private final TeacherService teacherService;
 
     @PostMapping("/login")
     public JwtResponse authenticateUser(@Valid @RequestBody LoginRequest request) throws UnauthorizedException {
@@ -102,13 +101,8 @@ public class AuthenticationController {
         if (!ObjectUtils.isEmpty(user)) {
             return new ResponseEntity<>("Username is existed", HttpStatus.BAD_REQUEST);
         } else {
-            if (request.getRole().equals("TEACHER")) {
-                Teacher newTeacher = teacherService.registerTeacher(request);
-                emailService.verifyAccount(newTeacher.getId(), request.getFullName(), request.getEmail(), request.getRole());
-            } else {
-                User newUser = userService.registerUser(request);
-                emailService.verifyAccount(newUser.getId(), request.getFullName(), request.getEmail(), request.getRole());
-            }
+            User newUser = userService.registerUser(request);
+            emailService.verifyAccount(newUser.getId(), request.getFullName(), request.getEmail());
             return new ResponseEntity<>(null, HttpStatus.CREATED);
         }
     }
@@ -128,7 +122,6 @@ public class AuthenticationController {
         userService.logout();
         return ResponseEntity.ok(null);
     }
-
 
 
 }

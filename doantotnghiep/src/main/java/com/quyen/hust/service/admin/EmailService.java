@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -64,8 +65,8 @@ public class EmailService {
         javaMailSender.send(mimeMessage);
     }
 
-
-    public void verifyAccount(Long id, String name, String receiver, String role) throws MessagingException {
+    @Async
+    public void verifyAccount(Long id, String name, String receiver) throws MessagingException {
         // Creating a mime message
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper;

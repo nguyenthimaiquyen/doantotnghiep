@@ -14,6 +14,7 @@ import com.quyen.hust.model.response.course.CourseDataResponse;
 import com.quyen.hust.model.response.course.CourseFeeUnitResponse;
 import com.quyen.hust.model.response.course.CourseResponse;
 import com.quyen.hust.model.response.course.DifficultyLevelResponse;
+import com.quyen.hust.model.response.teacher.TeacherResponse;
 import com.quyen.hust.repository.admin.DiscountCodeJpaRepository;
 import com.quyen.hust.repository.admin.TrainingFieldJpaRepository;
 import com.quyen.hust.repository.course.CourseJpaRepository;
@@ -78,7 +79,6 @@ public class CourseService {
     @Transactional
     public void saveCourse(CourseRequest request) {
         Optional<Teacher> teacher = teacherJpaRepository.findById(request.getTeacherID());
-        System.out.println(request.getTeacherID());
         Optional<TrainingField> trainingField = trainingFieldJpaRepository.findById(request.getTrainingFieldID());
         Optional<DiscountCode> discountCode = discountCodeJpaRepository.findById(request.getDiscountID());
         Course course = Course.builder()
@@ -99,15 +99,15 @@ public class CourseService {
             courseNeedUpdate.setDescription(request.getDescription());
             courseNeedUpdate.setLearningObjectives(request.getLearningObjectives());
             courseNeedUpdate.setCourseFee(request.getCourseFee());
-            course.setCourseFeeUnit(request.getCourseFeeUnit());
-            course.setDifficultyLevel(request.getDifficultyLevel());
-            course.setTrainingField(trainingField.get());
-            course.setTeacher(teacher.get());
-            course.setDiscountCode(discountCode.get());
+            courseNeedUpdate.setCourseFeeUnit(request.getCourseFeeUnit());
+            courseNeedUpdate.setDifficultyLevel(request.getDifficultyLevel());
+            courseNeedUpdate.setTrainingField(trainingField.get());
+            courseNeedUpdate.setTeacher(teacher.get());
+            courseNeedUpdate.setDiscountCode(discountCode.get());
+//            courseJpaRepository.save(courseNeedUpdate);
             return;
         }
         //create a new course
-        System.out.println("vào đến đây rồi");
         course.setCourseStatus(CourseStatus.DRAFT);
         courseJpaRepository.save(course);
     }
@@ -127,7 +127,13 @@ public class CourseService {
                         .courseFee(course.getCourseFee())
                         .courseFeeUnit(course.getCourseFeeUnit())
                         .discountCode(course.getDiscountCode())
-                        .teacherName(course.getTeacher().getUser().getFullName())
+                        .teacher(TeacherResponse.builder()
+                                .id(course.getTeacher().getId())
+                                .user(course.getTeacher().getUser())
+                                .yearsOfExperience(course.getTeacher().getYearsOfExperience())
+                                .teachingExpertise(course.getTeacher().getTeachingExpertise())
+                                .trainingFields(course.getTeacher().getTrainingFields())
+                                .build())
                         .difficultyLevel(course.getDifficultyLevel())
                         .trainingField(course.getTrainingField())
                         .courseStatus(course.getCourseStatus())
@@ -137,6 +143,7 @@ public class CourseService {
 
 
     public CourseDataResponse getCourseDetails(Long id) throws CourseNotFoundException {
+
         return courseJpaRepository.findById(id).map(
                 course -> CourseDataResponse.builder()
                         .id(course.getId())
@@ -147,7 +154,13 @@ public class CourseService {
                         .courseFeeUnit(course.getCourseFeeUnit())
                         .difficultyLevel(course.getDifficultyLevel())
                         .discountCode(course.getDiscountCode())
-                        .teacherName(course.getTeacher().getUser().getFullName())
+                        .teacher(TeacherResponse.builder()
+                                .id(course.getTeacher().getId())
+                                .user(course.getTeacher().getUser())
+                                .yearsOfExperience(course.getTeacher().getYearsOfExperience())
+                                .teachingExpertise(course.getTeacher().getTeachingExpertise())
+                                .trainingFields(course.getTeacher().getTrainingFields())
+                                .build())
                         .courseStatus(course.getCourseStatus())
                         .trainingField(course.getTrainingField())
                         .build()

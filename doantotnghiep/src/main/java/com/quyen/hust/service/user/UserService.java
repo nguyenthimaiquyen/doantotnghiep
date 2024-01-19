@@ -73,8 +73,7 @@ public class UserService {
 
     public User registerUser(RegistrationRequest registrationRequest) {
         Set<Role> roles = new HashSet<>();
-        //đăng ký với role là user
-        Optional<Role> optionalRole = roleJpaRepository.findByName(Roles.USER);
+        Optional<Role> optionalRole = roleJpaRepository.findByName(registrationRequest.getRole());
         roles.add(optionalRole.get());
         User user = User.builder()
                 .fullName(registrationRequest.getFullName())
@@ -83,10 +82,15 @@ public class UserService {
                 .roles(roles)
                 .userStatus(UserStatus.CREATED)
                 .build();
+        if (registrationRequest.getRole().equals(Roles.TEACHER)) {
+            Teacher teacher = Teacher.builder()
+                    .user(user)
+                    .build();
+            teacherJpaRepository.save(teacher);
+        }
         userJpaRepository.save(user);
         return user;
     }
-
 
     public List<UserResponse> getAll() {
         List<User> users = userJpaRepository.findAll();
@@ -140,9 +144,7 @@ public class UserService {
         if (ObjectUtils.isEmpty(UserNeedCheck)) {
             throw new ExistedUserException();
         }
-
         Set<Role> roles = roleJpaRepository.findByName(Roles.USER).stream().collect(Collectors.toSet());
-
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode("123"))

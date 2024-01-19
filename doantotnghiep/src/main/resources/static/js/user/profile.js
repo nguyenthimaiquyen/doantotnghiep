@@ -1,6 +1,5 @@
 $(document).ready(() => {
 
-    toastr.options.timeOut = 2500; // 2.5s
 
     //hiển thị tên người dùng khi chỉnh sửa hồ sơ
     const userInfo = JSON.parse(localStorage.getItem('user-info'));
@@ -75,11 +74,26 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
-                toastr.success("Thay đổi mật khẩu thành công!");
-                console.log(data);
+                $.toast({
+                    heading: 'Thành công',
+                    text: 'Thay đổi mật khẩu thành công!',
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                })
             },
             error: function (error) {
-                toastr.error("Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                })
                 console.log(error);
             }
         });
@@ -133,14 +147,29 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
-                toastr.success("Vui lòng kiểm tra email để lấy OTP!");
-                console.log(data);
+                $.toast({
+                    heading: 'Thành công',
+                    text: 'Vui lòng kiểm tra email để lấy OTP!',
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                })
                 setTimeout(() => {
                     window.location.href = "http://localhost:8080/profile/forget-password";
                 }, 5000);
             },
             error: function (error) {
-                toastr.error("Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                })
                 console.log(error);
             }
         });
@@ -205,14 +234,29 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(RequestBody),
             success: function (data) {
-                toastr.success("Đặt lại mật khẩu thành công!");
-                console.log(data);
+                $.toast({
+                    heading: 'Thành công',
+                    text: 'Đặt lại mật khẩu thành công!',
+                    icon: 'success',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#4CAF50'
+                })
                 setTimeout(() => {
                     window.location.href = "http://localhost:8080";
                 }, 3000);
             },
             error: function (error) {
-                toastr.error("Đã có lỗi xảy ra, vui lòng thử lại sau!");
+                $.toast({
+                    heading: 'Lỗi',
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    showHideTransition: 'fade',
+                    position: 'top-right',
+                    loader: false,
+                    bgColor: '#FF0000'
+                })
                 console.log(error);
             }
         });

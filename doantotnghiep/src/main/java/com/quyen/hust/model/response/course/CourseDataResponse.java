@@ -37,7 +37,7 @@ public class CourseDataResponse {
 
     private DiscountCode discountCode;
 
-    private String teacherName;
+    private TeacherResponse teacher;
 
     private Integer totalLessons;
 

@@ -5,4 +5,6 @@ import com.quyen.hust.entity.teacher.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TrainingFieldJpaRepository extends JpaRepository<TrainingField, Long> {
+
+    TrainingField findByFieldName(String fieldName);
 }

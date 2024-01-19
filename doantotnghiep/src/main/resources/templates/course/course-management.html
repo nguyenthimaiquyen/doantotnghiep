@@ -12,197 +12,138 @@
 <main>
 
     <!-- ====== faq-page-area-start============================================ -->
-    <div class="faq-page-area faq-page2 pt-160 mb-115 over-hidden">
+    <div class="faq-page-area faq-page2 pt-130 mb-115">
         <div class="container" style="max-width: 1400px;">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="faq2-wrapper pl-xl-4 pl-lg-3">
-                        <div class="nav faq-nav justify-content-center" id="faq-tabs" role="tablist"
-                             aria-orientation="vertical">
-                            <a href="#tab1" class="nav-link active" data-toggle="pill" role="tab" aria-controls="tab1"
-                               aria-selected="true">Phác thảo</a>
+                    <div class="row my-1">
+                        <div class="col-lg-12">
+                            <div class="d-flex text-center justify-content-center mt-3 mt-lg-0">
+                                <h6>Danh sách các khóa học</h6>
+                            </div><!-- /my-btn -->
+                        </div><!-- /col -->
+                    </div>
+                    <div class="row my-1">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-end mt-3 mt-lg-0">
+                                <button class="btn btn-primary f-500 create-course-btn">
+                                    <i class="fas fa-plus mr-2"></i>Tạo khóa học
+                                </button>
+                            </div><!-- /my-btn -->
+                        </div><!-- /col -->
+                    </div>
 
-                            <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab2"
-                               aria-selected="false">Chờ phê duyệt</a>
-
-                            <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3"
-                               aria-selected="false">Đã phê duyệt</a>
-
-                            <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4"
-                               aria-selected="true">Đã từ chối</a>
-
-                            <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5"
-                               aria-selected="false">Đã công bố</a>
-
-                            <a href="#tab6" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab6"
-                               aria-selected="false">Dừng công bố</a>
-
-                            <a href="#tab7" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab7"
-                               aria-selected="false">Lưu trữ</a>
-                        </div>
-
-                        <div class="tab-content mt-55 mb-100" id="faq-tab-content">
-                            <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
-                                <div class="row my-1">
-                                    <div class="col-lg-12">
-                                        <div class="d-flex justify-content-end mt-3 mt-lg-0">
-                                            <button class="btn btn-primary f-500 create-course-btn">
-                                                <i class="fas fa-plus mr-2"></i>Tạo khóa học
-                                            </button>
-                                        </div><!-- /my-btn -->
-                                    </div><!-- /col -->
-                                </div>
-
-                                <div class="row my-4">
-                                    <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
-                                        <table class="table table-bordered table-hover">
-                                            <thead>
-                                            <tr class="text-center">
-                                                <th>STT</th>
-                                                <th>Tên khóa học</th>
-                                                <th>Giá</th>
-                                                <th>Đơn vị giá</th>
-                                                <th>Cấp độ</th>
-                                                <th>Giảng viên</th>
-                                                <th>Mã giảm giá</th>
-                                                <th>Lĩnh vực</th>
-                                                <th>Trạng thái</th>
-                                                <th></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="course : ${courses}">
-                                                <td class="text-center" th:text="${course.id}"></td>
-                                                <td th:text="${course.title}"></td>
-                                                <td th:text="${course.courseFee}"></td>
-                                                <td th:text="${course.courseFeeUnit}"></td>
-                                                <td th:text="${course.difficultyLevel.name}"></td>
-                                                <td th:text="${course.teacherName}"></td>
-                                                <td th:text="${course.discountCode.codeName}"></td>
-                                                <td th:text="${course.trainingField.fieldName}"></td>
-                                                <td>
-                                                    <span class="badge badge-success mr-1" th:each="type: ${course.courseStatus}">
+                    <div class="row my-4">
+                        <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr class="text-center">
+                                    <th>STT</th>
+                                    <th>Tên khóa học</th>
+                                    <th>Giá</th>
+                                    <th>Đơn vị giá</th>
+                                    <th>Cấp độ</th>
+                                    <th>Giảng viên</th>
+                                    <th>Mã giảm giá</th>
+                                    <th>Lĩnh vực</th>
+                                    <th>Trạng thái</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="course : ${courses}">
+                                    <td class="text-center" th:text="${course.id}"></td>
+                                    <td th:text="${course.title}"></td>
+                                    <td th:text="${course.courseFee}"></td>
+                                    <td th:text="${course.courseFeeUnit}"></td>
+                                    <td th:text="${course.difficultyLevel.name}"></td>
+                                    <td th:text="${course.teacher.user.fullName}"></td>
+                                    <td th:text="${course.discountCode.codeName}"></td>
+                                    <td th:text="${course.trainingField.fieldName}"></td>
+                                    <td>
+                                                    <span class="badge badge-success mr-1"
+                                                          th:each="type: ${course.courseStatus}">
                                                         <span th:text="${type.name}"></span>
                                                     </span>
-                                                </td>
-                                                <td>
-                                                    <div class="dropdown" id="common-course-menu">
-                                                        <button class="btn btn-primary dropdown-toggle" type="button"
-                                                                id="dropdownMenuButton" data-toggle="dropdown"
-                                                                aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <button class="dropdown-item update-course-btn focused cursor-pointer"
-                                                                    th:attr="course-id=${course.id}">Cập nhật khóa học
-                                                            </button>
-                                                            <button class="dropdown-item add-section-btn focused cursor-pointer"
-                                                                    th:attr="course-id=${course.id}">Thêm chương trình học
-                                                            </button>
-                                                            <button class="dropdown-item review-course-btn focused cursor-pointer"
-                                                                    th:attr="course-id=${course.id}">Yêu cầu phê duyệt
-                                                            </button>
-                                                            <button class="dropdown-item delete-course-btn focused cursor-pointer"
-                                                                    th:attr="course-id=${course.id}">Xóa khóa học
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div><!-- /row -->
-                                <!--                                <div class="row mb-110">-->
-                                <!--                                    <div class="col-xl-2  col-lg-2  col-md-12  col-sm-12 col-12"-->
-                                <!--                                         th:text="${'Tổng số ' + totalElement + ' bản ghi'}">-->
-                                <!--                                    </div>-->
-                                <!--                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 d-flex justify-content-end align-items-center">-->
-                                <!--                                        <div class="my-3">-->
-                                <!--                                            <span>Hiển thị </span>-->
-                                <!--                                            <select class="mr-1" id="product-page-size">-->
-                                <!--                                                <option value="6" th:selected="${pageSize==6}">6</option>-->
-                                <!--                                                <option value="12" th:selected="${pageSize==12}">12</option>-->
-                                <!--                                            </select>-->
-                                <!--                                            <span>bản ghi</span>-->
-                                <!--                                        </div>-->
-                                <!--                                        <div>-->
-                                <!--                                            <ul class="pagination justify-content-end mb-0">-->
-                                <!--                                                <li class="page-item">-->
-                                <!--                                                    <a class="page-link"-->
-                                <!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=0'}">-->
-                                <!--                                                        <i class="fas fa-angle-double-left"></i>-->
-                                <!--                                                    </a>-->
-                                <!--                                                </li>-->
-                                <!--                                                <li class="page-item">-->
-                                <!--                                                    <a th:class="${'page-link ' + (currentPage == 0 ? 'disabled-page' : '')}"-->
-                                <!--                                                       th:href="@{${currentPage} != 0 ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage - 1}) : '#'}">-->
-                                <!--                                                        <i class="fas fa-angle-left"></i>-->
-                                <!--                                                    </a>-->
-                                <!--                                                </li>-->
-                                <!--                                                <th:block th:each="index : ${#numbers.sequence(0, totalPage - 1)}">-->
-                                <!--                                                    <li th:class="${'page-item ' + (index == currentPage ? 'active' : '')}">-->
-                                <!--                                                        <a class="page-link"-->
-                                <!--                                                           th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${index}}"-->
-                                <!--                                                           th:text="${index + 1}"></a>-->
-                                <!--                                                    </li>-->
-                                <!--                                                </th:block>-->
-                                <!--                                                <li class="page-item">-->
-                                <!--                                                    <a th:class="${'page-link ' + (currentPage == (totalPage - 1) ? 'disabled-page' : '')}"-->
-                                <!--                                                       th:href="@{${currentPage} != (${totalPage} - 1) ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage + 1}) : '#'}">-->
-                                <!--                                                        <i class="fas fa-angle-right"></i>-->
-                                <!--                                                    </a>-->
-                                <!--                                                </li>-->
-                                <!--                                                <li class="page-item">-->
-                                <!--                                                    <a class="page-link"-->
-                                <!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${totalPage - 1}}">-->
-                                <!--                                                        <i class="fas fa-angle-double-right"></i>-->
-                                <!--                                                    </a>-->
-                                <!--                                                </li>-->
-                                <!--                                            </ul>-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-                            </div>
-
-                            <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="tab2">
-                                <div class="row">
-                                    Danh sách các khóa học đang chờ phê duyệt
-                                </div><!-- /row -->
-                            </div>
-
-                            <div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="tab3">
-                                <div class="row">
-                                    Danh sách các khóa học đã được phê duyệt
-                                </div><!-- /row -->
-                            </div>
-
-                            <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="tab4">
-                                <div class="row">
-                                    Danh sách các khóa học đã bị từ chối
-                                </div><!-- /row -->
-                            </div>
-
-                            <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="tab5">
-                                <div class="row">
-                                    Danh sách các khóa học đã được công bố
-                                </div><!-- /row -->
-                            </div>
-
-                            <div class="tab-pane" id="tab6" role="tabpanel" aria-labelledby="tab6">
-                                <div class="row">
-                                    Danh sách các khóa học đã dừng công bố
-                                </div><!-- /row -->
-                            </div>
-
-                            <div class="tab-pane" id="tab7" role="tabpanel" aria-labelledby="tab7">
-                                <div class="row">
-                                    Danh sách các khóa học đang lưu trữ
-                                </div><!-- /row -->
-                            </div>
-
+                                    </td>
+                                    <td>
+                                        <div class="dropdown dropleft">
+                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <button class="dropdown-item update-course-btn focused cursor-pointer"
+                                                        th:attr="course-id=${course.id}">Cập nhật khóa học
+                                                </button>
+                                                <button class="dropdown-item add-section-btn focused cursor-pointer"
+                                                        th:attr="course-id=${course.id}">Thêm chương trình học
+                                                </button>
+                                                <button class="dropdown-item review-course-btn focused cursor-pointer"
+                                                        th:attr="course-id=${course.id}">Yêu cầu phê duyệt
+                                                </button>
+                                                <button class="dropdown-item delete-course-btn focused cursor-pointer"
+                                                        th:attr="course-id=${course.id}">Xóa khóa học
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div><!-- /faq-wrapper -->
+                    </div><!-- /row -->
+                    <!--                                <div class="row mb-110">-->
+                    <!--                                    <div class="col-xl-2  col-lg-2  col-md-12  col-sm-12 col-12"-->
+                    <!--                                         th:text="${'Tổng số ' + totalElement + ' bản ghi'}">-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 d-flex justify-content-end align-items-center">-->
+                    <!--                                        <div class="my-3">-->
+                    <!--                                            <span>Hiển thị </span>-->
+                    <!--                                            <select class="mr-1" id="product-page-size">-->
+                    <!--                                                <option value="6" th:selected="${pageSize==6}">6</option>-->
+                    <!--                                                <option value="12" th:selected="${pageSize==12}">12</option>-->
+                    <!--                                            </select>-->
+                    <!--                                            <span>bản ghi</span>-->
+                    <!--                                        </div>-->
+                    <!--                                        <div>-->
+                    <!--                                            <ul class="pagination justify-content-end mb-0">-->
+                    <!--                                                <li class="page-item">-->
+                    <!--                                                    <a class="page-link"-->
+                    <!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=0'}">-->
+                    <!--                                                        <i class="fas fa-angle-double-left"></i>-->
+                    <!--                                                    </a>-->
+                    <!--                                                </li>-->
+                    <!--                                                <li class="page-item">-->
+                    <!--                                                    <a th:class="${'page-link ' + (currentPage == 0 ? 'disabled-page' : '')}"-->
+                    <!--                                                       th:href="@{${currentPage} != 0 ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage - 1}) : '#'}">-->
+                    <!--                                                        <i class="fas fa-angle-left"></i>-->
+                    <!--                                                    </a>-->
+                    <!--                                                </li>-->
+                    <!--                                                <th:block th:each="index : ${#numbers.sequence(0, totalPage - 1)}">-->
+                    <!--                                                    <li th:class="${'page-item ' + (index == currentPage ? 'active' : '')}">-->
+                    <!--                                                        <a class="page-link"-->
+                    <!--                                                           th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${index}}"-->
+                    <!--                                                           th:text="${index + 1}"></a>-->
+                    <!--                                                    </li>-->
+                    <!--                                                </th:block>-->
+                    <!--                                                <li class="page-item">-->
+                    <!--                                                    <a th:class="${'page-link ' + (currentPage == (totalPage - 1) ? 'disabled-page' : '')}"-->
+                    <!--                                                       th:href="@{${currentPage} != (${totalPage} - 1) ? ('/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage + 1}) : '#'}">-->
+                    <!--                                                        <i class="fas fa-angle-right"></i>-->
+                    <!--                                                    </a>-->
+                    <!--                                                </li>-->
+                    <!--                                                <li class="page-item">-->
+                    <!--                                                    <a class="page-link"-->
+                    <!--                                                       th:href="@{'/teacher?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${totalPage - 1}}">-->
+                    <!--                                                        <i class="fas fa-angle-double-right"></i>-->
+                    <!--                                                    </a>-->
+                    <!--                                                </li>-->
+                    <!--                                            </ul>-->
+                    <!--                                        </div>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+
+
                 </div><!-- /col -->
             </div><!-- /row -->
         </div><!-- /container -->
@@ -222,6 +163,7 @@
 </div>
 
 <div th:replace="~{course/course-delete-modal :: course-delete-modal}"></div>
+<div th:replace="~{course/course-modal :: course-modal}"></div>
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>
 </html>

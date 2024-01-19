@@ -22,6 +22,15 @@ public class Lesson extends BaseEntity {
     @Column
     private String content;
 
+    @Column(name = "embedded_url")
+    private String embeddedUrl;
+
+    @Column(name = "video_url")
+    private String videoUrl;
+
+    @Column(name = "file_url")
+    private String fileUrl;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})

@@ -1,5 +1,6 @@
 package com.quyen.hust.model.request.anonymous;
 
+import com.quyen.hust.statics.Roles;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -22,6 +23,6 @@ public class RegistrationRequest {
     @NotBlank
     String password;
 
-    String role;
+    Roles role;
 
 }

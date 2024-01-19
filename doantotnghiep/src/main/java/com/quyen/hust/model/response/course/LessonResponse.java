@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,7 +20,9 @@ public class LessonResponse {
 
     private String content;
 
-    private LocalDateTime createdAt;
+    private String embeddedUrl;
 
-    private LocalDateTime modifiedAt;
+    private String videoUrl;
+
+    private String fileUrl;
 }

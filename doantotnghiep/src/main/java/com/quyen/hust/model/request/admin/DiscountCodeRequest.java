@@ -42,7 +42,6 @@ public class DiscountCodeRequest {
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     private LocalDate endDate;
 
-    @NotNull(message = "Usage limitation is required")
     @Min(value = 1, message = "Usage limitation must be greater than 1")
     private Integer usageLimitationCount;
 
