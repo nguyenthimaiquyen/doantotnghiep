@@ -101,6 +101,9 @@ $(document).ready(function () {
                 } else if (error.status === 404) {
                     $('#login-error-msg').html("Không thể tìm thấy trang web, vui lòng thử lại");
                     return;
+                } else if (error.status === 500) {
+                    $('#login-error-msg').html("Tài khoản chưa được kích hoạt");
+                    return;
                 } else {
                     $.toast({
                         heading: 'Lỗi',

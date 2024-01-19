@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/graduation
     username: root
-    password:
+    password: 1234
   jpa:
     database: mysql
     show-sql: false

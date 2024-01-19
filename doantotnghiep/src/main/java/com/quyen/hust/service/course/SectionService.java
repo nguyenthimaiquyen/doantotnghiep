@@ -12,6 +12,7 @@ import com.quyen.hust.repository.course.CourseJpaRepository;
 import com.quyen.hust.repository.course.LessonJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import lombok.AllArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -37,7 +38,6 @@ public class SectionService {
                             .title(section.getTitle())
                             .lessons(new ArrayList<>())
                             .build();
-
                     if (section.getLessons() != null) {
                         sectionResponse.setLessons(section.getLessons().stream().map(
                                 lesson -> LessonResponse.builder()
@@ -46,7 +46,6 @@ public class SectionService {
                                         .build()
                         ).collect(Collectors.toList()));
                     }
-
                     return sectionResponse;
                 }).collect(Collectors.toList());
     }

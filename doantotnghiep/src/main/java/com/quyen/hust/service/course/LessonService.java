@@ -10,7 +10,13 @@ import com.quyen.hust.repository.course.SectionJpaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,15 +54,29 @@ public class LessonService {
         ).collect(Collectors.toList());
     }
 
-    public void saveLesson(LessonRequest request) {
+    public void saveLesson(LessonRequest request, MultipartFile file, MultipartFile video) {
+        //lưu file, video
+        String filePath = "course_data" + File.separator + "file" + File.separator + file.getOriginalFilename();
+        try {
+            Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String videoPath = "course_data" + File.separator + "video" + File.separator + video.getOriginalFilename();
+        try {
+            Files.copy(video.getInputStream(), Paths.get(videoPath), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Optional<Section> sectionOptional = sectionJpaRepository.findById(request.getSectionId());
         Lesson lesson = Lesson.builder()
                 .title(request.getTitle())
                 .content(request.getContent())
                 .section(sectionOptional.get())
                 .embeddedUrl(request.getEmbeddedUrl())
-                .videoUrl(request.getVideoUrl())
-                .fileUrl(request.getFileUrl())
+                .videoUrl(video.getOriginalFilename())
+                .fileUrl(file.getOriginalFilename())
                 .build();
 
         if (!ObjectUtils.isEmpty(request.getId())) {
@@ -65,8 +85,8 @@ public class LessonService {
             lessonNeedUpdate.setTitle(request.getTitle());
             lessonNeedUpdate.setContent(request.getContent());
             lessonNeedUpdate.setEmbeddedUrl(request.getEmbeddedUrl());
-            lessonNeedUpdate.setFileUrl(request.getFileUrl());
-            lessonNeedUpdate.setVideoUrl(request.getVideoUrl());
+            lessonNeedUpdate.setFileUrl(file.getOriginalFilename());
+            lessonNeedUpdate.setVideoUrl(video.getOriginalFilename());
             lessonJpaRepository.save(lessonNeedUpdate);
             return;
         }

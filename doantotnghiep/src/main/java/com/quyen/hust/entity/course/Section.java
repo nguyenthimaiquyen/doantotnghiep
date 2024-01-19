@@ -20,7 +20,7 @@ public class Section extends BaseEntity {
     @Column
     private String title;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {
+    @OneToMany(mappedBy = "section", fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Lesson> lessons;

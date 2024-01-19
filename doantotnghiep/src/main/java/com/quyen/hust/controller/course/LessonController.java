@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -29,15 +30,20 @@ public class LessonController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createLesson(@RequestPart("lessonRequest") String lessonRequest) {
+    public ResponseEntity<?> createLesson(@RequestPart("lessonRequest") String lessonRequest,
+                                          @RequestPart("file") MultipartFile file,
+                                          @RequestPart("video") MultipartFile video) {
         LessonRequest request = gson.fromJson(lessonRequest, LessonRequest.class);
-        lessonService.saveLesson(request);
+        lessonService.saveLesson(request, file, video);
         return ResponseEntity.ok(null);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateLesson(@RequestBody @Valid LessonRequest request) {
-        lessonService.saveLesson(request);
+    public ResponseEntity<?> updateLesson(@RequestPart("lessonRequest") String lessonRequest,
+                                          @RequestPart("file") MultipartFile file,
+                                          @RequestPart("video") MultipartFile video) {
+        LessonRequest request = gson.fromJson(lessonRequest, LessonRequest.class);
+        lessonService.saveLesson(request, file, video);
         return ResponseEntity.ok(null);
     }
 

@@ -70,12 +70,14 @@ public class AdminWebController {
     }
 
     @GetMapping("/courses/{id}/sections")
-    public String getSectionCreationPage(Model model, @PathVariable Long id) throws SectionNotFoundException, CourseNotFoundException {
+    public String getSectionCreationPage(Model model, @PathVariable Long id) throws CourseNotFoundException {
         List<SectionResponse> sections = sectionService.getSections(id);
         CourseDataResponse courseDetails = courseService.getCourseDetails(id);
         model.addAttribute("courseTitle", courseDetails.getTitle());
         model.addAttribute("sections", sections);
         return "course/section-creation";
     }
+
+
 
 }

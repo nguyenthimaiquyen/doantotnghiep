@@ -40,7 +40,6 @@
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 m-0 p-0 border-left"
                  style="border-left: 4px solid #dee2e6; min-height: 100vh;">
                 <h6 class="mt-40 ml-30" th:text="${courseTitle}"></h6>
-                <!-- Nút thêm chương -->
                 <div class="mt-4 ml-150 mb-4">
                     <a class="btn btn-primary f-500 create-section-btn">
                         <i class="fas fa-plus mr-2"></i>Thêm chương
@@ -50,7 +49,7 @@
                 <!-- Danh sách chương -->
                 <div class="list-group">
                     <div th:each="section : ${sections}">
-                        <a class="list-group-item list-group-item-action" data-toggle="collapse" th:data-target="'#section' + ${section.id}">
+                        <a class="list-group-item list-group-item-action pl-1 border-left-0 border-right-0" data-toggle="collapse" th:data-target="'#section' + ${section.id}">
                             <span th:text="${section.title}" class="h6"></span>
                             <div class="dropdown float-right dropleft">
                                 <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="dropdown">
@@ -74,9 +73,8 @@
                             </div>
                         </a>
                         <div th:if="${not #lists.isEmpty(section.lessons)}" class="collapse" th:id="'section' + ${section.id}">
-                            <!-- Kiểm tra và hiển thị danh sách bài học -->
-                            <div class="list-group mt-2">
-                                <a th:each="lesson : ${section.lessons}" class="list-group-item list-group-item-action"
+                            <div class="list-group">
+                                <a th:each="lesson : ${section.lessons}" class="list-group-item list-group-item-action border-0"
                                    data-toggle="collapse" th:data-target="'#lesson' + ${lesson.id}">
                                     <span th:text="${lesson.title}" class="h6"></span>
                                     <div class="dropdown float-right dropleft">
@@ -85,14 +83,14 @@
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <button class="dropdown-item update-section-btn focused cursor-pointer"
-                                                    th:attr="section-id=${lesson.id}">Cập nhật bài học
+                                            <button class="dropdown-item update-lesson-btn focused cursor-pointer"
+                                                    th:attr="lesson-id=${lesson.id}">Cập nhật bài học
                                             </button>
                                             <button class="dropdown-item hide-lesson-btn focused cursor-pointer"
-                                                    th:attr="section-id=${lesson.id}">Ẩn nội dung bài học
+                                                    th:attr="lesson-id=${lesson.id}">Ẩn nội dung bài học
                                             </button>
-                                            <button class="dropdown-item delete-section-btn focused cursor-pointer"
-                                                    th:attr="section-id=${lesson.id}">Xóa bài học
+                                            <button class="dropdown-item delete-lesson-btn focused cursor-pointer"
+                                                    th:attr="lesson-id=${lesson.id}">Xóa bài học
                                             </button>
                                         </div>
                                     </div>

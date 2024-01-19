@@ -1,21 +1,23 @@
 package com.quyen.hust.config;
 
+import com.quyen.hust.entity.admin.DiscountCode;
 import com.quyen.hust.entity.admin.Role;
 import com.quyen.hust.entity.admin.TrainingField;
 import com.quyen.hust.entity.user.User;
+import com.quyen.hust.repository.admin.DiscountCodeJpaRepository;
 import com.quyen.hust.repository.admin.RoleJpaRepository;
 import com.quyen.hust.repository.admin.TrainingFieldJpaRepository;
 import com.quyen.hust.repository.user.UserJpaRepository;
 import com.quyen.hust.statics.Roles;
+import com.quyen.hust.statics.Unit;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 @Component
 @AllArgsConstructor
@@ -24,6 +26,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final RoleJpaRepository roleJpaRepository;
     private final PasswordEncoder passwordEncoder;
     private final TrainingFieldJpaRepository trainingFieldJpaRepository;
+    private final DiscountCodeJpaRepository discountCodeJpaRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -70,6 +73,19 @@ public class DatabaseInitializer implements CommandLineRunner {
             trainingFieldJpaRepository.save(generalField);
         }
 
+        //khởi tạo mã giảm giá
+        List<DiscountCode> discountCodes = discountCodeJpaRepository.findAll();
+        if (ObjectUtils.isEmpty(discountCodes)) {
+            DiscountCode discountCode = DiscountCode.builder()
+                    .codeName("HAPPYNEWYEAR")
+                    .discountValue(900000d)
+                    .discountUnit(Unit.VND)
+                    .activated(true)
+                    .startDate(LocalDate.now())
+                    .endDate(LocalDate.now().plusDays(30l))
+                    .build();
+            discountCodeJpaRepository.save(discountCode);
+        }
 
 
     }

@@ -231,7 +231,8 @@ $(document).ready(() => {
 
 });
 
-
+let chosenVideo = [];
+let chosenFile = [];
 
 function createLesson(sectionId, sectionTitle) {
     $('#left-section-content').empty();
@@ -323,44 +324,45 @@ function createLesson(sectionId, sectionTitle) {
     lessonContent = lessonContent.replace("[sectionTitle]", sectionTitle)
     $('#left-section-content').append(lessonContent);
 
+    $('#video-upload-btn').click(() => {
+        e.preventDefault();
+        $('#video-input').click();
+    });
+
+    $('#file-upload-btn').click(() => {
+        e.preventDefault();
+        $('#file-input').click();
+    });
+
+    $('#video-input').on("change", (event) => {
+        const tempVideo = event.target.files;
+        if (!tempVideo || tempVideo.length === 0) {
+            return;
+        }
+        chosenVideo = tempVideo[0];
+        if (chosenVideo) {
+            $('#video-status').text('Đã tải lên: ' + chosenVideo.name);
+        }
+        const videoBlob = new Blob([chosenVideo], {type: chosenVideo.type});
+        const videoUrl = URL.createObjectURL(videoBlob);
+    });
+
+    $('#file-input').on("change", (event) => {
+        const tempFiles = event.target.files;
+        if (!tempFiles || tempFiles.length === 0) {
+            return;
+        }
+        chosenFile = tempFiles[0];
+        if (chosenFile) {
+            $('#file-status').text('Đã tải lên: ' + chosenFile.name);
+        }
+        const fileBlob = new Blob([chosenFile], {type: chosenFile.type});
+        const fileUrl = URL.createObjectURL(fileBlob);
+    });
+
 }
 
-let chosenVideo = [];
-let chosenFile = [];
 
-$('#video-upload-btn').click(() => {
-    $('#video-input').click();
-});
-
-$('#file-upload-btn').click(() => {
-    $('#file-input').click();
-});
-
-$('#video-input').on("change", (event) => {
-    const tempVideo = event.target.files;
-    if (!tempVideo || tempVideo.length === 0) {
-        return;
-    }
-    chosenVideo = tempVideo[0];
-    if (chosenVideo) {
-        $('#video-status').text('Đã tải lên: ' + chosenVideo.name);
-    }
-    const videoBlob = new Blob([chosenVideo], {type: chosenVideo.type});
-    const videoUrl = URL.createObjectURL(videoBlob);
-});
-
-$('#file-input').on("change", (event) => {
-    const tempFiles = event.target.files;
-    if (!tempFiles || tempFiles.length === 0) {
-        return;
-    }
-    chosenFile = tempFiles[0];
-    if (chosenFile) {
-        $('#file-status').text('Đã tải lên: ' + chosenFile.name);
-    }
-    const fileBlob = new Blob([chosenFile], {type: chosenFile.type});
-    const fileUrl = URL.createObjectURL(fileBlob);
-});
 
 function saveLessonContent(sectionId) {
     //validate form thông tin chung của khóa học
@@ -406,8 +408,10 @@ function saveLessonContent(sectionId) {
         requestBody[contentData[i].name] = contentData[i].value;
     }
     requestBody["sectionId"] = sectionId;
+    //sử dụng formData để đóng gói dữ liệu
     const formData = new FormData();
-    // formData.append("file", chosenFile, chosenFile.name);
+    formData.append("file", chosenFile);
+    formData.append("video", chosenVideo);
     formData.append("lessonRequest", JSON.stringify(requestBody));
     //call api lên backend
     $.ajax({
@@ -443,4 +447,6 @@ function saveLessonContent(sectionId) {
     });
 
 }
+
+
 

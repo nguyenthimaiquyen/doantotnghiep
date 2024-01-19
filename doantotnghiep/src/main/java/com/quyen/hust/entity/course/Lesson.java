@@ -23,15 +23,18 @@ public class Lesson extends BaseEntity {
     private String content;
 
     @Column(name = "embedded_url")
+    @Lob
     private String embeddedUrl;
 
     @Column(name = "video_url")
+    @Lob
     private String videoUrl;
 
     @Column(name = "file_url")
+    @Lob
     private String fileUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "section_id", nullable = false)

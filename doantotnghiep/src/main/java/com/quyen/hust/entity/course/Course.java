@@ -27,9 +27,11 @@ public class Course extends BaseEntity {
     private String title;
 
     @Column
+    @Lob
     private String description;
 
     @Column(name = "learning_objectives")
+    @Lob
     private String learningObjectives;
 
     @Column(name = "course_fee")

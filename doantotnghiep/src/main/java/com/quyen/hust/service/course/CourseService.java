@@ -81,6 +81,9 @@ public class CourseService {
         Optional<Teacher> teacher = teacherJpaRepository.findById(request.getTeacherID());
         Optional<TrainingField> trainingField = trainingFieldJpaRepository.findById(request.getTrainingFieldID());
         Optional<DiscountCode> discountCode = discountCodeJpaRepository.findById(request.getDiscountID());
+//        if (!discountCode.isPresent()) {
+//
+//        }
         Course course = Course.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())

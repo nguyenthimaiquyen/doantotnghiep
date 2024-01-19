@@ -25,7 +25,7 @@ public class SectionController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getSections(@PathVariable Long id) throws SectionNotFoundException, CourseNotFoundException {
+    public ResponseEntity<?> getSections(@PathVariable Long id) {
         return ResponseEntity.ok(sectionService.getSections(id));
     }
 
