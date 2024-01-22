@@ -1,7 +1,8 @@
 $(document).ready(() => {
 
-
     let deleteCourseId = -1;
+    let courseId = -1;
+    let courseStatus = "";
 
     //thêm nội dung nếu role là admin
     let adminData = `
@@ -24,6 +25,7 @@ $(document).ready(() => {
 
     const userInfo = JSON.parse(localStorage.getItem('user-info'));
     const userRole = userInfo ? userInfo.roles : null;
+    const userEmail = userInfo ? userInfo.email :null;
     if (userRole == 'ADMIN') {
         $('#course-common-data').append(adminData);
     }
@@ -131,7 +133,7 @@ $(document).ready(() => {
                     if (!data || data.length === 0) {
                         return;
                     }
-                    let teachersOptions = "<option value=''>--</option>";
+                    let teachersOptions = "";
                     for (let i = 0; i < data.length; i++) {
                         teachersOptions += "<option value='" + data[i].id + "'>" + data[i].user.fullName + "</option>";
                     }
@@ -158,7 +160,7 @@ $(document).ready(() => {
         getTeachers();
     }, 900000); // 15p chạy 1 lần
 
-//1. chức năng thêm sửa xóa thông tin chung của khóa học
+    //1. chức năng thêm sửa xóa thông tin chung của khóa học
 
     //validate form thông tin chung của khóa học
     const validator = $('#course-form').validate({
@@ -203,7 +205,7 @@ $(document).ready(() => {
         }
     });
 
-    //xử lý ấn menu của course
+    //mở modal tạo mới khóa học
     $('.create-course-btn').click(function () {
         $('#course-modal #save-course-btn').attr("action-type", "CREATE");
         $('#course-modal').modal('show');
@@ -260,8 +262,8 @@ $(document).ready(() => {
         $('#course-form #courseFeeUnit').val(course.courseFeeUnit);
         $('#course-form #difficultyLevel').val(course.difficultyLevel);
         $('#course-form #trainingFieldID').val(course.trainingField.id);
-        $('#course-form #teacherID').val(course.teacher.id);
-        $('#course-form #discountID').val(course.discountCode.id);
+        $('#course-form #teacherID').val(course.teacher ? course.teacher.id : '');
+        $('#course-form #discountID').val(course.discountCode ? course.discountCode.id : '');
 
         $('#course-modal #save-course-btn').attr('action-type', "UPDATE");
         $('#course-modal #save-course-btn').attr("course-id", updateCourseId);
@@ -291,6 +293,9 @@ $(document).ready(() => {
         const method = actionType == "CREATE" ? "POST" : "PUT";
         if (method == "PUT") {
             courseRequestBody["id"] = courseId;
+        }
+        if (userRole == "TEACHER") {
+            courseRequestBody["teacherEmail"] = userEmail;
         }
         //call api lên backend
         $.ajax({
@@ -328,7 +333,6 @@ $(document).ready(() => {
         $("#course-modal #save-course-btn").attr("action-type", "");
         $('#course-modal #save-course-btn').attr("course-id", "");
     });
-
 
     //show modal to delete a course
     $('.delete-course-btn').click(function (event) {
@@ -369,7 +373,130 @@ $(document).ready(() => {
         });
     });
 
+    //reset form
+    $('#course-modal').on('hidden.bs.modal', function () {
+        $("#course-modal #save-course-btn").attr("action-type", "");
+        $('#course-modal #save-course-btn').attr("course-id", "");
+        $('#course-form').trigger("reset");
+        $('#course-form input').removeClass("error");
+        validator.resetForm();
+    });
+
+    //yêu cầu thay đổi trạng thái khóa học
+    $('.course-status-btn').click((event) => {
+        courseId = parseInt($(event.currentTarget).attr("course-id"));
+        courseStatus = $(event.currentTarget).attr("course-status");
+        switch (courseStatus) {
+            case 'DRAFT':
+                $('#course-review-modal').modal('show');
+                break;
+            case 'WAITING_FOR_REVIEW':
+                $('#course-approve-modal').modal('show');
+                break;
+            case 'APPROVED':
+                $('#course-publish-modal').modal('show');
+                break;
+            case 'PUBLISHED':
+                $('#course-unpublish-modal').modal('show');
+                break;
+            case 'REJECTED':
+            case 'UNPUBLISHED':
+                $('#course-archive-modal').modal('show');
+                break;
+            default:
+                $('#course-review-modal').modal('show');
+        }
+    });
+
+    $('#review-course-btn').click(() => {
+        const courseStatusRequestBody = {};
+        courseStatusRequestBody["courseStatus"] = 'WAITING_FOR_REVIEW';
+        changeCourseStatus(courseId, courseStatusRequestBody)
+    });
+
+    $('#approve-course-btn').click(() => {
+        const courseStatusRequestBody = {};
+        courseStatusRequestBody["courseStatus"] = 'APPROVED';
+        changeCourseStatus(courseId, courseStatusRequestBody)
+    });
+
+    $('#reject-course-btn').click(() => {
+        const courseStatusRequestBody = {};
+        courseStatusRequestBody["courseStatus"] = 'REJECTED';
+        changeCourseStatus(courseId, courseStatusRequestBody)
+    });
+
+    $('#publish-course-btn').click(() => {
+        const courseStatusRequestBody = {};
+        courseStatusRequestBody["courseStatus"] = 'PUBLISHED';
+        changeCourseStatus(courseId, courseStatusRequestBody)
+    });
+
+    $('#unpublish-course-btn').click(() => {
+        const courseStatusRequestBody = {};
+        courseStatusRequestBody["courseStatus"] = 'UNPUBLISHED';
+        changeCourseStatus(courseId, courseStatusRequestBody)
+    });
+
+    $('#archive-course-btn').click(() => {
+        const courseStatusRequestBody = {};
+        courseStatusRequestBody["courseStatus"] = 'ARCHIVED';
+        changeCourseStatus(courseId, courseStatusRequestBody)
+    });
 
 
 });
 
+function getCourseMessage(courseStatus) {
+    switch (courseStatus) {
+        case 'WAITING_FOR_REVIEW':
+            return 'Khóa học đã được admin xem xét';
+        case 'APPROVED':
+            return 'Khóa học đã được phê duyệt';
+        case 'PUBLISHED':
+            return 'Khóa học đã được công bố thành công';
+        case 'UNPUBLISHED':
+            return 'Khóa học đã được dừng công bố';
+        case 'ARCHIVED':
+            return 'Khóa học đã được đưa vào lưu trữ';
+        case 'REJECTED':
+            return 'Khóa học đã bị từ chối';
+        default:
+            return 'Khóa học đã được xem xét lại';
+    }
+}
+
+function changeCourseStatus(courseId, courseStatusRequestBody) {
+    $.ajax({
+        url: "/api/v1/courses/" + courseId,
+        type: "PUT",
+        data: JSON.stringify(courseStatusRequestBody),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            const courseMessage = getCourseMessage(courseStatusRequestBody.courseStatus);
+            $.toast({
+                heading: 'Thành công',
+                text: courseMessage,
+                icon: 'success',
+                showHideTransition: 'fade',
+                position: 'top-right',
+                loader: false,
+                bgColor: '#4CAF50'
+            });
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        },
+        error: function (err) {
+            $.toast({
+                heading: 'Lỗi',
+                text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                icon: 'error',
+                showHideTransition: 'fade',
+                position: 'top-right',
+                loader: false,
+                bgColor: '#FF0000'
+            });
+        }
+    });
+}

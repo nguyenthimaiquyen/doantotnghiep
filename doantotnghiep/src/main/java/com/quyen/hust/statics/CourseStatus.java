@@ -17,4 +17,5 @@ public enum CourseStatus {
 
     public String code;
     public String name;
+
 }

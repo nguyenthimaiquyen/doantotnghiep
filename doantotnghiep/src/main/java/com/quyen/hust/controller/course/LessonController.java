@@ -31,8 +31,8 @@ public class LessonController {
 
     @PostMapping
     public ResponseEntity<?> createLesson(@RequestPart("lessonRequest") String lessonRequest,
-                                          @RequestPart("file") MultipartFile file,
-                                          @RequestPart("video") MultipartFile video) {
+                                          @RequestPart(value = "file", required = false) MultipartFile file,
+                                          @RequestPart(value = "video", required = false) MultipartFile video) {
         LessonRequest request = gson.fromJson(lessonRequest, LessonRequest.class);
         lessonService.saveLesson(request, file, video);
         return ResponseEntity.ok(null);
@@ -40,8 +40,8 @@ public class LessonController {
 
     @PutMapping
     public ResponseEntity<?> updateLesson(@RequestPart("lessonRequest") String lessonRequest,
-                                          @RequestPart("file") MultipartFile file,
-                                          @RequestPart("video") MultipartFile video) {
+                                          @RequestPart(value = "file", required = false) MultipartFile file,
+                                          @RequestPart(value = "video", required = false) MultipartFile video) {
         LessonRequest request = gson.fromJson(lessonRequest, LessonRequest.class);
         lessonService.saveLesson(request, file, video);
         return ResponseEntity.ok(null);

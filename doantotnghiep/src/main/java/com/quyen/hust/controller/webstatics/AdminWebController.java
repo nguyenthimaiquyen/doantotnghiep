@@ -12,6 +12,7 @@ import com.quyen.hust.service.admin.TrainingFieldService;
 import com.quyen.hust.service.course.CourseService;
 import com.quyen.hust.service.course.SectionService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,6 @@ public class AdminWebController {
     private final DiscountCodeService discountCodeService;
     private final CourseService courseService;
     private final SectionService sectionService;
-
 
     @GetMapping("/training-fields")
     public String getTrainingFieldManagementPage(Model model) {
@@ -52,7 +52,7 @@ public class AdminWebController {
         return "admin/account/manage-account";
     }
 
-    @GetMapping("/courses/analysis/admin")
+    @GetMapping("/courses/analysis")
     public String getAdminDashboardPage(Model model) {
         return "admin/dashboard/dashboard";
     }

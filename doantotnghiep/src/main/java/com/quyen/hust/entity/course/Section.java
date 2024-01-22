@@ -22,7 +22,7 @@ public class Section extends BaseEntity {
 
     @OneToMany(mappedBy = "section", fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
+            CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true)
     private List<Lesson> lessons;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {

@@ -25,4 +25,7 @@ public class LessonResponse {
     private String videoUrl;
 
     private String fileUrl;
+
+    private SectionResponse section;
+
 }

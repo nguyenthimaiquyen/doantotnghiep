@@ -54,17 +54,17 @@
                                 <tr th:each="course : ${courses}">
                                     <td class="text-center" th:text="${course.id}"></td>
                                     <td th:text="${course.title}"></td>
-                                    <td th:text="${course.courseFee}"></td>
-                                    <td th:text="${course.courseFeeUnit}"></td>
-                                    <td th:text="${course.difficultyLevel.name}"></td>
-                                    <td th:text="${course.teacher.user.fullName}"></td>
-                                    <td th:text="${course.discountCode.codeName}"></td>
-                                    <td th:text="${course.trainingField.fieldName}"></td>
+                                    <td class="text-center" th:text="${course.courseFee}"></td>
+                                    <td class="text-center" th:text="${course.courseFeeUnit}"></td>
+                                    <td class="text-center" th:text="${course.difficultyLevel.name}"></td>
+                                    <td class="text-center" th:text="${course.teacher.user.fullName}"></td>
+                                    <td class="text-center"
+                                        th:text="${course.discountCode != null ? course.discountCode.codeName : '--'}"></td>
+                                    <td class="text-center" th:text="${course.trainingField.fieldName}"></td>
                                     <td>
-                                                    <span class="badge badge-success mr-1"
-                                                          th:each="type: ${course.courseStatus}">
-                                                        <span th:text="${type.name}"></span>
-                                                    </span>
+                                        <span class="badge badge-success mr-1" th:each="type: ${course.courseStatus}">
+                                            <span th:text="${type.name}"></span>
+                                        </span>
                                     </td>
                                     <td>
                                         <div class="dropdown dropleft">
@@ -76,13 +76,23 @@
                                                         th:attr="course-id=${course.id}">Cập nhật khóa học
                                                 </button>
                                                 <button class="dropdown-item add-section-btn focused cursor-pointer"
-                                                        th:attr="course-id=${course.id}">Thêm chương trình học
+                                                        th:attr="course-id=${course.id}">Cập nhật chương trình học
                                                 </button>
-                                                <button class="dropdown-item review-course-btn focused cursor-pointer"
-                                                        th:attr="course-id=${course.id}">Yêu cầu phê duyệt
+                                                <button class="dropdown-item focused cursor-pointer course-status-btn"
+                                                        th:attr="course-id=${course.id}, course-status=${course.courseStatus.code}">
+                                                    <span th:switch="${course.courseStatus.code}">
+                                                        <span th:case="'DRAFT'">Yêu cầu xem xét khóa học</span>
+                                                        <span th:case="'WAITING_FOR_REVIEW'">Chấp thuận/ Từ chối khóa học</span>
+                                                        <span th:case="'APPROVED'">Công bố khóa học</span>
+                                                        <span th:case="'REJECTED'">Lưu trữ khóa học</span>
+                                                        <span th:case="'UNPUBLISHED'">Lưu trữ khóa học</span>
+                                                        <span th:case="'PUBLISHED'">Hủy công bố khóa học</span>
+                                                        <span th:case="'ARCHIVED'">Xem xét lại khóa học</span>
+                                                    </span>
                                                 </button>
                                                 <button class="dropdown-item delete-course-btn focused cursor-pointer"
-                                                        th:attr="course-id=${course.id}">Xóa khóa học
+                                                        th:attr="course-id=${course.id}"
+                                                        th:if="${course.courseStatus.code == 'DRAFT'}">Xóa khóa học
                                                 </button>
                                             </div>
                                         </div>
@@ -154,6 +164,7 @@
 </main>
 
 <!-- ====== footer-area-start ============================================ -->
+
 <footer th:replace="~{admin/fragments/admin-footer :: admin-footer}"></footer>
 
 <!-- back top -->
@@ -162,8 +173,17 @@
     </div>
 </div>
 
-<div th:replace="~{course/course-delete-modal :: course-delete-modal}"></div>
-<div th:replace="~{course/course-modal :: course-modal}"></div>
+<div th:replace="~{course/modal/course-delete-modal :: course-delete-modal}"></div>
+<div th:replace="~{course/modal/course-modal :: course-modal}"></div>
+<div th:replace="~{course/modal/course-approve-modal :: course-approve-modal}"></div>
+<div th:replace="~{course/modal/course-publish-modal :: course-publish-modal}"></div>
+<div th:replace="~{course/modal/course-review-modal :: course-review-modal}"></div>
+<div th:replace="~{course/modal/course-unpublish-modal :: course-unpublish-modal}"></div>
+<div th:replace="~{course/modal/course-archive-modal :: course-archive-modal}"></div>
+
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
+
 </body>
+
+<script src="/js/course/course.js"></script>
 </html>

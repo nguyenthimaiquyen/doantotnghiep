@@ -75,7 +75,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         //khởi tạo mã giảm giá
         List<DiscountCode> discountCodes = discountCodeJpaRepository.findAll();
-        if (ObjectUtils.isEmpty(discountCodes)) {
+        if (discountCodes.isEmpty()) {
             DiscountCode discountCode = DiscountCode.builder()
                     .codeName("HAPPYNEWYEAR")
                     .discountValue(900000d)

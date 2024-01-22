@@ -4,6 +4,7 @@ $(document).ready(() => {
     //hiển thị tên người dùng khi chỉnh sửa hồ sơ
     const userInfo = JSON.parse(localStorage.getItem('user-info'));
     const fullName = userInfo ? userInfo.fullName : null;
+    const role = userInfo ? userInfo.roles : null;
 
     if (fullName) {
         $('#profile-fullName').val(fullName);
@@ -261,5 +262,39 @@ $(document).ready(() => {
             }
         });
     });
+
+    if (role == "TEACHER") {
+        let teacherData = `
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-expertise">Chuyên ngành giảng dạy</label>
+                                                            <input type="text" placeholder="Nhập chuyên ngành giảng dạy"
+                                                                   class="form-control w-100"
+                                                                   id="profile-expertise" name="profile-expertise">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="checkout-form-list mb-3">
+                                                            <label for="profile-experience">Số năm kinh nghiệm</label>
+                                                            <input type="number" placeholder="Nhập số năm kinh nghiệm"
+                                                                   class="form-control w-100"
+                                                                   id="profile-experience" name="profile-experience">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="custom-file pmd-custom-file-filled my-2">
+                                                            <input type="file" class="custom-file-input" id="profile-degree">
+                                                            <label class="custom-file-label" for="profile-avatar">Tải bằng đại học</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12 my-2">
+                                                        <div class="custom-file pmd-custom-file-filled my-2">
+                                                            <input type="file" class="custom-file-input" id="profile-certification">
+                                                            <label class="custom-file-label" for="profile-avatar">Tải chứng chỉ</label>
+                                                        </div>
+                                                    </div>                                                   
+        `;
+        $('#profile-data').append(teacherData);
+    }
 
 });

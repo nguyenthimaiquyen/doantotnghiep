@@ -58,10 +58,15 @@ public class Course extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private DifficultyLevel difficultyLevel;
 
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true)
+    private List<Section> sections;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "teacher_id", nullable = true)
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {

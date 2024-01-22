@@ -11,7 +11,7 @@ function setHeader() {
         if (userRole == 'ADMIN') {
             headerMenu = `
                                 <ul class="d-block">
-                                    <li><a class="mega-title text-dark" href="/courses/analysis/admin">Dashboard</a></li>
+                                    <li><a class="mega-title text-dark" href="/courses/analysis">Dashboard</a></li>
                                     <li><a class="text-dark" href="/courses/management">Khóa học</a></li>
                                     <li ><a class="text-dark" href="/training-fields">Lĩnh vực</a></li>
                                     <li ><a class="text-dark" href="/accounts">Tài khoản</a>
@@ -35,7 +35,7 @@ function setHeader() {
         } else if (userRole == 'TEACHER') {
             headerMenu = `
                                 <ul class="d-block text-dark">
-                                    <li><a class="mega-title text-dark" href="/courses/analysis/teacher">Dashboard</a></li>
+                                    <li><a class="mega-title text-dark" href="/courses/analysis">Dashboard</a></li>
                                     <li><a class="text-dark" href="/courses/management">Khóa học</a></li>         
                                 </ul>
             `;

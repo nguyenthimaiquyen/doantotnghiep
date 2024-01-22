@@ -2,6 +2,7 @@ package com.quyen.hust.controller.course;
 
 import com.quyen.hust.exception.CourseNotFoundException;
 import com.quyen.hust.model.request.course.CourseRequest;
+import com.quyen.hust.model.request.course.CourseStatusRequest;
 import com.quyen.hust.model.response.course.CourseResponse;
 import com.quyen.hust.model.response.teacher.TeacherResponse;
 import com.quyen.hust.service.course.CourseService;
@@ -71,6 +72,10 @@ public class CourseController {
         return ResponseEntity.ok(null);
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<?> changeCourseStatus(@PathVariable Long id, @RequestBody @Valid CourseStatusRequest courseStatus) {
+        courseService.changeCourseStatus(id, courseStatus);
+        return ResponseEntity.ok(null);
+    }
 
 }

@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: html_head(pageTitle = 'Online Courses - My Cart')}"></head>
+<head th:replace="~{fragments/head :: html_head(pageTitle = 'Online Courses - My Wishlist')}"></head>
 
 <body>
 
@@ -11,9 +11,23 @@
 
 <main>
     <!-- ======other-page-area-start=========================================== -->
-    <div th:replace="~{admin/fragments/admin-header :: admin-header}"></div>
-
-
+    <div class="other-page-area">
+        <div class="page-height  primary-overlay d-flex align-items-center position-relative">
+            <div class="other-page-bg position-absolute w-100 h-100 bg-no-repeat bg-cover z-index-1"
+                 data-background="/images/about-page/about-page1.jpg"></div><!-- home2 slider bg -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="page-content text-center mt-110">
+                            <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
+                                data-aos-delay="150"><span class="f-700">Mong muốn</span></h1>
+                        </div>
+                    </div><!-- /col -->
+                </div><!-- /row -->
+            </div><!-- /container -->
+        </div>
+    </div>
+    <!-- slider-area-end  -->
 
     <!-- ====== cart-area-start=============================================== -->
     <div class="cart-area mt-100 mb-100">

@@ -72,7 +72,7 @@ public class SectionService {
         if (sectionOptional.isPresent()) {
             Section section = sectionOptional.get();
             List<Lesson> lessons = lessonJpaRepository.findBySectionId(section.getId());
-            lessons.forEach(lesson -> lessonJpaRepository.deleteById(lesson.getId()));
+            lessonJpaRepository.deleteAll(lessons);
         }
         sectionJpaRepository.deleteById(id);
     }

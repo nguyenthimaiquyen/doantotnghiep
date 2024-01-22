@@ -31,12 +31,5 @@ public class Teacher extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinTable(name = "teachers_training_fields",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "training_field_id"))
-    private List<TrainingField> trainingFields;
 
 }

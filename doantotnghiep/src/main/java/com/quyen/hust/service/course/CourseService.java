@@ -4,10 +4,13 @@ package com.quyen.hust.service.course;
 import com.quyen.hust.entity.admin.DiscountCode;
 import com.quyen.hust.entity.admin.TrainingField;
 import com.quyen.hust.entity.course.Course;
+import com.quyen.hust.entity.course.Lesson;
+import com.quyen.hust.entity.course.Section;
 import com.quyen.hust.entity.teacher.Teacher;
 import com.quyen.hust.entity.user.User;
 import com.quyen.hust.exception.CourseNotFoundException;
 import com.quyen.hust.model.request.course.CourseRequest;
+import com.quyen.hust.model.request.course.CourseStatusRequest;
 import com.quyen.hust.model.response.admin.DiscountCodeResponse;
 import com.quyen.hust.model.response.admin.TrainingFieldResponse;
 import com.quyen.hust.model.response.course.CourseDataResponse;
@@ -18,6 +21,8 @@ import com.quyen.hust.model.response.teacher.TeacherResponse;
 import com.quyen.hust.repository.admin.DiscountCodeJpaRepository;
 import com.quyen.hust.repository.admin.TrainingFieldJpaRepository;
 import com.quyen.hust.repository.course.CourseJpaRepository;
+import com.quyen.hust.repository.course.LessonJpaRepository;
+import com.quyen.hust.repository.course.SectionJpaRepository;
 import com.quyen.hust.repository.teacher.TeacherJpaRepository;
 import com.quyen.hust.repository.user.UserJpaRepository;
 import com.quyen.hust.statics.CourseStatus;
@@ -38,8 +43,9 @@ public class CourseService {
     private final CourseJpaRepository courseJpaRepository;
     private final TrainingFieldJpaRepository trainingFieldJpaRepository;
     private final DiscountCodeJpaRepository discountCodeJpaRepository;
-    private final UserJpaRepository userJpaRepository;
     private final TeacherJpaRepository teacherJpaRepository;
+    private final SectionJpaRepository sectionJpaRepository;
+    private final LessonJpaRepository lessonJpaRepository;
 
     public List<CourseFeeUnitResponse> getCourseFeeUnit() {
         return List.of(
@@ -78,12 +84,18 @@ public class CourseService {
 
     @Transactional
     public void saveCourse(CourseRequest request) {
-        Optional<Teacher> teacher = teacherJpaRepository.findById(request.getTeacherID());
+        Teacher teacher = null;
+        if (!ObjectUtils.isEmpty(request.getTeacherEmail())) {
+            teacher = teacherJpaRepository.findByUserEmail(request.getTeacherEmail()).get();
+        }
+        if (request.getTeacherID() != null) {
+            teacher = teacherJpaRepository.findById(request.getTeacherID()).get();
+        }
+        Optional<DiscountCode> discountCode = Optional.empty();
+        if (request.getDiscountID() != null) {
+            discountCode = discountCodeJpaRepository.findById(request.getDiscountID());
+        }
         Optional<TrainingField> trainingField = trainingFieldJpaRepository.findById(request.getTrainingFieldID());
-        Optional<DiscountCode> discountCode = discountCodeJpaRepository.findById(request.getDiscountID());
-//        if (!discountCode.isPresent()) {
-//
-//        }
         Course course = Course.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -91,23 +103,25 @@ public class CourseService {
                 .courseFee(request.getCourseFee())
                 .courseFeeUnit(request.getCourseFeeUnit())
                 .difficultyLevel(request.getDifficultyLevel())
-                .trainingField(trainingField.get())
-                .teacher(teacher.get())
-                .discountCode(discountCode.get())
+                .trainingField(trainingField.orElse(null))
+                .teacher(teacher)
+                .discountCode(discountCode.orElse(null))
                 .build();
         if (!ObjectUtils.isEmpty(request.getId())) {
             //update course
-            Course courseNeedUpdate = courseJpaRepository.findById(request.getId()).get();
-            courseNeedUpdate.setTitle(request.getTitle());
-            courseNeedUpdate.setDescription(request.getDescription());
-            courseNeedUpdate.setLearningObjectives(request.getLearningObjectives());
-            courseNeedUpdate.setCourseFee(request.getCourseFee());
-            courseNeedUpdate.setCourseFeeUnit(request.getCourseFeeUnit());
-            courseNeedUpdate.setDifficultyLevel(request.getDifficultyLevel());
-            courseNeedUpdate.setTrainingField(trainingField.get());
-            courseNeedUpdate.setTeacher(teacher.get());
-            courseNeedUpdate.setDiscountCode(discountCode.get());
-//            courseJpaRepository.save(courseNeedUpdate);
+            Course courseNeedUpdate = courseJpaRepository.findById(request.getId()).orElse(null);
+            if (courseNeedUpdate != null) {
+                courseNeedUpdate.setTitle(request.getTitle());
+                courseNeedUpdate.setDescription(request.getDescription());
+                courseNeedUpdate.setLearningObjectives(request.getLearningObjectives());
+                courseNeedUpdate.setCourseFee(request.getCourseFee());
+                courseNeedUpdate.setCourseFeeUnit(request.getCourseFeeUnit());
+                courseNeedUpdate.setDifficultyLevel(request.getDifficultyLevel());
+                courseNeedUpdate.setTrainingField(trainingField.orElse(null));
+                courseNeedUpdate.setTeacher(teacher);
+                courseNeedUpdate.setDiscountCode(discountCode.orElse(null));
+                courseJpaRepository.save(courseNeedUpdate);
+            }
             return;
         }
         //create a new course
@@ -115,7 +129,18 @@ public class CourseService {
         courseJpaRepository.save(course);
     }
 
+    @Transactional
     public void deleteCourse(Long id) {
+        Optional<Course> courseOptional = courseJpaRepository.findById(id);
+        if (courseOptional.isPresent()) {
+            Course course = courseOptional.get();
+            List<Section> sections = sectionJpaRepository.findByCourseId(course.getId());
+            for (Section section : sections) {
+                List<Lesson> lessons = lessonJpaRepository.findBySectionId(section.getId());
+                lessonJpaRepository.deleteAll(lessons);
+            }
+            sectionJpaRepository.deleteAll(sections);
+        }
         courseJpaRepository.deleteById(id);
     }
 
@@ -135,7 +160,6 @@ public class CourseService {
                                 .user(course.getTeacher().getUser())
                                 .yearsOfExperience(course.getTeacher().getYearsOfExperience())
                                 .teachingExpertise(course.getTeacher().getTeachingExpertise())
-                                .trainingFields(course.getTeacher().getTrainingFields())
                                 .build())
                         .difficultyLevel(course.getDifficultyLevel())
                         .trainingField(course.getTrainingField())
@@ -162,11 +186,21 @@ public class CourseService {
                                 .user(course.getTeacher().getUser())
                                 .yearsOfExperience(course.getTeacher().getYearsOfExperience())
                                 .teachingExpertise(course.getTeacher().getTeachingExpertise())
-                                .trainingFields(course.getTeacher().getTrainingFields())
                                 .build())
                         .courseStatus(course.getCourseStatus())
                         .trainingField(course.getTrainingField())
                         .build()
         ).orElseThrow(() -> new CourseNotFoundException("Course with id " + id + " could not be found!"));
     }
+
+    public void changeCourseStatus(Long courseId, CourseStatusRequest status) {
+        Course course = courseJpaRepository.findById(courseId).orElse(null);
+        if (ObjectUtils.isEmpty(course)) {
+            return;
+        }
+        course.setCourseStatus(status.getCourseStatus());
+        courseJpaRepository.save(course);
+    }
+
+
 }

@@ -5,6 +5,7 @@ import com.quyen.hust.entity.course.Section;
 import com.quyen.hust.exception.LessonNotFoundException;
 import com.quyen.hust.model.request.course.LessonRequest;
 import com.quyen.hust.model.response.course.LessonResponse;
+import com.quyen.hust.model.response.course.SectionResponse;
 import com.quyen.hust.repository.course.LessonJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import lombok.AllArgsConstructor;
@@ -28,8 +29,13 @@ public class LessonService {
     private final LessonJpaRepository lessonJpaRepository;
 
 
-    public LessonResponse getLessonDetails(Long id) throws LessonNotFoundException {
-        return lessonJpaRepository.findById(id).map(
+    public LessonResponse getLessonDetails(Long lessonId) throws LessonNotFoundException {
+        Section section = lessonJpaRepository.findById(lessonId).get().getSection();
+        SectionResponse sectionResponse = SectionResponse.builder()
+                .id(section.getId())
+                .title(section.getTitle())
+                .build();
+        return lessonJpaRepository.findById(lessonId).map(
                 lesson -> LessonResponse.builder()
                         .id(lesson.getId())
                         .title(lesson.getTitle())
@@ -37,8 +43,9 @@ public class LessonService {
                         .embeddedUrl(lesson.getEmbeddedUrl())
                         .fileUrl(lesson.getFileUrl())
                         .videoUrl(lesson.getVideoUrl())
+                        .section(sectionResponse)
                         .build()
-        ).orElseThrow(() -> new LessonNotFoundException("Lesson with id " + id + " could not be found!"));
+        ).orElseThrow(() -> new LessonNotFoundException("Lesson with id " + lessonId + " could not be found!"));
     }
 
     public List<LessonResponse> getLessons(Long sectionId) {
@@ -56,28 +63,35 @@ public class LessonService {
 
     public void saveLesson(LessonRequest request, MultipartFile file, MultipartFile video) {
         //lưu file, video
-        String filePath = "course_data" + File.separator + "file" + File.separator + file.getOriginalFilename();
-        try {
-            Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (file != null) {
+            String filePath = "course_data" + File.separator + "file" + File.separator + file.getOriginalFilename();
+            try {
+                Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        String videoPath = "course_data" + File.separator + "video" + File.separator + video.getOriginalFilename();
-        try {
-            Files.copy(video.getInputStream(), Paths.get(videoPath), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (video != null) {
+            String videoPath = "course_data" + File.separator + "video" + File.separator + video.getOriginalFilename();
+            try {
+                Files.copy(video.getInputStream(), Paths.get(videoPath), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
         Optional<Section> sectionOptional = sectionJpaRepository.findById(request.getSectionId());
         Lesson lesson = Lesson.builder()
                 .title(request.getTitle())
                 .content(request.getContent())
                 .section(sectionOptional.get())
                 .embeddedUrl(request.getEmbeddedUrl())
-                .videoUrl(video.getOriginalFilename())
-                .fileUrl(file.getOriginalFilename())
                 .build();
+        if (file != null) {
+            lesson.setFileUrl(file.getOriginalFilename());
+        }
+        if (video != null) {
+            lesson.setVideoUrl(video.getOriginalFilename());
+        }
 
         if (!ObjectUtils.isEmpty(request.getId())) {
             //update lesson
@@ -85,8 +99,12 @@ public class LessonService {
             lessonNeedUpdate.setTitle(request.getTitle());
             lessonNeedUpdate.setContent(request.getContent());
             lessonNeedUpdate.setEmbeddedUrl(request.getEmbeddedUrl());
-            lessonNeedUpdate.setFileUrl(file.getOriginalFilename());
-            lessonNeedUpdate.setVideoUrl(video.getOriginalFilename());
+            if (file != null) {
+                lessonNeedUpdate.setFileUrl(file.getOriginalFilename());
+            }
+            if (video != null) {
+                lessonNeedUpdate.setVideoUrl(video.getOriginalFilename());
+            }
             lessonJpaRepository.save(lessonNeedUpdate);
             return;
         }
@@ -94,7 +112,13 @@ public class LessonService {
         lessonJpaRepository.save(lesson);
     }
 
-    public void deleteLesson(Long id) {
-        lessonJpaRepository.deleteById(id);
+    public void deleteLesson(Long lessonId) {
+        Optional<Lesson> lessonOptional = lessonJpaRepository.findById(lessonId);
+        if (lessonOptional.isPresent()) {
+            Section section = lessonOptional.get().getSection();
+            List<Lesson> lessons = section.getLessons();
+            lessons.removeIf(lesson -> lesson.getId().equals(lessonId));
+            sectionJpaRepository.save(section);
+        }
     }
 }
