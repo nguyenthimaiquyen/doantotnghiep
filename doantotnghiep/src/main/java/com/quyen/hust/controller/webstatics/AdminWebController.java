@@ -25,8 +25,7 @@ import java.util.List;
 public class AdminWebController {
     private final TrainingFieldService trainingFieldService;
     private final DiscountCodeService discountCodeService;
-    private final CourseService courseService;
-    private final SectionService sectionService;
+
 
     @GetMapping("/training-fields")
     public String getTrainingFieldManagementPage(Model model) {
@@ -51,33 +50,6 @@ public class AdminWebController {
     public String getAccountManagementPage(Model model) {
         return "admin/account/manage-account";
     }
-
-    @GetMapping("/courses/analysis")
-    public String getAdminDashboardPage(Model model) {
-        return "admin/dashboard/dashboard";
-    }
-
-    @GetMapping("/courses/management")
-    public String getCourseManagementPage(Model model) {
-        List<CourseDataResponse> courses = courseService.getAll();
-        model.addAttribute("courses", courses);
-        return "course/course-management";
-    }
-
-    @GetMapping("/courses/creation")
-    public String getCourseCreationPage(Model model) {
-        return "course/course-creation";
-    }
-
-    @GetMapping("/courses/{id}/sections")
-    public String getSectionCreationPage(Model model, @PathVariable Long id) throws CourseNotFoundException {
-        List<SectionResponse> sections = sectionService.getSections(id);
-        CourseDataResponse courseDetails = courseService.getCourseDetails(id);
-        model.addAttribute("courseTitle", courseDetails.getTitle());
-        model.addAttribute("sections", sections);
-        return "course/section-creation";
-    }
-
 
 
 }

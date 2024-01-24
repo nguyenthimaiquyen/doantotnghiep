@@ -25,10 +25,14 @@ import com.quyen.hust.repository.course.LessonJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import com.quyen.hust.repository.teacher.TeacherJpaRepository;
 import com.quyen.hust.repository.user.UserJpaRepository;
+import com.quyen.hust.security.CustomUserDetails;
+import com.quyen.hust.security.SecurityUtils;
 import com.quyen.hust.statics.CourseStatus;
 import com.quyen.hust.statics.DifficultyLevel;
 import com.quyen.hust.statics.Unit;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -84,12 +88,12 @@ public class CourseService {
 
     @Transactional
     public void saveCourse(CourseRequest request) {
-        Teacher teacher = null;
-        if (!ObjectUtils.isEmpty(request.getTeacherEmail())) {
-            teacher = teacherJpaRepository.findByUserEmail(request.getTeacherEmail()).get();
-        }
+        Teacher teacher;
         if (request.getTeacherID() != null) {
             teacher = teacherJpaRepository.findById(request.getTeacherID()).get();
+        } else {
+            Optional<Long> id = SecurityUtils.getCurrentUserLoginId();
+            teacher = id.isPresent() ? teacherJpaRepository.findById(id.get()).get() : teacherJpaRepository.findById(1L).get();
         }
         Optional<DiscountCode> discountCode = Optional.empty();
         if (request.getDiscountID() != null) {
@@ -146,6 +150,7 @@ public class CourseService {
 
 
     public List<CourseDataResponse> getAll() {
+        //dùng hàm search,
         return courseJpaRepository.findAll().stream().map(
                 course -> CourseDataResponse.builder()
                         .id(course.getId())
@@ -168,9 +173,8 @@ public class CourseService {
         ).collect(Collectors.toList());
     }
 
-
+    @Transactional
     public CourseDataResponse getCourseDetails(Long id) throws CourseNotFoundException {
-
         return courseJpaRepository.findById(id).map(
                 course -> CourseDataResponse.builder()
                         .id(course.getId())

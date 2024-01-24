@@ -1,11 +1,13 @@
 package com.quyen.hust.security;
 
+import com.quyen.hust.entity.admin.Role;
 import com.quyen.hust.entity.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
@@ -26,6 +28,10 @@ public class CustomUserDetails implements UserDetails {
 
     public Long getId() {
         return user.getId();
+    }
+
+    public Set<Role> getRoles() {
+        return user.getRoles();
     }
 
     @Override

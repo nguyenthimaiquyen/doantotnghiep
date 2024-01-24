@@ -35,14 +35,15 @@
                 <!-- Form thêm bài giảng -->
                 <div class="d-flex justify-content-center align-items-center mt-200">
                     <div class="text-center">
-                        <span class="btn-primary d-inline-block p-2 rounded-circle"><i class="fas fa-question-circle fa-5x"></i></span>
+                        <span class="btn-primary d-inline-block p-2 rounded-circle"><i
+                                class="fas fa-question-circle fa-5x"></i></span>
                         <div class="mt-3">Hãy thêm nội dung các bài học</div>
                     </div>
                 </div>
             </div>
 
             <!-- Cột bên phải -->
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 m-0 p-0 border-left"
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 m-0 p-0 border-left pl-30"
                  style="border-left: 4px solid #dee2e6; min-height: 100vh;">
                 <h6 class="mt-40 ml-30" th:text="${courseTitle}"></h6>
                 <div class="mt-4 ml-150 mb-4">
@@ -54,8 +55,12 @@
                 <!-- Danh sách chương -->
                 <div class="list-group">
                     <div th:each="section : ${sections}">
-                        <a class="list-group-item list-group-item-action pl-1 border-left-0 border-right-0" data-toggle="collapse" th:data-target="'#section' + ${section.id}">
-                            <span th:text="${section.title}" class="h6"></span>
+                        <a class="list-group-item list-group-item-action pl-2 border-left-0 border-right-0"
+                           data-toggle="collapse" th:data-target="'#section' + ${section.id}">
+                            <span class="h6 focused cursor-pointer sectionTitle">
+<!--                                <i th:id="'section' + ${section.id}" class="fas fa-caret-right"></i>-->
+                                <span th:text="${section.title}"></span>
+                            </span>
                             <div class="dropdown float-right dropleft">
                                 <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="dropdown">
                                     <i class="fas fa-ellipsis-v"></i>
@@ -68,34 +73,67 @@
                                             th:attr="section-id=${section.id}, section-title=${section.title}">Thêm bài
                                         học
                                     </button>
-<!--                                    <button class="dropdown-item hide-lesson-btn focused cursor-pointer"-->
-<!--                                            th:attr="section-id=${section.id}">Ẩn chương với học viên-->
-<!--                                    </button>-->
+                                    <button class="dropdown-item hide-lesson-btn focused cursor-pointer"
+                                            th:attr="section-id=${section.id}" th:if="${courseStatus.code != 'DRAFT'}">
+                                        Ẩn chương với học viên
+                                    </button>
                                     <button class="dropdown-item delete-section-btn focused cursor-pointer"
-                                            th:attr="section-id=${section.id}">Xóa chương
+                                            th:attr="section-id=${section.id}" th:if="${courseStatus.code == 'DRAFT'}">
+                                        Xóa chương
                                     </button>
                                 </div>
                             </div>
                         </a>
-                        <div th:if="${not #lists.isEmpty(section.lessons)}" class="collapse" th:id="'section' + ${section.id}">
+                        <div th:if="${not #lists.isEmpty(section.lessons)}" class="collapse"
+                             th:id="'section' + ${section.id}">
                             <div class="list-group">
-                                <a th:each="lesson : ${section.lessons}" class="list-group-item list-group-item-action border-0"
+                                <a th:each="lesson : ${section.lessons}"
+                                   class="list-group-item list-group-item-action border-0"
                                    data-toggle="collapse" th:data-target="'#lesson' + ${lesson.id}">
-                                    <span th:text="${lesson.title}" class="h6"></span>
+                                    <span th:text="${lesson.title}"></span>
                                     <div class="dropdown float-right dropleft">
                                         <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                data-toggle="dropdown">
-                                            <i class="fas fa-ellipsis-v"></i>
+                                                data-toggle="dropdown"><i class="fas fa-ellipsis-v"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <button class="dropdown-item update-lesson-btn focused cursor-pointer"
                                                     th:attr="lesson-id=${lesson.id}">Cập nhật bài học
                                             </button>
-<!--                                            <button class="dropdown-item hide-lesson-btn focused cursor-pointer"-->
-<!--                                                    th:attr="lesson-id=${lesson.id}">Ẩn bài học với học viên-->
-<!--                                            </button>-->
+                                            <button class="dropdown-item hide-lesson-btn focused cursor-pointer"
+                                                    th:attr="lesson-id=${lesson.id}"
+                                                    th:if="${courseStatus.code != 'DRAFT'}">Ẩn bài học với học viên
+                                            </button>
                                             <button class="dropdown-item delete-lesson-btn focused cursor-pointer"
-                                                    th:attr="lesson-id=${lesson.id}">Xóa bài học
+                                                    th:attr="lesson-id=${lesson.id}"
+                                                    th:if="${courseStatus.code == 'DRAFT'}">Xóa bài học
+                                            </button>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div th:if="${not #lists.isEmpty(section.quizzes)}" class="collapse"
+                             th:id="'section' + ${section.id}">
+                            <div class="list-group">
+                                <a th:each="quiz : ${section.quizzes}"
+                                   class="list-group-item list-group-item-action border-0"
+                                   data-toggle="collapse" th:data-target="'#lesson' + ${quiz.id}">
+                                    <span th:text="${quiz.title}"></span>
+                                    <div class="dropdown float-right dropleft">
+                                        <button class="btn btn-sm btn-outline-secondary" type="button"
+                                                data-toggle="dropdown"><i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <button class="dropdown-item update-quiz-btn focused cursor-pointer"
+                                                    th:attr="quiz-id=${quiz.id}">Cập nhật quiz
+                                            </button>
+                                            <button class="dropdown-item hide-quiz-btn focused cursor-pointer"
+                                                    th:attr="quiz-id=${quiz.id}"
+                                                    th:if="${courseStatus.code != 'DRAFT'}">Ẩn quiz với học viên
+                                            </button>
+                                            <button class="dropdown-item delete-quiz-btn focused cursor-pointer"
+                                                    th:attr="quiz-id=${quiz.id}"
+                                                    th:if="${courseStatus.code == 'DRAFT'}">Xóa quiz
                                             </button>
                                         </div>
                                     </div>
@@ -108,16 +146,23 @@
         </div>
     </div>
 
+    <script>
+        CKEDITOR.replace('content');
+        CKEDITOR.replace('embeddedUrl');
+    </script>
 
 </main>
 
 <div th:replace="~{course/modal/section-modal :: section-modal}"></div>
 <div th:replace="~{course/modal/section-delete-modal :: section-delete-modal}"></div>
 <div th:replace="~{course/modal/lesson-delete-modal :: lesson-delete-modal}"></div>
+<div th:replace="~{course/modal/quiz-delete-modal :: quiz-delete-modal}"></div>
 
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>
 
 <script src="/js/course/section.js"></script>
 <script src="/js/course/lesson.js"></script>
+
+<script src="../ckeditor.js"></script>
 </html>

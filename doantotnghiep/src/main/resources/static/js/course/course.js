@@ -25,7 +25,6 @@ $(document).ready(() => {
 
     const userInfo = JSON.parse(localStorage.getItem('user-info'));
     const userRole = userInfo ? userInfo.roles : null;
-    const userEmail = userInfo ? userInfo.email :null;
     if (userRole == 'ADMIN') {
         $('#course-common-data').append(adminData);
     }
@@ -172,8 +171,15 @@ $(document).ready(() => {
                 required: true,
                 maxlength: 255
             },
+            "description": {
+                maxlength: 1000
+            },
+            "learningObjectives": {
+                maxlength: 1000
+            },
             "courseFee": {
-                required: true
+                required: true,
+                min: 0
             },
             "courseFeeUnit": {
                 required: true
@@ -190,8 +196,15 @@ $(document).ready(() => {
                 required: "Tiêu đề bắt buộc",
                 maxlength: "Tiêu đề dài tối đa 255 ký tự"
             },
+            "description": {
+                maxlength: "Mô tả khóa học dài tối đa 1000 ký tự"
+            },
+            "learningObjectives": {
+                maxlength: "Mục tiêu học tập dài tối đa 1000 ký tự"
+            },
             'courseFee': {
-                required: "Giá khóa học bắt buộc"
+                required: "Giá khóa học bắt buộc",
+                min: "Giá khóa học không là số âm"
             },
             "courseFeeUnit": {
                 required: "Đơn vị giá bắt buộc"
@@ -208,9 +221,30 @@ $(document).ready(() => {
     //mở modal tạo mới khóa học
     $('.create-course-btn').click(function () {
         $('#course-modal #save-course-btn').attr("action-type", "CREATE");
+        $('#course-modal #save-course-btn').prop("disabled", true);
         $('#course-modal').modal('show');
     });
 
+    //disable nút lưu khi chưa nhập các trường thông tin bắt buộc của khóa học
+    $('#course-form #title, #course-form #courseFee').on("input", function () {
+        let allFieldsFilled = checkAllFieldsFilled();
+        $('#course-modal #save-course-btn').prop("disabled", !allFieldsFilled);
+    });
+
+    //hàm check các các trường bắt buộc đã nhập thông tin chưa
+    function checkAllFieldsFilled() {
+        let allFields = $('#course-form #title, #course-form #courseFee');
+        let allFieldsFilled = true;
+        allFields.each(function () {
+            if ($(this).val === "") {
+                allFieldsFilled = false;
+                return false;
+            }
+        });
+        return allFieldsFilled;
+    }
+
+    //chọn chức năng thêm chương trình học thì lưu id của course vào local storage
     $('.add-section-btn').click(function (event) {
         const courseId = $(event.currentTarget).attr("course-id");
         localStorage.setItem("course-id", courseId);
@@ -273,6 +307,8 @@ $(document).ready(() => {
 
     //create or update a course
     $('#save-course-btn').click(function (event) {
+        //disable nút lưu khi người dùng ấn lưu
+        $('#course-modal #save-course-btn').prop("disabled", true);
         //validate
         const isValidForm = $('#course-form').valid();
         if (!isValidForm) {
@@ -294,9 +330,6 @@ $(document).ready(() => {
         if (method == "PUT") {
             courseRequestBody["id"] = courseId;
         }
-        if (userRole == "TEACHER") {
-            courseRequestBody["teacherEmail"] = userEmail;
-        }
         //call api lên backend
         $.ajax({
             url: "/api/v1/courses",
@@ -315,6 +348,7 @@ $(document).ready(() => {
                 });
                 setTimeout(() => {
                     location.reload();
+                    $('#course-modal #save-course-btn').prop("disabled", false);
                 }, 1000);
             },
             error: function (error) {
@@ -382,7 +416,7 @@ $(document).ready(() => {
         validator.resetForm();
     });
 
-    //yêu cầu thay đổi trạng thái khóa học
+    //mở modal khi ấn nút yêu cầu thay đổi trạng thái khóa học
     $('.course-status-btn').click((event) => {
         courseId = parseInt($(event.currentTarget).attr("course-id"));
         courseStatus = $(event.currentTarget).attr("course-status");
@@ -500,3 +534,4 @@ function changeCourseStatus(courseId, courseStatusRequestBody) {
         }
     });
 }
+

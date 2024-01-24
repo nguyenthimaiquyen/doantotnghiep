@@ -31,7 +31,7 @@ public class Enrollment extends BaseEntity {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {
+    @OneToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "lesson_id", nullable = false)

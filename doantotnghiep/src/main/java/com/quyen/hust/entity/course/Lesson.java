@@ -34,7 +34,7 @@ public class Lesson extends BaseEntity {
     @Lob
     private String fileUrl;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "section_id", nullable = false)

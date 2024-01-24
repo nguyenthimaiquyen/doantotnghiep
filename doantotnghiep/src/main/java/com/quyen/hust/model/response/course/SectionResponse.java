@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +19,8 @@ public class SectionResponse {
 
     private String title;
 
-    private List<LessonResponse> lessons;
+    private Set<LessonResponse> lessons;
+
+    private Set<QuizResponse> quizzes;
 
 }

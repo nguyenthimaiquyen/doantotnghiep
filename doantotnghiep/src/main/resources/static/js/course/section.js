@@ -187,7 +187,13 @@ $(document).ready(() => {
         sectionValidator.resetForm();
     });
 
-
+    //xử lý icon khi nhấn vào tên chương
+    $('.sectionTitle').click(() => {
+        // Lấy id của section từ th:data-target
+        // let sectionId = $(this).closest('.list-group-item').data('target').replace('#section', '');
+        // let icon = $('#section' + sectionId);
+        // icon.toggleClass('fa-caret-right fa-caret-down');
+    });
 
 
 });

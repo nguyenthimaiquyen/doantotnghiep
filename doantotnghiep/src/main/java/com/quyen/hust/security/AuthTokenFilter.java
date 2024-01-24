@@ -1,5 +1,7 @@
 package com.quyen.hust.security;
 
+import com.quyen.hust.exception.UnauthorizedException;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
+    @SneakyThrows
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -46,6 +49,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            throw new UnauthorizedException("Invalid token");
         }
 
         filterChain.doFilter(request, response);

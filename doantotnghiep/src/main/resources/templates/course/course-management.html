@@ -53,7 +53,8 @@
                                 <tbody>
                                 <tr th:each="course : ${courses}">
                                     <td class="text-center" th:text="${course.id}"></td>
-                                    <td th:text="${course.title}"></td>
+                                    <td><a class="add-section-btn focused cursor-pointer text-dark"
+                                           th:attr="course-id=${course.id}" th:text="${course.title}"></a></td>
                                     <td class="text-center" th:text="${course.courseFee}"></td>
                                     <td class="text-center" th:text="${course.courseFeeUnit}"></td>
                                     <td class="text-center" th:text="${course.difficultyLevel.name}"></td>
@@ -62,8 +63,17 @@
                                         th:text="${course.discountCode != null ? course.discountCode.codeName : '--'}"></td>
                                     <td class="text-center" th:text="${course.trainingField.fieldName}"></td>
                                     <td>
-                                        <span class="badge badge-success mr-1" th:each="type: ${course.courseStatus}">
-                                            <span th:text="${type.name}"></span>
+                                        <span th:each="type: ${course.courseStatus}">
+                                            <span th:switch="${course.courseStatus.code}">
+                                                <span th:case="'DRAFT'" class="badge badge-secondary mr-1" th:text="${type.name}"></span>
+                                                <span th:case="'WAITING_FOR_REVIEW'" class="badge badge-warning mr-1" th:text="${type.name}"></span>
+                                                <span th:case="'APPROVED'" class="badge badge-primary mr-1" th:text="${type.name}"></span>
+                                                <span th:case="'REJECTED'" class="badge badge-danger mr-1" th:text="${type.name}"></span>
+                                                <span th:case="'UNPUBLISHED'" class="badge badge-dark mr-1" th:text="${type.name}"></span>
+                                                <span th:case="'PUBLISHED'" class="badge badge-success mr-1" th:text="${type.name}"></span>
+                                                <span th:case="'ARCHIVED'" class="badge badge-info mr-1" th:text="${type.name}"></span>
+                                            </span>
+                                            <span ></span>
                                         </span>
                                     </td>
                                     <td>
@@ -75,19 +85,17 @@
                                                 <button class="dropdown-item update-course-btn focused cursor-pointer"
                                                         th:attr="course-id=${course.id}">Cập nhật khóa học
                                                 </button>
-                                                <button class="dropdown-item add-section-btn focused cursor-pointer"
-                                                        th:attr="course-id=${course.id}">Cập nhật chương trình học
-                                                </button>
                                                 <button class="dropdown-item focused cursor-pointer course-status-btn"
                                                         th:attr="course-id=${course.id}, course-status=${course.courseStatus.code}">
                                                     <span th:switch="${course.courseStatus.code}">
+<!--                                                        th:if="${role == 'ADMIN'}"-->
                                                         <span th:case="'DRAFT'">Yêu cầu xem xét khóa học</span>
-                                                        <span th:case="'WAITING_FOR_REVIEW'">Chấp thuận/ Từ chối khóa học</span>
-                                                        <span th:case="'APPROVED'">Công bố khóa học</span>
-                                                        <span th:case="'REJECTED'">Lưu trữ khóa học</span>
-                                                        <span th:case="'UNPUBLISHED'">Lưu trữ khóa học</span>
-                                                        <span th:case="'PUBLISHED'">Hủy công bố khóa học</span>
-                                                        <span th:case="'ARCHIVED'">Xem xét lại khóa học</span>
+                                                        <span th:case="'WAITING_FOR_REVIEW'" >Chấp thuận/ Từ chối khóa học</span>
+                                                        <span th:case="'APPROVED'" >Công bố khóa học</span>
+                                                        <span th:case="'REJECTED'" >Lưu trữ khóa học</span>
+                                                        <span th:case="'UNPUBLISHED'" >Lưu trữ khóa học</span>
+                                                        <span th:case="'PUBLISHED'" >Hủy công bố khóa học</span>
+                                                        <span th:case="'ARCHIVED'" >Xem xét lại khóa học</span>
                                                     </span>
                                                 </button>
                                                 <button class="dropdown-item delete-course-btn focused cursor-pointer"

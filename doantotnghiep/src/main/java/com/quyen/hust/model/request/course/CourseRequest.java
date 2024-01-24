@@ -44,6 +44,5 @@ public class CourseRequest {
     @NotNull(message = "Training fields is required")
     private Long trainingFieldID;
 
-    private String teacherEmail;
 
 }

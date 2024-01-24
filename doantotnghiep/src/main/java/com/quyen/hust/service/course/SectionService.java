@@ -6,7 +6,9 @@ import com.quyen.hust.entity.course.Section;
 import com.quyen.hust.exception.CourseNotFoundException;
 import com.quyen.hust.exception.SectionNotFoundException;
 import com.quyen.hust.model.request.course.SectionRequest;
+import com.quyen.hust.model.response.course.AnswerResponse;
 import com.quyen.hust.model.response.course.LessonResponse;
+import com.quyen.hust.model.response.course.QuizResponse;
 import com.quyen.hust.model.response.course.SectionResponse;
 import com.quyen.hust.repository.course.CourseJpaRepository;
 import com.quyen.hust.repository.course.LessonJpaRepository;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,7 +39,8 @@ public class SectionService {
                     SectionResponse sectionResponse = SectionResponse.builder()
                             .id(section.getId())
                             .title(section.getTitle())
-                            .lessons(new ArrayList<>())
+                            .lessons(new HashSet<>())
+                            .quizzes(new HashSet<>())
                             .build();
                     if (section.getLessons() != null) {
                         sectionResponse.setLessons(section.getLessons().stream().map(
@@ -44,7 +48,23 @@ public class SectionService {
                                         .id(lesson.getId())
                                         .title(lesson.getTitle())
                                         .build()
-                        ).collect(Collectors.toList()));
+                        ).collect(Collectors.toSet()));
+                    }
+                    if (section.getQuizzes() != null) {
+                        sectionResponse.setQuizzes(section.getQuizzes().stream().map(
+                                quiz -> QuizResponse.builder()
+                                        .id(quiz.getId())
+                                        .title(quiz.getTitle())
+                                        .question(quiz.getQuestion())
+                                        .answers(quiz.getAnswers().stream().map(
+                                                answer -> AnswerResponse.builder()
+                                                        .id(answer.getId())
+                                                        .content(answer.getContent())
+                                                        .isCorrect(answer.getIsCorrect())
+                                                        .build()).collect(Collectors.toSet()))
+                                        .explanation(quiz.getExplanation())
+                                        .build()
+                        ).collect(Collectors.toSet()));
                     }
                     return sectionResponse;
                 }).collect(Collectors.toList());

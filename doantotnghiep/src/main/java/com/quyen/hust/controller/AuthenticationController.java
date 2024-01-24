@@ -1,7 +1,6 @@
 package com.quyen.hust.controller;
 
 import com.quyen.hust.entity.RefreshToken;
-import com.quyen.hust.entity.teacher.Teacher;
 import com.quyen.hust.entity.user.User;
 import com.quyen.hust.exception.RefreshTokenNotFoundException;
 import com.quyen.hust.exception.UnauthorizedException;
@@ -14,13 +13,9 @@ import com.quyen.hust.repository.user.UserJpaRepository;
 import com.quyen.hust.security.CustomUserDetails;
 import com.quyen.hust.security.JwtUtils;
 import com.quyen.hust.service.admin.EmailService;
-import com.quyen.hust.service.teacher.TeacherService;
 import com.quyen.hust.service.user.UserService;
 import com.quyen.hust.statics.UserStatus;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,13 +24,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
