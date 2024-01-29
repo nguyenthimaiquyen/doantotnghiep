@@ -12,22 +12,30 @@
 <main>
 
     <!-- ====== faq-page-area-start============================================ -->
-    <div class="faq-page-area faq-page2 pt-160 mb-115">
+    <div class="faq-page-area faq-page2 pt-130 mb-115">
         <div class="container" style="max-width: 1400px;">
-            <div class="row text-center">
+            <div class="row text-center mb-2">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <h5>Danh sách mã giảm giá</h5>
                 </div><!-- /col -->
             </div><!-- /row -->
-            <div class="row my-1">
-                <div class="col-lg-12">
+            <div class="row my-2">
+                <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
+                    <div class="input-group">
+                        <form id="search-discount-code-form" method="get" action="/discount-codes">
+                            <input type="text" id="search-discount-code" class="form-control pr-100" name="name"
+                                   th:value="${requestSearch.name}" placeholder="Nhập từ khóa">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
                     <div class="d-flex justify-content-end mt-3 mt-lg-0">
                         <a class="btn btn-primary f-500 create-discountCode-btn">
                             <i class="fas fa-plus mr-2"></i>Tạo mã giảm giá</a>
                     </div><!-- /my-btn -->
                 </div><!-- /col -->
             </div>
-            <div class="row my-3">
+            <div class="row my-4">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -45,8 +53,8 @@
                         </tr>
                         </thead>
                         <tbody class="text-center">
-                        <tr th:each="discountCode : ${discountCodes}">
-                            <td th:text="${discountCode.id}"></td>
+                        <tr th:each="discountCode, discountCodeIndex : ${discountCodes}">
+                            <td th:text="${discountCodeIndex.index + 1}"></td>
                             <td th:text="${discountCode.codeName}"></td>
                             <td th:text="${discountCode.discountValue}"></td>
                             <td th:text="${discountCode.discountUnit}"></td>
@@ -70,6 +78,56 @@
                     </table>
                 </div><!-- /col -->
             </div><!-- /row -->
+            <div class="row my-3">
+                <div class="col-xl-2  col-lg-2  col-md-12  col-sm-12 col-12"
+                     th:text="${'Tổng số ' + totalElement + ' bản ghi'}">
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 d-flex justify-content-end align-items-center">
+                    <div class="my-3">
+                        <span>Hiển thị </span>
+                        <select class="mr-1" id="discount-code-page-size">
+                            <option value="6" th:selected="${pageSize==6}">6</option>
+                            <option value="12" th:selected="${pageSize==12}">12</option>
+                        </select>
+                        <span>bản ghi</span>
+                    </div>
+                    <div class="ml-2">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/discount-codes?pageSize=' + ${pageSize} + '&' + 'currentPage=0'}">
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a th:class="${'page-link ' + (currentPage == 0 ? 'disabled-page' : '')}"
+                                   th:href="@{${currentPage} != 0 ? ('/discount-codes?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage - 1}) : '#'}">
+                                    <i class="fas fa-angle-left"></i>
+                                </a>
+                            </li>
+                            <th:block th:each="index : ${#numbers.sequence(0, totalPage - 1)}">
+                                <li th:class="${'page-item ' + (index == currentPage ? 'active' : '')}">
+                                    <a class="page-link"
+                                       th:href="@{'/discount-codes?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${index}}"
+                                       th:text="${index + 1}"></a>
+                                </li>
+                            </th:block>
+                            <li class="page-item">
+                                <a th:class="${'page-link ' + (currentPage == (totalPage - 1) ? 'disabled-page' : '')}"
+                                   th:href="@{${currentPage} != (${totalPage} - 1) ? ('/discount-codes?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage + 1}) : '#'}">
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/discount-codes?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${totalPage - 1}}">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div><!-- /container -->
     </div>
 

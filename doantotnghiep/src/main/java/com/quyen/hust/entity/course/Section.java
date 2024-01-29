@@ -21,16 +21,6 @@ public class Section extends BaseEntity {
     @Column
     private String title;
 
-    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY, cascade = {
-            CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true)
-    private Set<Lesson> lessons;
-
-    @OneToMany(mappedBy = "section", fetch = FetchType.LAZY, cascade = {
-            CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true)
-    private Set<Quiz> quizzes;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})

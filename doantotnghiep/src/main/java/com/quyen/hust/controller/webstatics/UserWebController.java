@@ -19,9 +19,9 @@ public class UserWebController {
     private final StudyReminderService studyReminderService;
     private final UserService userService;
 
-    @GetMapping("/myLearning")
+    @GetMapping("/my-learning")
     public String getMyLearningPage(Model model) {
-        return "myLearning/myLearning";
+        return "my-learning/my-learning";
     }
 
     @GetMapping("/login")
@@ -39,16 +39,6 @@ public class UserWebController {
         return "error/403";
     }
 
-    @GetMapping("/courses")
-    public String getCoursePage(Model model) {
-        return "course/courses";
-    }
-
-    @GetMapping("/courses/details")
-    public String getCourseDetailsPage(Model model) {
-        return "course/course-details";
-    }
-
     @GetMapping("/teachers")
     public String getInstructorPage(Model model) {
         return "teacher/teachers";
@@ -64,26 +54,11 @@ public class UserWebController {
         return "cart/checkout";
     }
 
-    @GetMapping("/profile")
-    public String getProfilePage(Model model) {
-        return "profile/profile";
-    }
-
-    @GetMapping("/profile/otp-sending")
-    public String getOtpSendingPage(Model model) {
-        return "profile/otp-sending";
-    }
-
-    @GetMapping("/profile/forget-password")
-    public String getForgetPasswordPage(Model model) {
-        return "profile/forget-password";
-    }
-
     @GetMapping("/reminders")
     public String getReminderPage(Model model) {
         List<StudyReminderResponse> studyReminders = studyReminderService.getAll();
         model.addAttribute("studyReminders", studyReminders);
-        return "myLearning/myLearning";
+        return "my-learning/my-learning";
     }
 
     @GetMapping("/wishlist")

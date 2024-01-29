@@ -60,14 +60,12 @@ $(document).ready(() => {
         if (!changePasswordData || changePasswordData.length === 0) {
             return;
         }
-        console.log(changePasswordData)
         //chuyển dữ liệu từ object sang json
         const RequestBody = {};
         for (let i = 0; i < changePasswordData.length; i++) {
             RequestBody[changePasswordData[i].name] = changePasswordData[i].value;
         }
         RequestBody["email"] = email;
-        console.log(RequestBody)
         //call api lên backend
         await $.ajax({
             type: "PUT",
@@ -134,13 +132,11 @@ $(document).ready(() => {
         if (!emailData || emailData.length === 0) {
             return;
         }
-        console.log(emailData)
         //chuyển dữ liệu từ object sang json
         const RequestBody = {};
         for (let i = 0; i < emailData.length; i++) {
             RequestBody[emailData[i].name] = emailData[i].value;
         }
-        console.log(RequestBody)
         //call api lên backend
         await $.ajax({
             type: "POST",
@@ -149,12 +145,9 @@ $(document).ready(() => {
             data: JSON.stringify(RequestBody),
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
                     text: 'Vui lòng kiểm tra email để lấy OTP!',
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 })
                 setTimeout(() => {
@@ -221,13 +214,11 @@ $(document).ready(() => {
         if (!forgetPasswordData || forgetPasswordData.length === 0) {
             return;
         }
-        console.log(forgetPasswordData)
         //chuyển dữ liệu từ object sang json
         const RequestBody = {};
         for (let i = 0; i < forgetPasswordData.length; i++) {
             RequestBody[forgetPasswordData[i].name] = forgetPasswordData[i].value;
         }
-        console.log(RequestBody)
         //call api lên backend
         await $.ajax({
             type: "PUT",
@@ -236,12 +227,9 @@ $(document).ready(() => {
             data: JSON.stringify(RequestBody),
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
                     text: 'Đặt lại mật khẩu thành công!',
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 })
                 setTimeout(() => {

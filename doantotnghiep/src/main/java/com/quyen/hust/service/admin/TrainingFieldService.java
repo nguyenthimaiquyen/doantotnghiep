@@ -31,14 +31,13 @@ public class TrainingFieldService {
 
     public TrainingFieldResponse getTrainingFieldDetails(Long id) throws TrainingFieldNotFoundException {
         return trainingFieldJpaRepository.findById(id).map(
-            trainingField -> TrainingFieldResponse.builder()
-                    .fieldName(trainingField.getFieldName())
-                    .description(trainingField.getDescription())
-                    .build()
+                trainingField -> TrainingFieldResponse.builder()
+                        .fieldName(trainingField.getFieldName())
+                        .description(trainingField.getDescription())
+                        .build()
         ).orElseThrow(() -> new TrainingFieldNotFoundException("Training field with id" + id + " could not be found!"));
     }
 
-    @Transactional
     public void saveTrainingField(TrainingFieldRequest request) {
         TrainingField trainingField = TrainingField.builder()
                 .fieldName(request.getFieldName())

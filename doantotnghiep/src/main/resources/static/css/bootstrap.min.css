@@ -300,7 +300,9 @@ button::-moz-focus-inner {
 input[type=checkbox],
 input[type=radio] {
     box-sizing: border-box;
-    padding: 0
+    padding: 0;
+    width: 2.7%;
+    height: 2em;
 }
 
 input[type=date],
@@ -5227,7 +5229,7 @@ tbody.collapse.show {
 }
 
 .pagination-lg .page-link {
-    padding: .75rem 1.5rem;
+    padding: .75rem 1.0rem;
     font-size: 1.25rem;
     line-height: 1.5
 }
@@ -9835,7 +9837,7 @@ a.text-light:hover {
 
 a.text-dark:focus,
 a.text-dark:hover {
-    color: #1d2124 !important
+    color: #007bff !important
 }
 
 .text-muted {

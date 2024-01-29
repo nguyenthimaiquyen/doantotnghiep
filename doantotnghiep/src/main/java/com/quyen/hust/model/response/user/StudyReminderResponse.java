@@ -35,5 +35,5 @@ public class StudyReminderResponse {
 
     private CourseDataResponse course;
 
-    private UserResponse user;
+    private UserDataResponse user;
 }

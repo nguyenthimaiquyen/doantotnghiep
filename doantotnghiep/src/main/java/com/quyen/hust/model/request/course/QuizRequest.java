@@ -9,6 +9,8 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -32,7 +34,7 @@ public class QuizRequest {
     @Min(value = 1, message = "Section ID must be positive number")
     private Long sectionId;
 
-//    private List<Answer> answers;
-
+    @Size(min = 1, message = "There must be at least one answer")
+    private List<AnswerRequest> answers;
 
 }

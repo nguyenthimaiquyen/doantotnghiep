@@ -3,19 +3,14 @@ package com.quyen.hust.controller.course;
 import com.quyen.hust.exception.CourseNotFoundException;
 import com.quyen.hust.model.request.course.CourseRequest;
 import com.quyen.hust.model.request.course.CourseStatusRequest;
-import com.quyen.hust.model.response.course.CourseResponse;
-import com.quyen.hust.model.response.teacher.TeacherResponse;
 import com.quyen.hust.service.course.CourseService;
 import com.quyen.hust.service.teacher.TeacherService;
-import com.quyen.hust.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -73,7 +68,8 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> changeCourseStatus(@PathVariable Long id, @RequestBody @Valid CourseStatusRequest courseStatus) {
+    public ResponseEntity<?> changeCourseStatus(@PathVariable Long id, @RequestBody @Valid CourseStatusRequest courseStatus)
+            throws CourseNotFoundException {
         courseService.changeCourseStatus(id, courseStatus);
         return ResponseEntity.ok(null);
     }

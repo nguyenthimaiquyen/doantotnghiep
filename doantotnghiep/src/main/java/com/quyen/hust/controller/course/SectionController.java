@@ -17,7 +17,6 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/sections")
 public class SectionController {
     private final SectionService sectionService;
-    private final CourseService courseService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getSectionDetails(@PathVariable Long id) throws SectionNotFoundException {

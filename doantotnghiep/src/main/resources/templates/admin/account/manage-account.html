@@ -11,14 +11,118 @@
 <main>
 
     <!-- ====== faq-page-area-start============================================ -->
-    <div class="faq-page-area faq-page2 pt-160 mb-115 over-hidden">
-        <div class="container">
-            <div class="row">
+    <div class="faq-page-area faq-page2 pt-160 mb-115">
+        <div class="container" style="max-width: 1400px;">
+            <div class="row text-center mb-2">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6>Quản lý tài khoản</h6>
-
+                    <h5>Danh sách tài khoản</h5>
                 </div><!-- /col -->
             </div><!-- /row -->
+            <div class="row my-2">
+                <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
+                    <div class="input-group">
+                        <form id="search-account-form" method="get" action="/accounts">
+                            <input type="text" id="search-account" class="form-control pr-100" name="name"
+                                   th:value="${requestSearch.name}" placeholder="Nhập từ khóa">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-4">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr class="text-center">
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Email</th>
+<!--                            <th>Vai trò</th>-->
+                            <th>Trạng thái</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-center">
+                        <tr th:each="account, accountIndex : ${accounts}">
+                            <td th:text="${accountIndex.index + 1}"></td>
+                            <td><a class="view-account-btn focused cursor-pointer text-dark"
+                                   th:attr="account-id=${account.id}" th:text="${account.fullName}"></a></td>
+                            <td th:text="${account.email}"></td>
+<!--                            <td th:utext="${account.roles.get(0).name}"></td>-->
+                            <td th:text="${account.userStatus.name}"></td>
+                            <td>
+                                <div class="dropdown dropleft">
+                                    <button class="btn btn-primary" type="button" data-toggle="dropdown">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item focused cursor-pointer account-status-btn"
+                                                th:attr="account-id=${account.id}, account-status=${account.userStatus.code}">
+                                            <span th:switch="${account.userStatus.code}">
+                                                <span th:case="'ACTIVATED'">Cấm tài khoản</span>
+                                                <span th:case="'BANNED'">Dừng cấm tài khoản</span>
+                                            </span>
+                                        </button>
+                                        <button class="dropdown-item assign-account-btn focused cursor-pointer"
+                                                th:attr="account-id=${account.id}">Thay đổi quyền của tài khoản
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /col -->
+            </div><!-- /row -->
+            <div class="row my-3">
+                <div class="col-xl-2  col-lg-2  col-md-12  col-sm-12 col-12"
+                     th:text="${'Tổng số ' + totalElement + ' bản ghi'}">
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 d-flex justify-content-end align-items-center">
+                    <div class="my-3">
+                        <span>Hiển thị </span>
+                        <select class="mr-1" id="account-page-size">
+                            <option value="6" th:selected="${pageSize==6}">6</option>
+                            <option value="12" th:selected="${pageSize==12}">12</option>
+                        </select>
+                        <span>bản ghi</span>
+                    </div>
+                    <div class="ml-2">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/accounts?pageSize=' + ${pageSize} + '&' + 'currentPage=0'}">
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a th:class="${'page-link ' + (currentPage == 0 ? 'disabled-page' : '')}"
+                                   th:href="@{${currentPage} != 0 ? ('/accounts?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage - 1}) : '#'}">
+                                    <i class="fas fa-angle-left"></i>
+                                </a>
+                            </li>
+                            <th:block th:each="index : ${#numbers.sequence(0, totalPage - 1)}">
+                                <li th:class="${'page-item ' + (index == currentPage ? 'active' : '')}">
+                                    <a class="page-link"
+                                       th:href="@{'/accounts?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${index}}"
+                                       th:text="${index + 1}"></a>
+                                </li>
+                            </th:block>
+                            <li class="page-item">
+                                <a th:class="${'page-link ' + (currentPage == (totalPage - 1) ? 'disabled-page' : '')}"
+                                   th:href="@{${currentPage} != (${totalPage} - 1) ? ('/accounts?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage + 1}) : '#'}">
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   th:href="@{'/accounts?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${totalPage - 1}}">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div><!-- /container -->
     </div>
     <!-- faq-area-end -->
@@ -36,5 +140,9 @@
 </div>
 
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
+<div th:replace="~{admin/account/account-ban-modal :: account-ban-modal}"></div>
+<div th:replace="~{admin/account/account-activate-modal :: account-activate-modal}"></div>
 </body>
+
+<script src="/js/admin/account.js"></script>
 </html>

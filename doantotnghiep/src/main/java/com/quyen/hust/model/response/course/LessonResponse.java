@@ -26,6 +26,10 @@ public class LessonResponse {
 
     private String fileUrl;
 
-    private SectionResponse section;
+    private Long sectionId;
+
+    private String sectionTitle;
+
+//    private Long sectionIndex;
 
 }

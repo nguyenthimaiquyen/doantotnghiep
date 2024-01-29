@@ -42,7 +42,7 @@ public class Course extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Unit courseFeeUnit;
 
-    @Column
+    @Column(name = "course_status")
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
 
@@ -59,11 +59,6 @@ public class Course extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private DifficultyLevel difficultyLevel;
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = {
-            CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true)
-    private Set<Section> sections;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
@@ -76,7 +71,7 @@ public class Course extends BaseEntity {
     @JoinColumn(name = "discount_id")
     private DiscountCode discountCode;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "training_field_id")

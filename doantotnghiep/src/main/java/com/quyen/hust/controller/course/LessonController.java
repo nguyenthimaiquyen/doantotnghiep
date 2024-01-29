@@ -24,11 +24,6 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.getLessonDetails(id));
     }
 
-    @GetMapping
-    public ResponseEntity<?> getLessons(@PathVariable Long sectionId) {
-        return ResponseEntity.ok(lessonService.getLessons(sectionId));
-    }
-
     @PostMapping
     public ResponseEntity<?> createLesson(@RequestPart("lessonRequest") String lessonRequest,
                                           @RequestPart(value = "file", required = false) MultipartFile file,

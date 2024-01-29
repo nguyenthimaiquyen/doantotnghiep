@@ -2,6 +2,7 @@ package com.quyen.hust.service.course;
 
 import com.quyen.hust.entity.course.Course;
 import com.quyen.hust.entity.course.Lesson;
+import com.quyen.hust.entity.course.Quiz;
 import com.quyen.hust.entity.course.Section;
 import com.quyen.hust.exception.CourseNotFoundException;
 import com.quyen.hust.exception.SectionNotFoundException;
@@ -12,6 +13,7 @@ import com.quyen.hust.model.response.course.QuizResponse;
 import com.quyen.hust.model.response.course.SectionResponse;
 import com.quyen.hust.repository.course.CourseJpaRepository;
 import com.quyen.hust.repository.course.LessonJpaRepository;
+import com.quyen.hust.repository.course.QuizJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
@@ -31,8 +33,8 @@ public class SectionService {
     private final SectionJpaRepository sectionJpaRepository;
     private final CourseJpaRepository courseJpaRepository;
     private final LessonJpaRepository lessonJpaRepository;
+    private final QuizJpaRepository quizJpaRepository;
 
-    @Transactional
     public List<SectionResponse> getSections(Long courseId) {
         return sectionJpaRepository.findByCourseId(courseId).stream().map(
                 section -> {
@@ -42,29 +44,25 @@ public class SectionService {
                             .lessons(new HashSet<>())
                             .quizzes(new HashSet<>())
                             .build();
-                    if (section.getLessons() != null) {
-                        sectionResponse.setLessons(section.getLessons().stream().map(
+                    List<Lesson> lessons = lessonJpaRepository.findBySectionId(section.getId());
+                    if (lessons != null) {
+                        sectionResponse.setLessons(lessons.stream().map(
                                 lesson -> LessonResponse.builder()
                                         .id(lesson.getId())
                                         .title(lesson.getTitle())
                                         .build()
-                        ).collect(Collectors.toSet()));
+                                ).collect(Collectors.toSet())
+                        );
                     }
-                    if (section.getQuizzes() != null) {
-                        sectionResponse.setQuizzes(section.getQuizzes().stream().map(
+                    List<Quiz> quizzes = quizJpaRepository.findBySectionId(section.getId());
+                    if (quizzes != null) {
+                        sectionResponse.setQuizzes(quizzes.stream().map(
                                 quiz -> QuizResponse.builder()
                                         .id(quiz.getId())
                                         .title(quiz.getTitle())
-                                        .question(quiz.getQuestion())
-                                        .answers(quiz.getAnswers().stream().map(
-                                                answer -> AnswerResponse.builder()
-                                                        .id(answer.getId())
-                                                        .content(answer.getContent())
-                                                        .isCorrect(answer.getIsCorrect())
-                                                        .build()).collect(Collectors.toSet()))
-                                        .explanation(quiz.getExplanation())
                                         .build()
-                        ).collect(Collectors.toSet()));
+                                ).collect(Collectors.toSet())
+                        );
                     }
                     return sectionResponse;
                 }).collect(Collectors.toList());
@@ -89,11 +87,14 @@ public class SectionService {
 
     public void deleteSection(Long id) {
         Optional<Section> sectionOptional = sectionJpaRepository.findById(id);
-        if (sectionOptional.isPresent()) {
-            Section section = sectionOptional.get();
-            List<Lesson> lessons = lessonJpaRepository.findBySectionId(section.getId());
-            lessonJpaRepository.deleteAll(lessons);
+        if (!sectionOptional.isPresent()) {
+            return;
         }
+        Section section = sectionOptional.get();
+        List<Lesson> lessons = lessonJpaRepository.findBySectionId(section.getId());
+        List<Quiz> quizzes = quizJpaRepository.findBySectionId(section.getId());
+        quizJpaRepository.deleteAll(quizzes);
+        lessonJpaRepository.deleteAll(lessons);
         sectionJpaRepository.deleteById(id);
     }
 

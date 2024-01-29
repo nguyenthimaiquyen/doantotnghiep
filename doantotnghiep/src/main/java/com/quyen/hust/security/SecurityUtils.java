@@ -1,8 +1,6 @@
 package com.quyen.hust.security;
 
-import com.quyen.hust.entity.admin.Role;
 import com.quyen.hust.statics.Roles;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Utility class for Spring Security.
@@ -49,18 +46,7 @@ public final class SecurityUtils {
         return Optional.ofNullable(securityContext.getAuthentication()).map(authentication -> {
             if (authentication.getPrincipal() instanceof UserDetails) {
                 CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-                return userDetails.getId();
-            }
-            return null;
-        });
-    }
-
-    public static Optional<Role> getCurrentUserLoginRole() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional.ofNullable(securityContext.getAuthentication()).map(authentication -> {
-            if (authentication.getPrincipal() instanceof UserDetails) {
-                CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-                return userDetails.getRoles().stream().findFirst().get();
+                return userDetails.getUser().getId();
             }
             return null;
         });

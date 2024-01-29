@@ -26,7 +26,6 @@ $(document).ready(() => {
 
     //mở modal khi ấn thêm chương
     $('.create-section-btn').click(() => {
-        console.log("vào hàm rồi")
         $('#section-modal #save-section-btn').attr("action-type", "CREATE");
         $('#section-modal').modal('show');
     });
@@ -45,12 +44,9 @@ $(document).ready(() => {
             error: function (err) {
                 console.log(err)
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 })
             }
@@ -58,12 +54,9 @@ $(document).ready(() => {
 
         if (!section) {
             $.toast({
-                heading: 'Lỗi',
                 text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                 icon: 'error',
-                showHideTransition: 'fade',
                 position: 'top-right',
-                loader: false,
                 bgColor: '#FF0000'
             })
             return;
@@ -110,26 +103,20 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
-                    text: (method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công chương của khóa học!",
+                    text: (method === "POST" ? "Tạo mới " : "Cập nhật ") + "thành công chương của khóa học!",
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 })
                 setTimeout(() => {
                     location.reload();
-                }, 1000);
+                }, 3000);
             },
             error: function (error) {
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 })
             }
@@ -151,27 +138,21 @@ $(document).ready(() => {
             type: "DELETE",
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
                     text: 'Xóa chương thành công!',
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 })
                 setTimeout(() => {
                     location.reload();
-                }, 1000);
+                }, 3000);
             },
             error: function (err) {
                 console.log(err)
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 })
             }
@@ -189,10 +170,7 @@ $(document).ready(() => {
 
     //xử lý icon khi nhấn vào tên chương
     $('.sectionTitle').click(() => {
-        // Lấy id của section từ th:data-target
-        // let sectionId = $(this).closest('.list-group-item').data('target').replace('#section', '');
-        // let icon = $('#section' + sectionId);
-        // icon.toggleClass('fa-caret-right fa-caret-down');
+
     });
 
 

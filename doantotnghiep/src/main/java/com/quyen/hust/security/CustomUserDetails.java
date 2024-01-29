@@ -2,6 +2,7 @@ package com.quyen.hust.security;
 
 import com.quyen.hust.entity.admin.Role;
 import com.quyen.hust.entity.user.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Data
 public class CustomUserDetails implements UserDetails {
     private User user;
 
@@ -25,6 +27,8 @@ public class CustomUserDetails implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getName().toString()))
                 .collect(Collectors.toList());
     }
+
+
 
     public Long getId() {
         return user.getId();

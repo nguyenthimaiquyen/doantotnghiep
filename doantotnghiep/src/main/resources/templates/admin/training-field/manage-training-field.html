@@ -38,8 +38,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="trainingField : ${trainingFields}">
-                            <td th:text="${trainingField.id}"></td>
+                        <tr th:each="trainingField, trainingFieldIndex : ${trainingFields}">
+                            <td th:text="${trainingFieldIndex.index + 1}"></td>
                             <td th:text="${trainingField.fieldName}"></td>
                             <td th:text="${trainingField.description}" class=" text-left"></td>
                             <td>

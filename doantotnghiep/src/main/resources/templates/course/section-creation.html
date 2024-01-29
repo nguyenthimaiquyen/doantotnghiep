@@ -31,7 +31,7 @@
     <div class="container-fluid mt-50 p-0">
         <div class="row m-0 p-0">
             <!-- Cột bên trái -->
-            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9 m-0 p-0" id="left-section-content">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 m-0 p-0" id="left-section-content">
                 <!-- Form thêm bài giảng -->
                 <div class="d-flex justify-content-center align-items-center mt-200">
                     <div class="text-center">
@@ -43,22 +43,23 @@
             </div>
 
             <!-- Cột bên phải -->
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 m-0 p-0 border-left pl-30"
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 m-0 p-0 border-left"
                  style="border-left: 4px solid #dee2e6; min-height: 100vh;">
                 <h6 class="mt-40 ml-30" th:text="${courseTitle}"></h6>
-                <div class="mt-4 ml-150 mb-4">
+                <div class="mt-4 ml-200 mb-4">
                     <a class="btn btn-primary f-500 create-section-btn">
                         <i class="fas fa-plus mr-2"></i>Thêm chương
                     </a>
                 </div>
 
                 <!-- Danh sách chương -->
-                <div class="list-group">
-                    <div th:each="section : ${sections}">
+                <div class="list-group mb-50">
+                    <div th:each="section, sectionIndex : ${sections}">
                         <a class="list-group-item list-group-item-action pl-2 border-left-0 border-right-0"
                            data-toggle="collapse" th:data-target="'#section' + ${section.id}">
                             <span class="h6 focused cursor-pointer sectionTitle">
-<!--                                <i th:id="'section' + ${section.id}" class="fas fa-caret-right"></i>-->
+                                <i class="fas fa-caret-down"></i>
+                                <span class="pl-1" th:text="${sectionIndex.index + 1}"></span>.
                                 <span th:text="${section.title}"></span>
                             </span>
                             <div class="dropdown float-right dropleft">
@@ -71,7 +72,7 @@
                                     </button>
                                     <button class="dropdown-item add-lesson-btn focused cursor-pointer"
                                             th:attr="section-id=${section.id}, section-title=${section.title}">Thêm bài
-                                        học
+                                        học/quiz
                                     </button>
                                     <button class="dropdown-item hide-lesson-btn focused cursor-pointer"
                                             th:attr="section-id=${section.id}" th:if="${courseStatus.code != 'DRAFT'}">
@@ -84,12 +85,13 @@
                                 </div>
                             </div>
                         </a>
-                        <div th:if="${not #lists.isEmpty(section.lessons)}" class="collapse"
-                             th:id="'section' + ${section.id}">
+                        <div class="collapse" th:id="'section' + ${section.id}">
                             <div class="list-group">
-                                <a th:each="lesson : ${section.lessons}"
+                                <a th:each="lesson, lessonIndex : ${section.lessons}"
                                    class="list-group-item list-group-item-action border-0"
                                    data-toggle="collapse" th:data-target="'#lesson' + ${lesson.id}">
+                                    <span class="pl-3" th:text="${sectionIndex.index + 1}"></span>.
+                                    <span class="p-0 m-0" th:text="${lessonIndex.index + 1}"></span>.
                                     <span th:text="${lesson.title}"></span>
                                     <div class="dropdown float-right dropleft">
                                         <button class="btn btn-sm btn-outline-secondary" type="button"
@@ -111,13 +113,12 @@
                                     </div>
                                 </a>
                             </div>
-                        </div>
-                        <div th:if="${not #lists.isEmpty(section.quizzes)}" class="collapse"
-                             th:id="'section' + ${section.id}">
-                            <div class="list-group">
-                                <a th:each="quiz : ${section.quizzes}"
+                            <div class="list-group" th:with="totalLessonCount=${#lists.size(section.lessons)}">
+                                <a th:each="quiz, quizIndex : ${section.quizzes}"
                                    class="list-group-item list-group-item-action border-0"
-                                   data-toggle="collapse" th:data-target="'#lesson' + ${quiz.id}">
+                                   data-toggle="collapse" th:data-target="'#quiz' + ${quiz.id}">
+                                    <span class="pl-3" th:text="${sectionIndex.index + 1}"></span>.
+                                    <span class="p-0 m-0" th:text="${quizIndex.index + 1 + totalLessonCount}"></span>.
                                     <span th:text="${quiz.title}"></span>
                                     <div class="dropdown float-right dropleft">
                                         <button class="btn btn-sm btn-outline-secondary" type="button"
@@ -143,13 +144,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <script>
-        CKEDITOR.replace('content');
-        CKEDITOR.replace('embeddedUrl');
-    </script>
 
 </main>
 
@@ -163,6 +158,6 @@
 
 <script src="/js/course/section.js"></script>
 <script src="/js/course/lesson.js"></script>
+<script src="/js/course/quiz.js"></script>
 
-<script src="../ckeditor.js"></script>
 </html>

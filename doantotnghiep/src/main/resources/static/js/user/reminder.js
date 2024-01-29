@@ -231,26 +231,20 @@ $(document).ready(() => {
             contentUnit: "application/json; charset=utf-8",
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
-                    text: (method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công sự kiện nhắc nhở học tập!",
+                    text: (method === "POST" ? "Tạo mới " : "Cập nhật ") + "thành công sự kiện nhắc nhở học tập!",
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 })
                 setTimeout(() => {
                     location.reload();
-                }, 1000);
+                }, 3000);
             },
             error: function (error) {
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 })
             }
@@ -272,26 +266,20 @@ $(document).ready(() => {
             type: "DELETE",
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
                     text: 'Xóa sự kiện nhắc nhở học tập thành công!',
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 })
                 setTimeout(() => {
                     location.reload();
-                }, 1000);
+                }, 3000);
             },
             error: function (err) {
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 })
             }

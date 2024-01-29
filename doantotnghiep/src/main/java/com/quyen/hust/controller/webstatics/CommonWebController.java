@@ -1,16 +1,23 @@
 package com.quyen.hust.controller.webstatics;
 
+import com.quyen.hust.model.response.course.CourseDataResponse;
+import com.quyen.hust.service.course.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
 @AllArgsConstructor
 public class CommonWebController {
+    private final CourseService courseService;
 
     @GetMapping("/")
     public String getHomePage(Model model) {
+        List<CourseDataResponse> courses = courseService.getAll();
+        model.addAttribute("courses", courses);
         return "index";
     }
 

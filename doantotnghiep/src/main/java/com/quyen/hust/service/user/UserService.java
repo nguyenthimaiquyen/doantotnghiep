@@ -1,12 +1,14 @@
 package com.quyen.hust.service.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.quyen.hust.entity.RefreshToken;
 import com.quyen.hust.entity.admin.OTP;
 import com.quyen.hust.entity.admin.Role;
 import com.quyen.hust.entity.teacher.Teacher;
 import com.quyen.hust.entity.user.User;
 import com.quyen.hust.exception.*;
 import com.quyen.hust.model.request.RefreshTokenRequest;
+import com.quyen.hust.model.request.admin.AccountStatusRequest;
 import com.quyen.hust.model.request.anonymous.CreateUserRequest;
 import com.quyen.hust.model.request.anonymous.RegistrationRequest;
 import com.quyen.hust.model.request.user.ChangePasswordRequest;
@@ -14,8 +16,8 @@ import com.quyen.hust.model.request.user.ForgetPasswordRequest;
 import com.quyen.hust.model.request.user.UserSearchRequest;
 import com.quyen.hust.model.response.CommonResponse;
 import com.quyen.hust.model.response.JwtResponse;
+import com.quyen.hust.model.response.user.UserDataResponse;
 import com.quyen.hust.model.response.user.UserResponse;
-import com.quyen.hust.model.response.user.UserSearchResponse;
 import com.quyen.hust.repository.RefreshTokenRepository;
 import com.quyen.hust.repository.admin.OTPJpaRepository;
 import com.quyen.hust.repository.admin.RoleJpaRepository;
@@ -33,7 +35,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
@@ -92,16 +93,16 @@ public class UserService {
         return user;
     }
 
-    public List<UserResponse> getAll() {
+    public List<UserDataResponse> getAll() {
         List<User> users = userJpaRepository.findAll();
         if (!CollectionUtils.isEmpty(users)) {
-            return users.stream().map(u -> objectMapper.convertValue(u, UserResponse.class)).collect(Collectors.toList());
+            return users.stream().map(u -> objectMapper.convertValue(u, UserDataResponse.class)).collect(Collectors.toList());
         }
         return Collections.emptyList();
     }
 
-    public UserResponse getDetail(Long id) throws ClassNotFoundException {
-        return userJpaRepository.findById(id).map(u -> objectMapper.convertValue(u, UserResponse.class)).orElseThrow(ClassNotFoundException::new);
+    public UserDataResponse getDetail(Long id) throws ClassNotFoundException {
+        return userJpaRepository.findById(id).map(u -> objectMapper.convertValue(u, UserDataResponse.class)).orElseThrow(ClassNotFoundException::new);
     }
 
     public JwtResponse refreshToken(RefreshTokenRequest request) throws RefreshTokenNotFoundException {
@@ -124,12 +125,19 @@ public class UserService {
         if (newToken == null) {
             throw new RefreshTokenNotFoundException();
         }
+        String refreshToken = UUID.randomUUID().toString();
+        RefreshToken refreshTokenEntity = RefreshToken.builder()
+                .refreshToken(refreshToken)
+                .user(userJpaRepository.findById(userDetails.getId()).get())
+                .build();
+        refreshTokenRepository.save(refreshTokenEntity);
+
         return JwtResponse.builder()
                 .jwt(newToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
-    @Transactional
     public void logout() {
         Optional<Long> userIdOptional = SecurityUtils.getCurrentUserLoginId();
         if (userIdOptional.isEmpty()) {
@@ -154,7 +162,7 @@ public class UserService {
     }
 
     public CommonResponse<?> searchUser(UserSearchRequest request) {
-        List<UserSearchResponse> users = userCustomRepository.searchUser(request);
+        List<UserResponse> users = userCustomRepository.searchUser(request);
 
         Integer pageIndex = request.getPageIndex();
         Integer pageSize = request.getPageSize();
@@ -168,7 +176,6 @@ public class UserService {
                 .build();
     }
 
-    @Transactional
     public void changePassword(ChangePasswordRequest request) throws UserNotFoundException, PasswordNotMatchedException {
         User user = userJpaRepository.findByEmail(request.getEmail());
         if (ObjectUtils.isEmpty(user)) {
@@ -185,11 +192,6 @@ public class UserService {
          return userJpaRepository.findByEmail(email).getFullName();
     }
 
-    public Long getUserId(String email) {
-        return userJpaRepository.findByEmail(email).getId();
-    }
-
-    @Transactional
     public void forgetPassword(ForgetPasswordRequest request) throws UserNotFoundException, OTPNotMatchedException,
             PasswordNotMatchedException, OTPNotFoundException, OTPExpiredException {
         OTP otp = otpJpaRepository.findByOtp(request.getOtp());
@@ -210,12 +212,19 @@ public class UserService {
         userJpaRepository.save(user);
     }
 
-
     public void verifyAccount(Long id) {
-        System.out.println(id);
         Optional<User> user = userJpaRepository.findById(id);
         user.get().setUserStatus(UserStatus.ACTIVATED);
         userJpaRepository.save(user.get());
+    }
+
+    public void changeAccountStatus(Long id, AccountStatusRequest accountStatus) throws UserNotFoundException {
+        User user = userJpaRepository.findById(id).get();
+        if (ObjectUtils.isEmpty(user)) {
+            throw new UserNotFoundException("User with id " + id + " could not be found!");
+        }
+        user.setUserStatus(accountStatus.getUserStatus());
+        userJpaRepository.save(user);
     }
 
 

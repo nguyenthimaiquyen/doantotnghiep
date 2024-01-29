@@ -7,10 +7,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserStatus {
 
-    CREATED("CREATED", "đã tạo"),
-    ACTIVATED("ACTIVATED", "kích hoạt"),
-    DEACTIVATED("DEACTIVATED", "vô hiệu hóa"),
-    BANNED("BANNED", "bị cấm");
+    CREATED("CREATED", "Đã tạo"),
+    ACTIVATED("ACTIVATED", "Kích hoạt"),
+    DEACTIVATED("DEACTIVATED", "Vô hiệu hóa"),
+    BANNED("BANNED", "Bị cấm");
 
     public String code;
     public String name;

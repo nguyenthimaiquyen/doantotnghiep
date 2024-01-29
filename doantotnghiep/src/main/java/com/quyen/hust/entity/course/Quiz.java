@@ -32,10 +32,5 @@ public class Quiz extends BaseEntity {
     @JoinColumn(name = "section_id", nullable = false)
     private Section section;
 
-    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = {
-            CascadeType.DETACH, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.PERSIST}, orphanRemoval = true)
-    private Set<Answer> answers;
-
 
 }

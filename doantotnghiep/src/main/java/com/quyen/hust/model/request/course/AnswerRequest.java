@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -22,11 +20,7 @@ public class AnswerRequest {
     @Length(max = 255, message = "Content must be less than 255 characters")
     private String content;
 
-    private boolean isCorrect;
-
-    @NotNull(message = "Quiz is required")
-    @Min(value = 1, message = "Quiz ID must be positive number")
-    private Long quizId;
+    private Boolean isCorrect;
 
 
 }

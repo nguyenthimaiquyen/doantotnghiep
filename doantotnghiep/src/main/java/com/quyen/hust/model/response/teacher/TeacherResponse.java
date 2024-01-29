@@ -1,13 +1,11 @@
 package com.quyen.hust.model.response.teacher;
 
-import com.quyen.hust.entity.admin.TrainingField;
-import com.quyen.hust.entity.user.User;
+import com.quyen.hust.model.response.user.UserDataResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,8 +19,7 @@ public class TeacherResponse {
 
     private Integer yearsOfExperience;
 
-    private User user;
+    private UserDataResponse user;
 
-    private List<TrainingField> trainingFields;
 
 }

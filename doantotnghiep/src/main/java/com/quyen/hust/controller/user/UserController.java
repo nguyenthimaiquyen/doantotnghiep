@@ -4,7 +4,7 @@ import com.quyen.hust.exception.ExistedUserException;
 import com.quyen.hust.model.request.anonymous.CreateUserRequest;
 import com.quyen.hust.model.request.user.UserSearchRequest;
 import com.quyen.hust.model.response.CommonResponse;
-import com.quyen.hust.model.response.user.UserResponse;
+import com.quyen.hust.model.response.user.UserDataResponse;
 import com.quyen.hust.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public UserResponse getDetail(@PathVariable Long id) throws ClassNotFoundException {
+    public UserDataResponse getDetail(@PathVariable Long id) throws ClassNotFoundException {
         return userService.getDetail(id);
     }
 

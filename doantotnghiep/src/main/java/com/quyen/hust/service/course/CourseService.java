@@ -1,6 +1,7 @@
 package com.quyen.hust.service.course;
 
 
+import com.quyen.hust.entity.BaseEntity;
 import com.quyen.hust.entity.admin.DiscountCode;
 import com.quyen.hust.entity.admin.TrainingField;
 import com.quyen.hust.entity.course.Course;
@@ -11,6 +12,8 @@ import com.quyen.hust.entity.user.User;
 import com.quyen.hust.exception.CourseNotFoundException;
 import com.quyen.hust.model.request.course.CourseRequest;
 import com.quyen.hust.model.request.course.CourseStatusRequest;
+import com.quyen.hust.model.request.SearchRequest;
+import com.quyen.hust.model.response.admin.DiscountCodeDataResponse;
 import com.quyen.hust.model.response.admin.DiscountCodeResponse;
 import com.quyen.hust.model.response.admin.TrainingFieldResponse;
 import com.quyen.hust.model.response.course.CourseDataResponse;
@@ -18,23 +21,23 @@ import com.quyen.hust.model.response.course.CourseFeeUnitResponse;
 import com.quyen.hust.model.response.course.CourseResponse;
 import com.quyen.hust.model.response.course.DifficultyLevelResponse;
 import com.quyen.hust.model.response.teacher.TeacherResponse;
+import com.quyen.hust.model.response.user.UserDataResponse;
+import com.quyen.hust.model.response.user.UserResponse;
 import com.quyen.hust.repository.admin.DiscountCodeJpaRepository;
 import com.quyen.hust.repository.admin.TrainingFieldJpaRepository;
 import com.quyen.hust.repository.course.CourseJpaRepository;
+import com.quyen.hust.repository.course.CourseRepository;
 import com.quyen.hust.repository.course.LessonJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import com.quyen.hust.repository.teacher.TeacherJpaRepository;
 import com.quyen.hust.repository.user.UserJpaRepository;
-import com.quyen.hust.security.CustomUserDetails;
 import com.quyen.hust.security.SecurityUtils;
 import com.quyen.hust.statics.CourseStatus;
 import com.quyen.hust.statics.DifficultyLevel;
 import com.quyen.hust.statics.Unit;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
@@ -45,9 +48,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CourseService {
     private final CourseJpaRepository courseJpaRepository;
+    private final CourseRepository courseRepository;
     private final TrainingFieldJpaRepository trainingFieldJpaRepository;
     private final DiscountCodeJpaRepository discountCodeJpaRepository;
     private final TeacherJpaRepository teacherJpaRepository;
+    private final UserJpaRepository userJpaRepository;
     private final SectionJpaRepository sectionJpaRepository;
     private final LessonJpaRepository lessonJpaRepository;
 
@@ -77,23 +82,22 @@ public class CourseService {
         ).collect(Collectors.toList());
     }
 
-    public List<DiscountCodeResponse> getDiscountCode() {
+    public List<DiscountCodeDataResponse> getDiscountCode() {
         return discountCodeJpaRepository.findAll().stream().map(
-                discountCode -> DiscountCodeResponse.builder()
+                discountCode -> DiscountCodeDataResponse.builder()
                         .id(discountCode.getId())
                         .codeName(discountCode.getCodeName())
                         .build()
         ).collect(Collectors.toList());
     }
 
-    @Transactional
     public void saveCourse(CourseRequest request) {
         Teacher teacher;
         if (request.getTeacherID() != null) {
             teacher = teacherJpaRepository.findById(request.getTeacherID()).get();
         } else {
             Optional<Long> id = SecurityUtils.getCurrentUserLoginId();
-            teacher = id.isPresent() ? teacherJpaRepository.findById(id.get()).get() : teacherJpaRepository.findById(1L).get();
+            teacher = teacherJpaRepository.findByUserId(id.get());
         }
         Optional<DiscountCode> discountCode = Optional.empty();
         if (request.getDiscountID() != null) {
@@ -133,7 +137,6 @@ public class CourseService {
         courseJpaRepository.save(course);
     }
 
-    @Transactional
     public void deleteCourse(Long id) {
         Optional<Course> courseOptional = courseJpaRepository.findById(id);
         if (courseOptional.isPresent()) {
@@ -159,21 +162,27 @@ public class CourseService {
                         .learningObjectives(course.getLearningObjectives())
                         .courseFee(course.getCourseFee())
                         .courseFeeUnit(course.getCourseFeeUnit())
-                        .discountCode(course.getDiscountCode())
                         .teacher(TeacherResponse.builder()
                                 .id(course.getTeacher().getId())
-                                .user(course.getTeacher().getUser())
+                                .user(UserDataResponse.builder()
+                                        .id(course.getTeacher().getUser().getId())
+                                        .fullName(course.getTeacher().getUser().getFullName())
+                                        .email(course.getTeacher().getUser().getEmail())
+                                        .userStatus(course.getTeacher().getUser().getUserStatus())
+                                        .build())
                                 .yearsOfExperience(course.getTeacher().getYearsOfExperience())
                                 .teachingExpertise(course.getTeacher().getTeachingExpertise())
                                 .build())
                         .difficultyLevel(course.getDifficultyLevel())
-                        .trainingField(course.getTrainingField())
+                        .trainingField(TrainingFieldResponse.builder()
+                                .id(course.getTrainingField().getId())
+                                .fieldName(course.getTrainingField().getFieldName())
+                                .build())
                         .courseStatus(course.getCourseStatus())
                         .build()
         ).collect(Collectors.toList());
     }
 
-    @Transactional
     public CourseDataResponse getCourseDetails(Long id) throws CourseNotFoundException {
         return courseJpaRepository.findById(id).map(
                 course -> CourseDataResponse.builder()
@@ -184,26 +193,38 @@ public class CourseService {
                         .courseFee(course.getCourseFee())
                         .courseFeeUnit(course.getCourseFeeUnit())
                         .difficultyLevel(course.getDifficultyLevel())
-                        .discountCode(course.getDiscountCode())
-                        .teacher(TeacherResponse.builder()
-                                .id(course.getTeacher().getId())
-                                .user(course.getTeacher().getUser())
-                                .yearsOfExperience(course.getTeacher().getYearsOfExperience())
-                                .teachingExpertise(course.getTeacher().getTeachingExpertise())
-                                .build())
                         .courseStatus(course.getCourseStatus())
-                        .trainingField(course.getTrainingField())
                         .build()
         ).orElseThrow(() -> new CourseNotFoundException("Course with id " + id + " could not be found!"));
     }
 
-    public void changeCourseStatus(Long courseId, CourseStatusRequest status) {
+    public void changeCourseStatus(Long courseId, CourseStatusRequest status) throws CourseNotFoundException {
         Course course = courseJpaRepository.findById(courseId).orElse(null);
         if (ObjectUtils.isEmpty(course)) {
-            return;
+            throw new CourseNotFoundException("Course with id " + courseId + " could not be found!");
         }
         course.setCourseStatus(status.getCourseStatus());
         courseJpaRepository.save(course);
+    }
+
+
+    public CourseResponse searchCourse(SearchRequest request) {
+        List<CourseDataResponse> data = courseRepository.searchCourse(request);
+        Long totalElement = 0L;
+        if (!CollectionUtils.isEmpty(data)) {
+            totalElement = data.get(0).getTotalRecord();
+        }
+        double totalPageTemp = (double) totalElement / request.getPageSize();
+        if (totalPageTemp > totalElement / request.getPageSize()) {
+            totalPageTemp++;
+        }
+        return CourseResponse.builder()
+                .courses(data)
+                .totalElement(totalElement)
+                .totalPage(Double.valueOf(totalPageTemp).intValue())
+                .currentPage(request.getCurrentPage())
+                .pageSize(request.getPageSize())
+                .build();
     }
 
 

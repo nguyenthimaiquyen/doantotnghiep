@@ -65,7 +65,7 @@
                                     <div class="d-flex align-items-center mt-3">
                                         <input class="p-0" type="checkbox" id="teacherCheckbox"
                                                aria-label="Checkbox for following text input">
-                                        <p class="main-color mb-0 pl-10">Bạn là giảng viên</p>
+                                        <label class="main-color mb-0 pl-10 f-400" for="teacherCheckbox">Bạn là giảng viên</label>
                                     </div>
                                 </div>
                             </form>
@@ -93,5 +93,5 @@
 
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>
-<script src="/js/authentication.js"></script>
+<script src="/js/security/authentication.js"></script>
 </html>

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,9 +21,9 @@ public class QuizResponse {
 
     private String explanation;
 
+    private List<AnswerResponse> answers;
+
     private Long sectionId;
 
-    private Set<AnswerResponse> answers;
-
-
+    private String sectionTitle;
 }

@@ -1,19 +1,12 @@
 package com.quyen.hust.controller.admin;
 
-import com.quyen.hust.exception.DiscountCodeNotFoundException;
 import com.quyen.hust.exception.TrainingFieldNotFoundException;
-import com.quyen.hust.model.request.admin.DiscountCodeRequest;
 import com.quyen.hust.model.request.admin.TrainingFieldRequest;
-import com.quyen.hust.model.response.admin.DiscountCodeResponse;
-import com.quyen.hust.model.response.admin.TrainingFieldResponse;
 import com.quyen.hust.service.admin.TrainingFieldService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @AllArgsConstructor

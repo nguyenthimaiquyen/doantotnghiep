@@ -1,7 +1,9 @@
 package com.quyen.hust.controller.webstatics;
 
 import com.quyen.hust.exception.CourseNotFoundException;
+import com.quyen.hust.model.request.SearchRequest;
 import com.quyen.hust.model.response.course.CourseDataResponse;
+import com.quyen.hust.model.response.course.CourseResponse;
 import com.quyen.hust.model.response.course.SectionResponse;
 import com.quyen.hust.service.course.CourseService;
 import com.quyen.hust.service.course.SectionService;
@@ -21,23 +23,33 @@ public class CourseWebController {
     private final CourseService courseService;
     private final SectionService sectionService;
 
+    @GetMapping
+    public String getCoursePage(Model model) {
+        List<CourseDataResponse> courses = courseService.getAll();
+        model.addAttribute("courses", courses);
+        return "course/courses";
+    }
+
+    @GetMapping("/details")
+    public String getCourseDetailsPage(Model model) {
+        return "course/course-details";
+    }
+
     @GetMapping("/analysis")
     public String getAdminDashboardPage(Model model) {
         return "admin/dashboard/dashboard";
     }
 
     @GetMapping("/management")
-    public String getCourseManagementPage(Model model) {
-        List<CourseDataResponse> courses = courseService.getAll();
-//        Optional<Role> currentUserLoginRole = SecurityUtils.getCurrentUserLoginRole();
-        model.addAttribute("courses", courses);
-//        model.addAttribute("role", currentUserLoginRole.get().getName().name());
+    public String getCourseManagementPage(Model model, SearchRequest request) {
+        CourseResponse courseResponse = courseService.searchCourse(request);
+        model.addAttribute("requestSearch", request);
+        model.addAttribute("courses", courseResponse.getCourses());
+        model.addAttribute("currentPage", courseResponse.getCurrentPage());
+        model.addAttribute("totalPage", courseResponse.getTotalPage());
+        model.addAttribute("totalElement", courseResponse.getTotalElement());
+        model.addAttribute("pageSize", courseResponse.getPageSize());
         return "course/course-management";
-    }
-
-    @GetMapping("/creation")
-    public String getCourseCreationPage(Model model) {
-        return "course/course-creation";
     }
 
     @GetMapping("/{id}/sections")

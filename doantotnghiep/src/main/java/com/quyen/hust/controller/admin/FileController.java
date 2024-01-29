@@ -28,7 +28,7 @@ public class FileController {
             return ResponseEntity.badRequest().body("File name is empty");
         }
 
-        File file = new File("product_images/" + fileName);
+        File file = new File("course_data/file/" + fileName); //check là file hay video
         HttpHeaders headers = new HttpHeaders();
         List<String> customHeaders = new ArrayList<>();
         customHeaders.add(HttpHeaders.CONTENT_DISPOSITION);

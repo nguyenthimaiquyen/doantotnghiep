@@ -14,28 +14,28 @@ public class FileUtil {
         return fileNames[0] + "_" + System.currentTimeMillis() + "." + fileNames[1];
     }
 
-    public static boolean isValidVideoFormat(String contentType) {
-        if (StringUtils.hasText(contentType)) {
-            String[] parts = contentType.split("/");
-            if (parts.length == 2) {
-                String extension = parts[1].toLowerCase();
-                return Arrays.asList("mp4", "avi", "mkv", "mov", "wmv", "flv", "webm", "3gp", "mpg", "mpeg").contains(extension);
-            }
+    public static String getFileExtension(String fileName) {
+        if (!StringUtils.hasText(fileName)) {
+            return null;
         }
-        return false;
+        String[] fileNames = fileName.split("\\.");
+        return fileNames[fileNames.length - 1];
     }
 
-    public static boolean isValidFileFormat(String contentType) {
-        if (StringUtils.hasText(contentType)) {
-            // Xác định extension từ contentType
-            String[] parts = contentType.split("/");
-            if (parts.length == 2) {
-                String extension = parts[1].toLowerCase();
-                // Kiểm tra xem extension có thuộc danh sách cho phép không
-                return Arrays.asList("pdf", "xls", "xlsx", "doc", "docx", "ppt", "pptx").contains(extension);
-            }
+    public static boolean isValidVideoFormat(String fileName) {
+        String videoExtension = getFileExtension(fileName);
+        if (!StringUtils.hasText(videoExtension)) {
+            return false;
         }
-        return false;
+        return Arrays.asList("mp4", "avi", "mkv", "mov", "wmv", "flv", "webm", "3gp", "mpg", "mpeg").contains(videoExtension);
+    }
+
+    public static boolean isValidFileFormat(String fileName) {
+        String fileExtension = getFileExtension(fileName);
+        if (!StringUtils.hasText(fileExtension)) {
+            return false;
+        }
+        return Arrays.asList("pdf", "xls", "xlsx", "doc", "docx", "ppt", "pptx").contains(fileExtension);
     }
 
 

@@ -1,7 +1,7 @@
 package com.quyen.hust.repository.user;
 
 import com.quyen.hust.model.request.user.UserSearchRequest;
-import com.quyen.hust.model.response.user.UserSearchResponse;
+import com.quyen.hust.model.response.user.UserResponse;
 import com.quyen.hust.repository.BaseRepository;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
@@ -13,7 +13,7 @@ import java.util.Map;
 @Repository
 public class UserCustomRepository extends BaseRepository {
 
-    public List<UserSearchResponse> searchUser(UserSearchRequest request) {
+    public List<UserResponse> searchUser(UserSearchRequest request) {
         String sql = "select u.username name, u.gender gender from users u where 1 = 1";
 
         Map<String, Object> parameters = new HashMap<>();
@@ -38,7 +38,7 @@ public class UserCustomRepository extends BaseRepository {
             parameters.put("gender", request.getGender());
         }
 
-        return getNamedParameterJdbcTemplate().query(sql, parameters, BeanPropertyRowMapper.newInstance(UserSearchResponse.class));
+        return getNamedParameterJdbcTemplate().query(sql, parameters, BeanPropertyRowMapper.newInstance(UserResponse.class));
     }
 
 }

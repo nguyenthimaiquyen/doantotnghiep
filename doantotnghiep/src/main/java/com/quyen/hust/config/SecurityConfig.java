@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.POST, "/authentication/refresh-token", "/authentication/logout").authenticated()
 //                .antMatchers(HttpMethod.GET, "/users", "/users/{id}").hasAnyAuthority(Roles.USER.toString(), Roles.ADMIN.toString())
 //                .antMatchers(HttpMethod.POST, "/users").hasAnyAuthority(Roles.ADMIN.toString())
+                .antMatchers(HttpMethod.POST, "/courses/management").hasAnyAuthority(Roles.ADMIN.toString(), Roles.TEACHER.toString())
                 .anyRequest().permitAll()
                 .and()
                 .httpBasic()

@@ -42,8 +42,6 @@ $(document).ready(() => {
         if (this.optional(element)) {
             return true;
         }
-        console.log("value : " + value)
-        console.log("element : " + element)
         const myDate = new Date(value);
         myDate.setHours(0);
         myDate.setMinutes(0);
@@ -61,8 +59,6 @@ $(document).ready(() => {
         if (this.optional(element)) {
             return true;
         }
-        console.log("value : " + value)
-        console.log("element : " + element)
         const myDate = new Date(value);
         myDate.setHours(0);
         myDate.setMinutes(0);
@@ -73,7 +69,6 @@ $(document).ready(() => {
         today.setMinutes(0);
         today.setSeconds(0);
         today.setMilliseconds(0);
-        console.log(myDate - today)
         return this.optional(element) || myDate - today > 0;
     }, "Date must be a future date");
 
@@ -155,12 +150,9 @@ $(document).ready(() => {
             },
             error: function (err) {
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 });
             }
@@ -168,12 +160,9 @@ $(document).ready(() => {
 
         if (!discountCode) {
             $.toast({
-                heading: 'Lỗi',
                 text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                 icon: 'error',
-                showHideTransition: 'fade',
                 position: 'top-right',
-                loader: false,
                 bgColor: '#FF0000'
             });
             return;
@@ -223,26 +212,20 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
-                    text: (method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công mã giảm giá!",
+                    text: (method === "POST" ? "Tạo mới " : "Cập nhật ") + "thành công mã giảm giá!",
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 })
                 setTimeout(() => {
                     location.reload();
-                }, 1000);
+                }, 3000);
             },
             error: function (error) {
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 });
             }
@@ -264,26 +247,20 @@ $(document).ready(() => {
             type: "DELETE",
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
                     text: "Xóa mã giảm giá thành công!",
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 });
                 setTimeout(() => {
                     location.reload();
-                }, 1000);
+                }, 3000);
             },
             error: function (err) {
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 });
             }
@@ -299,6 +276,19 @@ $(document).ready(() => {
         validator.resetForm();
     });
 
+    //lắng nghe sự kiện người dùng nhấn enter khi search discount code
+    $("#search-discount-code").keypress(function (event) {
+        if (event.which == 13) {
+            $('#search-discount-code-form').submit();
+            return false;
+        }
+    });
+
+    //set url mới khi thẻ select thay đổi
+    $('#discount-code-page-size').change(function (event) {
+        const pageSize = event.target.value;
+        window.location.href = ('/discount-codes?pageSize=' + pageSize + '&currentPage=0');
+    });
 
 
 });

@@ -1,7 +1,7 @@
 package com.quyen.hust.model.response.course;
 
-import com.quyen.hust.entity.admin.DiscountCode;
-import com.quyen.hust.entity.admin.TrainingField;
+import com.quyen.hust.model.response.admin.DiscountCodeDataResponse;
+import com.quyen.hust.model.response.admin.TrainingFieldResponse;
 import com.quyen.hust.model.response.teacher.TeacherResponse;
 import com.quyen.hust.statics.DifficultyLevel;
 import com.quyen.hust.statics.CourseStatus;
@@ -31,11 +31,11 @@ public class CourseDataResponse {
 
     private Unit courseFeeUnit;
 
-    private TrainingField trainingField;
+    private TrainingFieldResponse trainingField;
 
     private CourseStatus courseStatus;
 
-    private DiscountCode discountCode;
+    private DiscountCodeDataResponse discountCode;
 
     private TeacherResponse teacher;
 

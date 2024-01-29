@@ -6,7 +6,6 @@ import com.quyen.hust.exception.LessonNotFoundException;
 import com.quyen.hust.exception.UnsupportedFormatException;
 import com.quyen.hust.model.request.course.LessonRequest;
 import com.quyen.hust.model.response.course.LessonResponse;
-import com.quyen.hust.model.response.course.SectionResponse;
 import com.quyen.hust.repository.course.LessonJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import com.quyen.hust.util.FileUtil;
@@ -23,7 +22,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,10 +33,7 @@ public class LessonService {
 
     public LessonResponse getLessonDetails(Long lessonId) throws LessonNotFoundException {
         Section section = lessonJpaRepository.findById(lessonId).get().getSection();
-        SectionResponse sectionResponse = SectionResponse.builder()
-                .id(section.getId())
-                .title(section.getTitle())
-                .build();
+        List<Section> sections = sectionJpaRepository.findByCourseId(section.getCourse().getId());
         return lessonJpaRepository.findById(lessonId).map(
                 lesson -> LessonResponse.builder()
                         .id(lesson.getId())
@@ -47,29 +42,29 @@ public class LessonService {
                         .embeddedUrl(lesson.getEmbeddedUrl())
                         .fileUrl(lesson.getFileUrl())
                         .videoUrl(lesson.getVideoUrl())
-                        .section(sectionResponse)
+                        .sectionId(section.getId())
+                        .sectionTitle(section.getTitle())
                         .build()
         ).orElseThrow(() -> new LessonNotFoundException("Lesson with id " + lessonId + " could not be found!"));
     }
 
-    public List<LessonResponse> getLessons(Long sectionId) {
-        return lessonJpaRepository.findBySectionId(sectionId).stream().map(
-                lesson -> LessonResponse.builder()
-                        .id(lesson.getId())
-                        .title(lesson.getTitle())
-                        .content(lesson.getContent())
-                        .embeddedUrl(lesson.getEmbeddedUrl())
-                        .videoUrl(lesson.getVideoUrl())
-                        .fileUrl(lesson.getFileUrl())
-                        .build()
-        ).collect(Collectors.toList());
-    }
+//    public List<LessonResponse> getLessons(Long sectionId) {
+//        return lessonJpaRepository.findBySectionId(sectionId).stream().map(
+//                lesson -> LessonResponse.builder()
+//                        .id(lesson.getId())
+//                        .title(lesson.getTitle())
+//                        .content(lesson.getContent())
+//                        .embeddedUrl(lesson.getEmbeddedUrl())
+//                        .videoUrl(lesson.getVideoUrl())
+//                        .fileUrl(lesson.getFileUrl())
+//                        .build()
+//        ).collect(Collectors.toList());
+//    }
 
     public void saveLesson(LessonRequest request, MultipartFile file, MultipartFile video) throws UnsupportedFormatException {
         if (file != null) {
             //kiểm tra định dạng file thỏa mãn: pdf, xls, xlsx, doc, docx, ppt, pptx
-            System.out.println(file.getContentType());
-            if (!FileUtil.isValidFileFormat(file.getContentType())) {
+            if (!FileUtil.isValidFileFormat(file.getOriginalFilename())) {
                 throw new UnsupportedFormatException("File formats do not support");
             }
             //lưu file
@@ -82,8 +77,7 @@ public class LessonService {
         }
         if (video != null) {
             //kiểm tra định dạng video tải lên
-            System.out.println(video.getContentType());
-            if (!FileUtil.isValidVideoFormat(video.getContentType())) {
+            if (!FileUtil.isValidVideoFormat(video.getOriginalFilename())) {
                 throw new UnsupportedFormatException("Video formats do not support");
             }
             //lưu video
@@ -129,11 +123,13 @@ public class LessonService {
 
     public void deleteLesson(Long lessonId) {
         Optional<Lesson> lessonOptional = lessonJpaRepository.findById(lessonId);
-        if (lessonOptional.isPresent()) {
-            Section section = lessonOptional.get().getSection();
-            Set<Lesson> lessons = section.getLessons();
-            lessons.removeIf(lesson -> lesson.getId().equals(lessonId));
-            sectionJpaRepository.save(section);
+        if (!lessonOptional.isPresent()) {
+            return;
         }
+        Section section = lessonOptional.get().getSection();
+        List<Lesson> lessons = lessonJpaRepository.findBySectionId(section.getId());
+        lessons.removeIf(lesson -> lesson.getId().equals(lessonId));
+        sectionJpaRepository.save(section);
+        lessonJpaRepository.delete(lessonOptional.get());
     }
 }

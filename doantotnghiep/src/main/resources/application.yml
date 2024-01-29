@@ -43,5 +43,3 @@ application:
       rememberMeTokenValiditySeconds: 86400000
     refreshToken:
       tokenValidityMilliseconds: 86400000
-ckeditor:
-  resources-path: classpath:/ckeditor/

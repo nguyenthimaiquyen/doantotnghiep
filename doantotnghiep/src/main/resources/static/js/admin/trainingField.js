@@ -47,7 +47,6 @@ $(document).ready(() => {
             },
             error: function (err) {
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
                     showHideTransition: 'fade',
@@ -110,26 +109,20 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
-                    text: (method === "CREATE" ? "Tạo mới " : "Cập nhật ") + "thành công lĩnh vực đào tạo!",
+                    text: (method === "POST" ? "Tạo mới " : "Cập nhật ") + "thành công lĩnh vực đào tạo!",
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 });
                 setTimeout(() => {
                     location.reload();
-                }, 1000);
+                }, 3000);
             },
             error: function (error) {
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 });
             }
@@ -150,26 +143,20 @@ $(document).ready(() => {
             type: "DELETE",
             success: function (data) {
                 $.toast({
-                    heading: 'Thành công',
                     text: "Xóa lĩnh vực đào tạo thành công!",
                     icon: 'success',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#4CAF50'
                 });
                 setTimeout(() => {
                     location.reload();
-                }, 1000);
+                }, 3000);
             },
             error: function (err) {
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 });
             }
