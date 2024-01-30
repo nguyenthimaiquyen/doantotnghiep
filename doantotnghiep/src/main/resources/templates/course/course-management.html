@@ -27,7 +27,7 @@
                         <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
                             <div class="input-group">
                                 <form id="search-course-form" method="get" action="/courses/management">
-                                    <input type="text" id="search-course" class="form-control pr-100" name="name"
+                                    <input type="text" id="search-course" class="form-control pr-100" name="courseName"
                                            th:value="${requestSearch.name}" placeholder="Nhập từ khóa">
                                 </form>
                             </div>
@@ -51,9 +51,9 @@
                                     <th>Giá</th>
                                     <th>Đơn vị giá</th>
                                     <th>Cấp độ</th>
-<!--                                    <th>Giảng viên</th>-->
-<!--                                    <th>Mã giảm giá</th>-->
-<!--                                    <th>Lĩnh vực</th>-->
+                                    <th>Giảng viên</th>
+                                    <th>Mã giảm giá</th>
+                                    <th>Lĩnh vực</th>
                                     <th>Trạng thái</th>
                                     <th></th>
                                 </tr>
@@ -66,10 +66,10 @@
                                     <td class="text-center" th:text="${course.courseFee}"></td>
                                     <td class="text-center" th:text="${course.courseFeeUnit}"></td>
                                     <td class="text-center" th:text="${course.difficultyLevel.name}"></td>
-<!--                                    <td class="text-center" th:text="${course.teacher.user.fullName}"></td>-->
-<!--                                    <td class="text-center"-->
-<!--                                        th:text="${course.discountCode != null ? course.discountCode.codeName : '&#45;&#45;'}"></td>-->
-<!--                                    <td class="text-center" th:text="${course.trainingField.fieldName}"></td>-->
+                                    <td class="text-center" th:text="${course.teacherName}"></td>
+                                    <td class="text-center"
+                                        th:text="${course.discountCode != null ? course.discountCodeName : '--'}"></td>
+                                    <td class="text-center" th:text="${course.trainingFieldName}"></td>
                                     <td>
                                         <span th:each="type: ${course.courseStatus}">
                                             <span th:switch="${course.courseStatus.code}">

@@ -1,9 +1,7 @@
 package com.quyen.hust.controller.course;
 
-import com.quyen.hust.exception.CourseNotFoundException;
 import com.quyen.hust.exception.SectionNotFoundException;
 import com.quyen.hust.model.request.course.SectionRequest;
-import com.quyen.hust.service.course.CourseService;
 import com.quyen.hust.service.course.SectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

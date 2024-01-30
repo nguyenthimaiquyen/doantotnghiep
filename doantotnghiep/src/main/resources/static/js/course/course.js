@@ -321,6 +321,7 @@ $(document).ready(() => {
         if (!formCourseData || formCourseData.length === 0) {
             return;
         }
+        formCourseData["trainingFieldID"] = [formCourseData["trainingFieldID"]];
         //chuyển dữ liệu từ object sang json
         const courseRequestBody = {};
         for (let i = 0; i < formCourseData.length; i++) {

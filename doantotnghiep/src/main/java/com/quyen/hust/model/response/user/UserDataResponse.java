@@ -50,7 +50,7 @@ public class UserDataResponse {
 
     private LocalDateTime modifiedAt;
 
-    private Set<RoleResponse> roles;
+    private String roleName;
 
     private Long totalRecord;
 }

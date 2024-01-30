@@ -4,8 +4,8 @@ import com.quyen.hust.entity.BaseEntity;
 import com.quyen.hust.entity.admin.DiscountCode;
 import com.quyen.hust.entity.admin.TrainingField;
 import com.quyen.hust.entity.teacher.Teacher;
-import com.quyen.hust.statics.DifficultyLevel;
 import com.quyen.hust.statics.CourseStatus;
+import com.quyen.hust.statics.DifficultyLevel;
 import com.quyen.hust.statics.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -71,11 +70,13 @@ public class Course extends BaseEntity {
     @JoinColumn(name = "discount_id")
     private DiscountCode discountCode;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "training_field_id")
-    private TrainingField trainingField;
+    @JoinTable(name = "courses_training_fields",
+            joinColumns = @JoinColumn(name = "training_field_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<TrainingField> trainingField;
 
 
 

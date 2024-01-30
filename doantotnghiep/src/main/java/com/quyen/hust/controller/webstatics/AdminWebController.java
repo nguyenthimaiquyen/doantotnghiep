@@ -1,7 +1,8 @@
 package com.quyen.hust.controller.webstatics;
 
-import com.quyen.hust.model.request.SearchRequest;
-import com.quyen.hust.model.response.admin.DiscountCodeDataResponse;
+import com.quyen.hust.model.request.search.AccountSearchRequest;
+import com.quyen.hust.model.request.search.CourseSearchRequest;
+import com.quyen.hust.model.request.search.DiscountCodeSearchRequest;
 import com.quyen.hust.model.response.admin.DiscountCodeResponse;
 import com.quyen.hust.model.response.admin.TrainingFieldResponse;
 import com.quyen.hust.model.response.user.UserResponse;
@@ -36,9 +37,9 @@ public class AdminWebController {
     }
 
     @GetMapping("/discount-codes")
-    public String getDiscountCodeManagementPage(Model model, SearchRequest request) {
+    public String getDiscountCodeManagementPage(Model model, DiscountCodeSearchRequest request) {
         DiscountCodeResponse discountCodeResponse = discountCodeService.searchDiscountCode(request);
-        model.addAttribute("requestSearch", request);
+        model.addAttribute("requestSearch", request.getDiscountCodeName());
         model.addAttribute("currentPage", discountCodeResponse.getCurrentPage());
         model.addAttribute("totalPage", discountCodeResponse.getTotalPage());
         model.addAttribute("totalElement", discountCodeResponse.getTotalElement());
@@ -48,9 +49,9 @@ public class AdminWebController {
     }
 
     @GetMapping("/accounts")
-    public String getAccountManagementPage(Model model, SearchRequest request) {
+    public String getAccountManagementPage(Model model, AccountSearchRequest request) {
         UserResponse userResponse = accountService.searchUser(request);
-        model.addAttribute("requestSearch", request);
+        model.addAttribute("requestSearch", request.getAccountName());
         model.addAttribute("currentPage", userResponse.getCurrentPage());
         model.addAttribute("totalPage", userResponse.getTotalPage());
         model.addAttribute("totalElement", userResponse.getTotalElement());

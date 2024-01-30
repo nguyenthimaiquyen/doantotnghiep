@@ -22,7 +22,7 @@
                 <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
                     <div class="input-group">
                         <form id="search-account-form" method="get" action="/accounts">
-                            <input type="text" id="search-account" class="form-control pr-100" name="name"
+                            <input type="text" id="search-account" class="form-control pr-100" name="accountName"
                                    th:value="${requestSearch.name}" placeholder="Nhập từ khóa">
                         </form>
                     </div>
@@ -36,7 +36,7 @@
                             <th>STT</th>
                             <th>Họ và tên</th>
                             <th>Email</th>
-<!--                            <th>Vai trò</th>-->
+                            <th>Vai trò</th>
                             <th>Trạng thái</th>
                             <th></th>
                         </tr>
@@ -47,7 +47,7 @@
                             <td><a class="view-account-btn focused cursor-pointer text-dark"
                                    th:attr="account-id=${account.id}" th:text="${account.fullName}"></a></td>
                             <td th:text="${account.email}"></td>
-<!--                            <td th:utext="${account.roles.get(0).name}"></td>-->
+                            <td th:text="${account.roleName}"></td>
                             <td th:text="${account.userStatus.name}"></td>
                             <td>
                                 <div class="dropdown dropleft">

@@ -2,8 +2,9 @@ package com.quyen.hust.service.admin;
 
 import com.quyen.hust.entity.admin.DiscountCode;
 import com.quyen.hust.exception.DiscountCodeNotFoundException;
-import com.quyen.hust.model.request.SearchRequest;
+import com.quyen.hust.model.request.search.CourseSearchRequest;
 import com.quyen.hust.model.request.admin.DiscountCodeRequest;
+import com.quyen.hust.model.request.search.DiscountCodeSearchRequest;
 import com.quyen.hust.model.response.admin.DiscountCodeDataResponse;
 import com.quyen.hust.model.response.admin.DiscountCodeResponse;
 import com.quyen.hust.model.response.admin.DiscountCodeUnitResponse;
@@ -93,7 +94,7 @@ public class DiscountCodeService {
         discountCodeJpaRepository.deleteById(id);
     }
 
-    public DiscountCodeResponse searchDiscountCode(SearchRequest request) {
+    public DiscountCodeResponse searchDiscountCode(DiscountCodeSearchRequest request) {
         List<DiscountCodeDataResponse> data = discountCodeRepository.searchDiscountCode(request);
         Long totalElement = 0L;
         if (!CollectionUtils.isEmpty(data)) {
@@ -107,7 +108,7 @@ public class DiscountCodeService {
                 .discountCodes(data)
                 .totalElement(totalElement)
                 .totalPage(Double.valueOf(totalPageTemp).intValue())
-                .currentPage(request.getCurrentPage())
+                .currentPage(request.getPageIndex())
                 .pageSize(request.getPageSize())
                 .build();
     }

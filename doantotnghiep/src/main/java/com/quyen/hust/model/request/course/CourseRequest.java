@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -42,7 +43,7 @@ public class CourseRequest {
     private DifficultyLevel difficultyLevel;
 
     @NotNull(message = "Training fields is required")
-    private Long trainingFieldID;
+    private List<Long> trainingFieldID;
 
 
 }

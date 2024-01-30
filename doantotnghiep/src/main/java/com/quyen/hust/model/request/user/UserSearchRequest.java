@@ -1,6 +1,6 @@
 package com.quyen.hust.model.request.user;
 
-import com.quyen.hust.model.request.BaseSearchRequest;
+import com.quyen.hust.model.request.search.BaseSearchRequest;
 import lombok.Data;
 
 @Data

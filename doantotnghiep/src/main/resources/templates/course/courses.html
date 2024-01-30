@@ -120,7 +120,7 @@
                                             <img class="w-100 img" src="/images/about-page/about-page2.jpg" alt="course-image01">
                                             <div class="pc-category z-index1 position-absolute">
                                     <span class="text-white f-500 theme-bg d-inline-block py-1 px-3"
-                                          th:text="${course.trainingField.fieldName}"></span>
+                                          th:text="${course.trainingFieldName}"></span>
                                             </div><!-- /pc-category  -->
                                         </div><!-- /p-course img -->
                                     </div>
@@ -144,7 +144,7 @@
                                             <h3><a class="show-course-btn focused cursor-pointer text-dark"
                                                    th:attr="course-id=${course.id}" th:text="${course.title}"></a></h3>
                                             <p class="admin mb-2">
-                                                By <span class="theme-color f-500 d-inline-block" th:text="${course.teacher.user.fullName}"></span>
+                                                By <span class="theme-color f-500 d-inline-block" th:text="${course.teacherName}"></span>
                                             </p>
                                             <p class="badge badge-primary mr-1" th:text="${course.difficultyLevel.name}"></p>
                                         </div><!-- /course-content -->

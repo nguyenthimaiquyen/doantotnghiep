@@ -1,6 +1,7 @@
 package com.quyen.hust.repository.admin;
 
-import com.quyen.hust.model.request.SearchRequest;
+import com.quyen.hust.model.request.search.CourseSearchRequest;
+import com.quyen.hust.model.request.search.DiscountCodeSearchRequest;
 import com.quyen.hust.model.response.admin.DiscountCodeDataResponse;
 import com.quyen.hust.util.StringUtil;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.Map;
 public class DiscountCodeRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<DiscountCodeDataResponse> searchDiscountCode(SearchRequest request) {
+    public List<DiscountCodeDataResponse> searchDiscountCode(DiscountCodeSearchRequest request) {
         String sql = "WITH RECURSIVE data_discount_code AS (\n" +
                 "\tSELECT id, code_name, discount_value, discount_unit, start_date, end_date, " +
                 "usage_limitation_count, used_count, activated \n" +
@@ -37,16 +38,16 @@ public class DiscountCodeRepository {
 
         String searchCondition = " where 1 = 1 ";
         Map<String, Object> parameters = new HashMap<>();
-        if (StringUtils.hasText(request.getName())) {
+        if (StringUtils.hasText(request.getDiscountCodeName())) {
             searchCondition += "and dc.code_name like :code_name \n";
-            parameters.put("code_name", "%" + StringUtil.escapeWildCardCharacter(request.getName()) + "%");
+            parameters.put("code_name", "%" + StringUtil.escapeWildCardCharacter(request.getDiscountCodeName()) + "%");
         }
 
         sql = sql.replace("{search_condition}", searchCondition);
         sql = sql.replace("{limit_number}", Integer.valueOf(request.getPageSize()).toString());
         String offsetNumber = "0";
-        if (request.getCurrentPage() != 0) {
-            offsetNumber = Integer.valueOf(request.getCurrentPage() * request.getPageSize()).toString();
+        if (request.getPageIndex() != 0) {
+            offsetNumber = Integer.valueOf(request.getPageIndex() * request.getPageSize()).toString();
         }
         sql = sql.replace("{offset_number}", offsetNumber);
 

@@ -1,7 +1,7 @@
 package com.quyen.hust.controller.user;
 
 import com.quyen.hust.exception.ExistedUserException;
-import com.quyen.hust.model.request.anonymous.CreateUserRequest;
+import com.quyen.hust.model.request.authentication.CreateUserRequest;
 import com.quyen.hust.model.request.user.UserSearchRequest;
 import com.quyen.hust.model.response.CommonResponse;
 import com.quyen.hust.model.response.user.UserDataResponse;

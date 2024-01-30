@@ -1,7 +1,7 @@
 package com.quyen.hust.controller.webstatics;
 
 import com.quyen.hust.exception.CourseNotFoundException;
-import com.quyen.hust.model.request.SearchRequest;
+import com.quyen.hust.model.request.search.CourseSearchRequest;
 import com.quyen.hust.model.response.course.CourseDataResponse;
 import com.quyen.hust.model.response.course.CourseResponse;
 import com.quyen.hust.model.response.course.SectionResponse;
@@ -24,9 +24,14 @@ public class CourseWebController {
     private final SectionService sectionService;
 
     @GetMapping
-    public String getCoursePage(Model model) {
-        List<CourseDataResponse> courses = courseService.getAll();
-        model.addAttribute("courses", courses);
+    public String getCoursePage(Model model, CourseSearchRequest request) {
+        CourseResponse courseResponse = courseService.searchCourse(request);
+        model.addAttribute("courses", courseResponse.getCourses());
+        model.addAttribute("requestSearch", request.getCourseName());
+        model.addAttribute("currentPage", courseResponse.getCurrentPage());
+        model.addAttribute("totalPage", courseResponse.getTotalPage());
+        model.addAttribute("totalElement", courseResponse.getTotalElement());
+        model.addAttribute("pageSize", courseResponse.getPageSize());
         return "course/courses";
     }
 
@@ -41,9 +46,9 @@ public class CourseWebController {
     }
 
     @GetMapping("/management")
-    public String getCourseManagementPage(Model model, SearchRequest request) {
+    public String getCourseManagementPage(Model model, CourseSearchRequest request) {
         CourseResponse courseResponse = courseService.searchCourse(request);
-        model.addAttribute("requestSearch", request);
+        model.addAttribute("requestSearch", request.getCourseName());
         model.addAttribute("courses", courseResponse.getCourses());
         model.addAttribute("currentPage", courseResponse.getCurrentPage());
         model.addAttribute("totalPage", courseResponse.getTotalPage());

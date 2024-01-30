@@ -1,28 +1,22 @@
 package com.quyen.hust.service.course;
 
 
-import com.quyen.hust.entity.BaseEntity;
 import com.quyen.hust.entity.admin.DiscountCode;
 import com.quyen.hust.entity.admin.TrainingField;
 import com.quyen.hust.entity.course.Course;
 import com.quyen.hust.entity.course.Lesson;
 import com.quyen.hust.entity.course.Section;
 import com.quyen.hust.entity.teacher.Teacher;
-import com.quyen.hust.entity.user.User;
 import com.quyen.hust.exception.CourseNotFoundException;
+import com.quyen.hust.model.request.search.CourseSearchRequest;
 import com.quyen.hust.model.request.course.CourseRequest;
 import com.quyen.hust.model.request.course.CourseStatusRequest;
-import com.quyen.hust.model.request.SearchRequest;
 import com.quyen.hust.model.response.admin.DiscountCodeDataResponse;
-import com.quyen.hust.model.response.admin.DiscountCodeResponse;
 import com.quyen.hust.model.response.admin.TrainingFieldResponse;
 import com.quyen.hust.model.response.course.CourseDataResponse;
 import com.quyen.hust.model.response.course.CourseFeeUnitResponse;
 import com.quyen.hust.model.response.course.CourseResponse;
 import com.quyen.hust.model.response.course.DifficultyLevelResponse;
-import com.quyen.hust.model.response.teacher.TeacherResponse;
-import com.quyen.hust.model.response.user.UserDataResponse;
-import com.quyen.hust.model.response.user.UserResponse;
 import com.quyen.hust.repository.admin.DiscountCodeJpaRepository;
 import com.quyen.hust.repository.admin.TrainingFieldJpaRepository;
 import com.quyen.hust.repository.course.CourseJpaRepository;
@@ -30,7 +24,6 @@ import com.quyen.hust.repository.course.CourseRepository;
 import com.quyen.hust.repository.course.LessonJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import com.quyen.hust.repository.teacher.TeacherJpaRepository;
-import com.quyen.hust.repository.user.UserJpaRepository;
 import com.quyen.hust.security.SecurityUtils;
 import com.quyen.hust.statics.CourseStatus;
 import com.quyen.hust.statics.DifficultyLevel;
@@ -52,7 +45,6 @@ public class CourseService {
     private final TrainingFieldJpaRepository trainingFieldJpaRepository;
     private final DiscountCodeJpaRepository discountCodeJpaRepository;
     private final TeacherJpaRepository teacherJpaRepository;
-    private final UserJpaRepository userJpaRepository;
     private final SectionJpaRepository sectionJpaRepository;
     private final LessonJpaRepository lessonJpaRepository;
 
@@ -103,7 +95,7 @@ public class CourseService {
         if (request.getDiscountID() != null) {
             discountCode = discountCodeJpaRepository.findById(request.getDiscountID());
         }
-        Optional<TrainingField> trainingField = trainingFieldJpaRepository.findById(request.getTrainingFieldID());
+        List<TrainingField> trainingFields = trainingFieldJpaRepository.findAllById(request.getTrainingFieldID());
         Course course = Course.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -111,7 +103,7 @@ public class CourseService {
                 .courseFee(request.getCourseFee())
                 .courseFeeUnit(request.getCourseFeeUnit())
                 .difficultyLevel(request.getDifficultyLevel())
-                .trainingField(trainingField.orElse(null))
+                .trainingField(trainingFields)
                 .teacher(teacher)
                 .discountCode(discountCode.orElse(null))
                 .build();
@@ -125,7 +117,7 @@ public class CourseService {
                 courseNeedUpdate.setCourseFee(request.getCourseFee());
                 courseNeedUpdate.setCourseFeeUnit(request.getCourseFeeUnit());
                 courseNeedUpdate.setDifficultyLevel(request.getDifficultyLevel());
-                courseNeedUpdate.setTrainingField(trainingField.orElse(null));
+                courseNeedUpdate.setTrainingField(trainingFields);
                 courseNeedUpdate.setTeacher(teacher);
                 courseNeedUpdate.setDiscountCode(discountCode.orElse(null));
                 courseJpaRepository.save(courseNeedUpdate);
@@ -152,36 +144,21 @@ public class CourseService {
     }
 
 
-    public List<CourseDataResponse> getAll() {
-        //dùng hàm search,
-        return courseJpaRepository.findAll().stream().map(
-                course -> CourseDataResponse.builder()
-                        .id(course.getId())
-                        .title(course.getTitle())
-                        .description(course.getDescription())
-                        .learningObjectives(course.getLearningObjectives())
-                        .courseFee(course.getCourseFee())
-                        .courseFeeUnit(course.getCourseFeeUnit())
-                        .teacher(TeacherResponse.builder()
-                                .id(course.getTeacher().getId())
-                                .user(UserDataResponse.builder()
-                                        .id(course.getTeacher().getUser().getId())
-                                        .fullName(course.getTeacher().getUser().getFullName())
-                                        .email(course.getTeacher().getUser().getEmail())
-                                        .userStatus(course.getTeacher().getUser().getUserStatus())
-                                        .build())
-                                .yearsOfExperience(course.getTeacher().getYearsOfExperience())
-                                .teachingExpertise(course.getTeacher().getTeachingExpertise())
-                                .build())
-                        .difficultyLevel(course.getDifficultyLevel())
-                        .trainingField(TrainingFieldResponse.builder()
-                                .id(course.getTrainingField().getId())
-                                .fieldName(course.getTrainingField().getFieldName())
-                                .build())
-                        .courseStatus(course.getCourseStatus())
-                        .build()
-        ).collect(Collectors.toList());
-    }
+//    public List<CourseDataResponse> getAll() {
+//        //dùng hàm search,
+//        return courseJpaRepository.findAll().stream().map(
+//                course -> CourseDataResponse.builder()
+//                        .id(course.getId())
+//                        .title(course.getTitle())
+//                        .description(course.getDescription())
+//                        .learningObjectives(course.getLearningObjectives())
+//                        .courseFee(course.getCourseFee())
+//                        .courseFeeUnit(course.getCourseFeeUnit())
+//                        .difficultyLevel(course.getDifficultyLevel())
+//                        .courseStatus(course.getCourseStatus())
+//                        .build()
+//        ).collect(Collectors.toList());
+//    }
 
     public CourseDataResponse getCourseDetails(Long id) throws CourseNotFoundException {
         return courseJpaRepository.findById(id).map(
@@ -208,7 +185,7 @@ public class CourseService {
     }
 
 
-    public CourseResponse searchCourse(SearchRequest request) {
+    public CourseResponse searchCourse(CourseSearchRequest request) {
         List<CourseDataResponse> data = courseRepository.searchCourse(request);
         Long totalElement = 0L;
         if (!CollectionUtils.isEmpty(data)) {
@@ -222,7 +199,7 @@ public class CourseService {
                 .courses(data)
                 .totalElement(totalElement)
                 .totalPage(Double.valueOf(totalPageTemp).intValue())
-                .currentPage(request.getCurrentPage())
+                .currentPage(request.getPageIndex())
                 .pageSize(request.getPageSize())
                 .build();
     }

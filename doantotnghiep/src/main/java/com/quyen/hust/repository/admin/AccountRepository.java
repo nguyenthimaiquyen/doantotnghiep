@@ -1,6 +1,6 @@
 package com.quyen.hust.repository.admin;
 
-import com.quyen.hust.model.request.SearchRequest;
+import com.quyen.hust.model.request.search.AccountSearchRequest;
 import com.quyen.hust.model.response.user.UserDataResponse;
 import com.quyen.hust.util.StringUtil;
 import lombok.AllArgsConstructor;
@@ -18,14 +18,14 @@ import java.util.Map;
 public class AccountRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public List<UserDataResponse> searchUser(SearchRequest request) {
+    public List<UserDataResponse> searchUser(AccountSearchRequest request) {
         String sql = "WITH RECURSIVE data_user AS (\n" +
                 "    SELECT\n" +
                 "        u.id,\n" +
                 "        u.full_name,\n" +
                 "        u.email,\n" +
                 "        u.user_status,\n" +
-                "        r.name AS role_name,\n" +
+                "        r.name AS roleName,\n" +
                 "        ROW_NUMBER() OVER (PARTITION BY u.id ORDER BY ur.user_id) AS row_num\n" +
                 "    FROM\n" +
                 "        users u\n" +
@@ -53,7 +53,11 @@ public class AccountRepository {
                 "    d.full_name,\n" +
                 "    d.email,\n" +
                 "    d.user_status,\n" +
-                "    d.role_name,\n" +
+                "    CASE\n" +
+                "\t\tWHEN d.roleName = 'TEACHER' THEN 'Giảng viên'\n" +
+                "\t\tWHEN d.roleName = 'USER' THEN 'Người dùng thường'\n" +
+                "\t\tELSE 'Quản trị viên'\n" +
+                "\tEND AS roleName,\n" +
                 "    c.total_record totalRecord\n" +
                 "FROM\n" +
                 "    data_user d\n" +
@@ -64,16 +68,16 @@ public class AccountRepository {
 
         String searchCondition = " where 1 = 1 ";
         Map<String, Object> parameters = new HashMap<>();
-        if (StringUtils.hasText(request.getName())) {
+        if (StringUtils.hasText(request.getAccountName())) {
             searchCondition += "and u.full_name like :full_name \n";
-            parameters.put("full_name", "%" + StringUtil.escapeWildCardCharacter(request.getName()) + "%");
+            parameters.put("full_name", "%" + StringUtil.escapeWildCardCharacter(request.getAccountName()) + "%");
         }
 
         sql = sql.replace("{search_condition}", searchCondition);
         sql = sql.replace("{limit_number}", Integer.valueOf(request.getPageSize()).toString());
         String offsetNumber = "0";
-        if (request.getCurrentPage() != 0) {
-            offsetNumber = Integer.valueOf(request.getCurrentPage() * request.getPageSize()).toString();
+        if (request.getPageIndex() != 0) {
+            offsetNumber = Integer.valueOf(request.getPageIndex() * request.getPageSize()).toString();
         }
         sql = sql.replace("{offset_number}", offsetNumber);
 
