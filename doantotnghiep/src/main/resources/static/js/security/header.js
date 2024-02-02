@@ -36,7 +36,7 @@ function setHeader() {
             headerMenu = `
                                 <ul class="d-block text-dark">
                                     <li><a class="mega-title text-dark" href="/courses/analysis">Dashboard</a></li>
-                                    <li><a class="text-dark" href="/courses/management">Khóa học</a></li>         
+                                    <li><a class="text-dark cursor-pointer" href="/courses/management">Khóa học</a></li>         
                                 </ul>
             `;
             subHeader = `
@@ -124,3 +124,4 @@ function setHeader() {
 }
 
 setHeader();
+

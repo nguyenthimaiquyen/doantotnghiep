@@ -34,6 +34,9 @@ public class Lesson extends BaseEntity {
     @Lob
     private String fileUrl;
 
+    @Column(name = "activated", columnDefinition = "bit default 0")
+    private Boolean activated;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})

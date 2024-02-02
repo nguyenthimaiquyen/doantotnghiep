@@ -19,7 +19,7 @@ public class Answer extends BaseEntity {
     @Column
     private String content;
 
-    @Column(name = "is_correct")
+    @Column(name = "is_correct", columnDefinition = "bit default 0")
     private Boolean isCorrect;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {

@@ -1,8 +1,12 @@
 package com.quyen.hust.controller.course;
 
 import com.quyen.hust.exception.CourseNotFoundException;
+import com.quyen.hust.exception.UserNotFoundException;
 import com.quyen.hust.model.request.course.CourseRequest;
 import com.quyen.hust.model.request.course.CourseStatusRequest;
+import com.quyen.hust.model.request.search.CourseSearchRequest;
+import com.quyen.hust.model.response.course.CourseDataResponse;
+import com.quyen.hust.model.response.course.CourseResponse;
 import com.quyen.hust.service.course.CourseService;
 import com.quyen.hust.service.teacher.TeacherService;
 import lombok.AllArgsConstructor;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -42,6 +47,12 @@ public class CourseController {
     @GetMapping("/teachers")
     public ResponseEntity<?> getTeachers() {
         return ResponseEntity.ok(teacherService.getTeachers());
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getCourseTable(CourseSearchRequest request) {
+        CourseResponse courses = courseService.searchCourse(request);
+        return ResponseEntity.ok(courses);
     }
 
     @PostMapping

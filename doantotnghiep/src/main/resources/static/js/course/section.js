@@ -168,11 +168,6 @@ $(document).ready(() => {
         sectionValidator.resetForm();
     });
 
-    //xử lý icon khi nhấn vào tên chương
-    $('.sectionTitle').click(() => {
-
-    });
-
 
 });
 

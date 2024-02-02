@@ -46,7 +46,7 @@ $(document).ready(() => {
                     </div>
                 </div>
         `;
-        lessonOptions = lessonOptions.replace("[sectionTitle]", sectionTitle)
+        lessonOptions = lessonOptions.replace("[sectionTitle]", sectionTitle);
         $('#left-section-content').append(lessonOptions);
     });
 

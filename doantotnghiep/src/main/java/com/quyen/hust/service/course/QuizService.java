@@ -3,6 +3,7 @@ package com.quyen.hust.service.course;
 import com.quyen.hust.entity.course.Answer;
 import com.quyen.hust.entity.course.Quiz;
 import com.quyen.hust.entity.course.Section;
+import com.quyen.hust.exception.AnswerNotFoundException;
 import com.quyen.hust.exception.QuizNotFoundException;
 import com.quyen.hust.exception.SectionNotFoundException;
 import com.quyen.hust.model.request.course.QuizRequest;
@@ -52,10 +53,13 @@ public class QuizService {
     }
 
     @Transactional
-    public void saveQuiz(QuizRequest request) throws SectionNotFoundException {
+    public void saveQuiz(QuizRequest request) throws SectionNotFoundException, AnswerNotFoundException {
         Optional<Section> sectionOptional = sectionJpaRepository.findById(request.getSectionId());
         if (!sectionOptional.isPresent()) {
             throw new SectionNotFoundException("Section with id " + request.getSectionId() + " could not be found!");
+        }
+        if (request.getAnswers().isEmpty()) {
+            throw new AnswerNotFoundException("List of answers is empty!");
         }
         if (!ObjectUtils.isEmpty(request.getId())) {
             //update quiz
@@ -63,7 +67,6 @@ public class QuizService {
             quizNeedUpdate.setTitle(request.getTitle());
             quizNeedUpdate.setQuestion(request.getQuestion());
             quizNeedUpdate.setExplanation(request.getExplanation());
-            answerJpaRepository.deleteByQuizId(quizNeedUpdate.getId());
             List<Answer> answers = request.getAnswers().stream().map(
                     answerRequest -> Answer.builder()
                             .content(answerRequest.getContent())
@@ -71,6 +74,7 @@ public class QuizService {
                             .quiz(quizNeedUpdate)
                             .build()
             ).collect(Collectors.toList());
+            answerJpaRepository.deleteByQuizId(quizNeedUpdate.getId());
             answerJpaRepository.saveAll(answers);
             quizJpaRepository.save(quizNeedUpdate);
         } else {
@@ -91,8 +95,9 @@ public class QuizService {
             quizJpaRepository.save(quiz);
             answerJpaRepository.saveAll(answers);
         }
-
     }
+
+
 
     public void deleteQuiz(Long quizId) throws QuizNotFoundException {
         Optional<Quiz> quiz = quizJpaRepository.findById(quizId);

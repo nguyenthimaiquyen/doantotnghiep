@@ -297,12 +297,16 @@ button::-moz-focus-inner {
     border-style: none
 }
 
-input[type=checkbox],
 input[type=radio] {
     box-sizing: border-box;
     padding: 0;
-    width: 2.7%;
+    width: 1.2em;
     height: 2em;
+}
+
+input[type=checkbox] {
+    box-sizing: border-box;
+    padding: 0;
 }
 
 input[type=date],

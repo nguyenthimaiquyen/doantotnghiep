@@ -22,7 +22,7 @@ $(document).ready(function () {
             },
             error: function (error) {
                 console.log(error);
-                window.location.replace("http://localhost:8080/login");
+                // window.location.replace("http://localhost:8080/login");
             }
         });
     }
@@ -34,9 +34,10 @@ $(document).ready(function () {
             return;
         }
         let jwtJson = parseJwt(accessToken);
-        if ((jwtJson.exp * 1000 - Date.now()) < (3 * 60 * 1000)) {
-            refreshAccessToken(refreshToken);  //check thời gian hết hạn, nếu còn dưới 3 phút thì call API
-        }
-    }, 180000); //3 phút chạy 1 lần
+        //check thời gian hết hạn, nếu còn dưới 3 phút thì call API
+        // if ((jwtJson.exp * 1000 - Date.now()) < (3 * 60 * 1000)) {
+        refreshAccessToken(refreshToken);
+        // }
+    }, 240000); //4 phút chạy 1 lần
 
 });

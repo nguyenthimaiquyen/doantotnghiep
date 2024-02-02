@@ -55,7 +55,7 @@ public class AccountRepository {
                 "    d.user_status,\n" +
                 "    CASE\n" +
                 "\t\tWHEN d.roleName = 'TEACHER' THEN 'Giảng viên'\n" +
-                "\t\tWHEN d.roleName = 'USER' THEN 'Người dùng thường'\n" +
+                "\t\tWHEN d.roleName = 'USER' THEN 'Học viên'\n" +
                 "\t\tELSE 'Quản trị viên'\n" +
                 "\tEND AS roleName,\n" +
                 "    c.total_record totalRecord\n" +

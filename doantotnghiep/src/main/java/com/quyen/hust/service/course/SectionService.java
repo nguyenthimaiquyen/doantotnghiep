@@ -4,10 +4,8 @@ import com.quyen.hust.entity.course.Course;
 import com.quyen.hust.entity.course.Lesson;
 import com.quyen.hust.entity.course.Quiz;
 import com.quyen.hust.entity.course.Section;
-import com.quyen.hust.exception.CourseNotFoundException;
 import com.quyen.hust.exception.SectionNotFoundException;
 import com.quyen.hust.model.request.course.SectionRequest;
-import com.quyen.hust.model.response.course.AnswerResponse;
 import com.quyen.hust.model.response.course.LessonResponse;
 import com.quyen.hust.model.response.course.QuizResponse;
 import com.quyen.hust.model.response.course.SectionResponse;
@@ -16,12 +14,11 @@ import com.quyen.hust.repository.course.LessonJpaRepository;
 import com.quyen.hust.repository.course.QuizJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import lombok.AllArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +33,7 @@ public class SectionService {
     private final QuizJpaRepository quizJpaRepository;
 
     public List<SectionResponse> getSections(Long courseId) {
-        return sectionJpaRepository.findByCourseId(courseId).stream().map(
+        List<SectionResponse> sections = sectionJpaRepository.findByCourseId(courseId).stream().map(
                 section -> {
                     SectionResponse sectionResponse = SectionResponse.builder()
                             .id(section.getId())
@@ -44,20 +41,23 @@ public class SectionService {
                             .lessons(new HashSet<>())
                             .quizzes(new HashSet<>())
                             .build();
-                    List<Lesson> lessons = lessonJpaRepository.findBySectionId(section.getId());
-                    if (lessons != null) {
-                        sectionResponse.setLessons(lessons.stream().map(
-                                lesson -> LessonResponse.builder()
+                    List<Lesson> lessons = lessonJpaRepository.findBySectionIdOrderByIdAsc(section.getId());
+                    if (lessons.size() != 0) {
+                        sectionResponse.setLessons(lessons.stream()
+                                .sorted(Comparator.comparingLong(Lesson::getId))
+                                .map(lesson -> LessonResponse.builder()
                                         .id(lesson.getId())
                                         .title(lesson.getTitle())
                                         .build()
                                 ).collect(Collectors.toSet())
                         );
                     }
-                    List<Quiz> quizzes = quizJpaRepository.findBySectionId(section.getId());
-                    if (quizzes != null) {
-                        sectionResponse.setQuizzes(quizzes.stream().map(
-                                quiz -> QuizResponse.builder()
+
+                    List<Quiz> quizzes = quizJpaRepository.findBySectionIdOrderByIdAsc(section.getId());
+                    if (quizzes.size() != 0) {
+                        sectionResponse.setQuizzes(quizzes.stream()
+                                .sorted(Comparator.comparingLong(Quiz::getId))
+                                .map(quiz -> QuizResponse.builder()
                                         .id(quiz.getId())
                                         .title(quiz.getTitle())
                                         .build()
@@ -66,6 +66,7 @@ public class SectionService {
                     }
                     return sectionResponse;
                 }).collect(Collectors.toList());
+        return sections;
     }
 
     @Transactional
@@ -107,4 +108,6 @@ public class SectionService {
                         .build()
         ).orElseThrow(() -> new SectionNotFoundException("Section with id " + id + " could not be found!"));
     }
+
+
 }

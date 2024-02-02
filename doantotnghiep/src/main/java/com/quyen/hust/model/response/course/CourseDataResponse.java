@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -28,9 +29,9 @@ public class CourseDataResponse {
 
     private Unit courseFeeUnit;
 
-    private String trainingFieldName;
-
     private CourseStatus courseStatus;
+
+    private List<String> trainingFields;
 
     private String discountCodeName;
 

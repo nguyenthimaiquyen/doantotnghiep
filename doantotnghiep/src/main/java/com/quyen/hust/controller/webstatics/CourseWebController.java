@@ -47,13 +47,13 @@ public class CourseWebController {
 
     @GetMapping("/management")
     public String getCourseManagementPage(Model model, CourseSearchRequest request) {
-        CourseResponse courseResponse = courseService.searchCourse(request);
-        model.addAttribute("requestSearch", request.getCourseName());
-        model.addAttribute("courses", courseResponse.getCourses());
-        model.addAttribute("currentPage", courseResponse.getCurrentPage());
-        model.addAttribute("totalPage", courseResponse.getTotalPage());
-        model.addAttribute("totalElement", courseResponse.getTotalElement());
-        model.addAttribute("pageSize", courseResponse.getPageSize());
+//        CourseResponse courseResponse = courseService.searchCourse(request);
+//        model.addAttribute("requestSearch", request.getCourseName());
+//        model.addAttribute("courses", courseResponse.getCourses());
+//        model.addAttribute("currentPage", courseResponse.getCurrentPage());
+//        model.addAttribute("totalPage", courseResponse.getTotalPage());
+//        model.addAttribute("totalElement", courseResponse.getTotalElement());
+//        model.addAttribute("pageSize", courseResponse.getPageSize());
         return "course/course-management";
     }
 

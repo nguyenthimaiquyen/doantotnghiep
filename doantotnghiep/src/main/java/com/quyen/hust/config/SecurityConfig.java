@@ -58,22 +58,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/v1/authentication/login", "/api/v1/authentication/signup").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/authentication/refresh-token", "/api/v1/authentication/logout").authenticated()
                 //manage account
-                .antMatchers(HttpMethod.GET, "/accounts").hasAuthority(Roles.ADMIN.getCode())
                 .antMatchers(HttpMethod.PUT, "/api/v1/accounts/**").hasAuthority(Roles.ADMIN.getCode())
                 //manage email sending
-                .antMatchers(HttpMethod.GET, "/mail-sending").hasAuthority(Roles.ADMIN.getCode())
+
                 //manage discount code
-                .antMatchers(HttpMethod.GET, "/discount-codes", "/api/v1/discount-codes/**").hasAuthority(Roles.ADMIN.getCode())
+                .antMatchers(HttpMethod.GET, "/api/v1/discount-codes/**").hasAuthority(Roles.ADMIN.getCode())
                 .antMatchers(HttpMethod.POST, "/api/v1/discount-codes/**").hasAuthority(Roles.ADMIN.getCode())
                 .antMatchers(HttpMethod.PUT, "/api/v1/discount-codes/**").hasAuthority(Roles.ADMIN.getCode())
                 .antMatchers(HttpMethod.DELETE, "/api/v1/discount-codes/**").hasAuthority(Roles.ADMIN.getCode())
                 //manage training field
-                .antMatchers(HttpMethod.GET, "/training-fields", "/api/v1/training-fields/**").hasAuthority(Roles.ADMIN.getCode())
+                .antMatchers(HttpMethod.GET, "/api/v1/training-fields/**").hasAuthority(Roles.ADMIN.getCode())
                 .antMatchers(HttpMethod.POST, "/api/v1/training-fields/**").hasAuthority(Roles.ADMIN.getCode())
                 .antMatchers(HttpMethod.PUT, "/api/v1/training-fields/**").hasAuthority(Roles.ADMIN.getCode())
                 .antMatchers(HttpMethod.DELETE, "/api/v1/training-fields/**").hasAuthority(Roles.ADMIN.getCode())
                 //manage course
-                .antMatchers(HttpMethod.GET, "/courses/management", "/courses/{id}/sections", "/api/v1/courses/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
+                .antMatchers(HttpMethod.GET, "/api/v1/courses/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.POST, "/api/v1/courses/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.PUT, "/api/v1/courses/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.DELETE, "/api/v1/courses/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
@@ -93,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/v1/quizzes/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.DELETE, "/api/v1/quizzes/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 //manage dashboard
-                .antMatchers(HttpMethod.GET, "/courses/analysis", "/api/v1/courses/analysis/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
+                .antMatchers(HttpMethod.GET, "/api/v1/courses/analysis/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.POST, "/api/v1/courses/analysis/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.PUT, "/api/v1/courses/analysis/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.DELETE, "/api/v1/courses/analysis/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())

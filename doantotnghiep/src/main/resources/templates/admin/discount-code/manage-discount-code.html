@@ -20,15 +20,17 @@
                 </div><!-- /col -->
             </div><!-- /row -->
             <div class="row my-2">
-                <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
-                    <div class="input-group">
+                <div class="col-xl-4  col-lg-4  col-md-4  col-sm-12 col-12">
+                    <div class="course-search position-relative">
                         <form id="search-discount-code-form" method="get" action="/discount-codes">
-                            <input type="text" id="search-discount-code" class="form-control pr-100" name="discountCodeName"
-                                   th:value="${requestSearch.name}" placeholder="Nhập từ khóa">
+                            <input type="text" id="search-discount-code" class="form-control pr-50" name="discountCodeName"
+                                   th:value="${requestSearch}" placeholder="Nhập tên mã giảm giá">
+                            <span class="position-absolute d-inline-block secondary-color"><i
+                                    class="fa fa-search"></i></span>
                         </form>
                     </div>
                 </div>
-                <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
+                <div class="col-xl-8  col-lg-8  col-md-8  col-sm-12 col-12">
                     <div class="d-flex justify-content-end mt-3 mt-lg-0">
                         <a class="btn btn-primary f-500 create-discountCode-btn">
                             <i class="fas fa-plus mr-2"></i>Tạo mã giảm giá</a>

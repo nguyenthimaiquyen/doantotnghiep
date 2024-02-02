@@ -1,5 +1,6 @@
 package com.quyen.hust.controller.course;
 
+import com.quyen.hust.exception.AnswerNotFoundException;
 import com.quyen.hust.exception.QuizNotFoundException;
 import com.quyen.hust.exception.SectionNotFoundException;
 import com.quyen.hust.model.request.course.QuizRequest;
@@ -24,13 +25,13 @@ public class QuizController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createQuiz(@RequestBody @Valid QuizRequest request) throws SectionNotFoundException {
+    public ResponseEntity<?> createQuiz(@RequestBody @Valid QuizRequest request) throws SectionNotFoundException, AnswerNotFoundException {
         quizService.saveQuiz(request);
         return ResponseEntity.ok(null);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateQuiz(@RequestBody @Valid QuizRequest request) throws SectionNotFoundException {
+    public ResponseEntity<?> updateQuiz(@RequestBody @Valid QuizRequest request) throws SectionNotFoundException, AnswerNotFoundException {
         quizService.saveQuiz(request);
         return ResponseEntity.ok(null);
     }

@@ -15,158 +15,166 @@
     <div class="faq-page-area faq-page2 pt-130 mb-115">
         <div class="container" style="max-width: 1400px;">
             <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="row my-1">
-                        <div class="col-lg-12">
-                            <div class="d-flex text-center justify-content-center mt-3 mt-lg-0">
-                                <h6>Danh sách các khóa học</h6>
-                            </div><!-- /my-btn -->
-                        </div><!-- /col -->
-                    </div>
-                    <div class="row my-2">
-                        <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
-                            <div class="input-group">
-                                <form id="search-course-form" method="get" action="/courses/management">
-                                    <input type="text" id="search-course" class="form-control pr-100" name="courseName"
-                                           th:value="${requestSearch.name}" placeholder="Nhập từ khóa">
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-xl-6  col-lg-6  col-md-6  col-sm-8 col-12">
-                            <div class="d-flex justify-content-end mt-3 mt-lg-0">
-                                <button class="btn btn-primary f-500 create-course-btn">
-                                    <i class="fas fa-plus mr-2"></i>Tạo khóa học
-                                </button>
-                            </div><!-- /my-btn -->
-                        </div><!-- /col -->
-                    </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" id="course-management">
 
-                    <div class="row my-4">
-                        <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                <tr class="text-center">
-                                    <th>STT</th>
-                                    <th>Tên khóa học</th>
-                                    <th>Giá</th>
-                                    <th>Đơn vị giá</th>
-                                    <th>Cấp độ</th>
-                                    <th>Giảng viên</th>
-                                    <th>Mã giảm giá</th>
-                                    <th>Lĩnh vực</th>
-                                    <th>Trạng thái</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="course, courseIndex : ${courses}">
-                                    <td class="text-center" th:text="${courseIndex.index + 1}"></td>
-                                    <td><a class="add-section-btn focused cursor-pointer text-dark"
-                                           th:attr="course-id=${course.id}" th:text="${course.title}"></a></td>
-                                    <td class="text-center" th:text="${course.courseFee}"></td>
-                                    <td class="text-center" th:text="${course.courseFeeUnit}"></td>
-                                    <td class="text-center" th:text="${course.difficultyLevel.name}"></td>
-                                    <td class="text-center" th:text="${course.teacherName}"></td>
-                                    <td class="text-center"
-                                        th:text="${course.discountCode != null ? course.discountCodeName : '--'}"></td>
-                                    <td class="text-center" th:text="${course.trainingFieldName}"></td>
-                                    <td>
-                                        <span th:each="type: ${course.courseStatus}">
-                                            <span th:switch="${course.courseStatus.code}">
-                                                <span th:case="'DRAFT'" class="badge badge-secondary mr-1" th:text="${type.name}"></span>
-                                                <span th:case="'WAITING_FOR_REVIEW'" class="badge badge-warning mr-1" th:text="${type.name}"></span>
-                                                <span th:case="'APPROVED'" class="badge badge-primary mr-1" th:text="${type.name}"></span>
-                                                <span th:case="'REJECTED'" class="badge badge-danger mr-1" th:text="${type.name}"></span>
-                                                <span th:case="'UNPUBLISHED'" class="badge badge-dark mr-1" th:text="${type.name}"></span>
-                                                <span th:case="'PUBLISHED'" class="badge badge-success mr-1" th:text="${type.name}"></span>
-                                                <span th:case="'ARCHIVED'" class="badge badge-info mr-1" th:text="${type.name}"></span>
-                                            </span>
-                                            <span ></span>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown dropleft">
-                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <button class="dropdown-item update-course-btn focused cursor-pointer"
-                                                        th:attr="course-id=${course.id}">Cập nhật khóa học
-                                                </button>
-                                                <button class="dropdown-item focused cursor-pointer course-status-btn"
-                                                        th:attr="course-id=${course.id}, course-status=${course.courseStatus.code}">
-                                                    <span th:switch="${course.courseStatus.code}">
-                                                        <span th:case="'DRAFT'">Yêu cầu xem xét khóa học</span>
-                                                        <span id="WAITING_FOR_REVIEW" th:case="'WAITING_FOR_REVIEW'">Chấp thuận/ Từ chối khóa học</span>
-                                                        <span id="APPROVED" th:case="'APPROVED'">Công bố khóa học</span>
-                                                        <span id="REJECTED" th:case="'REJECTED'" >Lưu trữ khóa học</span>
-                                                        <span id="UNPUBLISHED" th:case="'UNPUBLISHED'" >Lưu trữ khóa học</span>
-                                                        <span id="PUBLISHED" th:case="'PUBLISHED'" >Hủy công bố khóa học</span>
-                                                        <span id="ARCHIVED" th:case="'ARCHIVED'" >Xem xét lại khóa học</span>
-                                                    </span>
-                                                </button>
-                                                <button class="dropdown-item delete-course-btn focused cursor-pointer"
-                                                        th:attr="course-id=${course.id}"
-                                                        th:if="${course.courseStatus.code == 'DRAFT'}">Xóa khóa học
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div><!-- /row -->
-                    <div class="row my-3">
-                        <div class="col-xl-2  col-lg-2  col-md-12  col-sm-12 col-12"
-                             th:text="${'Tổng số ' + totalElement + ' bản ghi'}">
-                        </div>
-                        <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 d-flex justify-content-end align-items-center">
-                            <div class="my-3">
-                                <span>Hiển thị </span>
-                                <select class="mr-1" id="course-page-size">
-                                    <option value="6" th:selected="${pageSize==6}">6</option>
-                                    <option value="12" th:selected="${pageSize==12}">12</option>
-                                </select>
-                                <span>bản ghi</span>
-                            </div>
-                            <div class="ml-2">
-                                <ul class="pagination justify-content-end mb-0">
-                                    <li class="page-item">
-                                        <a class="page-link"
-                                           th:href="@{'/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=0'}">
-                                            <i class="fas fa-angle-double-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a th:class="${'page-link ' + (currentPage == 0 ? 'disabled-page' : '')}"
-                                           th:href="@{${currentPage} != 0 ? ('/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage - 1}) : '#'}">
-                                            <i class="fas fa-angle-left"></i>
-                                        </a>
-                                    </li>
-                                    <th:block th:each="index : ${#numbers.sequence(0, totalPage - 1)}">
-                                        <li th:class="${'page-item ' + (index == currentPage ? 'active' : '')}">
-                                            <a class="page-link"
-                                               th:href="@{'/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${index}}"
-                                               th:text="${index + 1}"></a>
-                                        </li>
-                                    </th:block>
-                                    <li class="page-item">
-                                        <a th:class="${'page-link ' + (currentPage == (totalPage - 1) ? 'disabled-page' : '')}"
-                                           th:href="@{${currentPage} != (${totalPage} - 1) ? ('/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage + 1}) : '#'}">
-                                            <i class="fas fa-angle-right"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link"
-                                           th:href="@{'/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${totalPage - 1}}">
-                                            <i class="fas fa-angle-double-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+
+<!--                    <div class="row my-2">-->
+<!--                        <div class="col-xl-4  col-lg-4  col-md-4  col-sm-10 col-12">-->
+<!--                            <div class="course-search position-relative">-->
+<!--                                <form id="search-course-form">-->
+<!--                                    <input type="text" id="search-course" class="form-control pr-50" name="courseName"-->
+<!--                                           th:value="${requestSearch}" placeholder="Nhập tên khóa học">-->
+<!--                                    <span class="position-absolute d-inline-block secondary-color">-->
+<!--                                        <i class="fa fa-search"></i></span>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-xl-8  col-lg-8  col-md-8  col-sm-10 col-12">-->
+<!--                            <div class="d-flex justify-content-end mt-3 mt-lg-0">-->
+<!--                                <button class="btn btn-primary f-500 create-course-btn">-->
+<!--                                    <i class="fas fa-plus mr-2"></i>Tạo khóa học-->
+<!--                                </button>-->
+<!--                            </div>&lt;!&ndash; /my-btn &ndash;&gt;-->
+<!--                        </div>&lt;!&ndash; /col &ndash;&gt;-->
+<!--                    </div>-->
+
+<!--                    <div class="row my-4">-->
+<!--                        <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">-->
+<!--                            <table class="table table-bordered table-hover">-->
+<!--                                <thead>-->
+<!--                                <tr class="text-center">-->
+<!--                                    <th>STT</th>-->
+<!--                                    <th>Tên khóa học</th>-->
+<!--                                    <th>Giá</th>-->
+<!--                                    <th>Đơn vị giá</th>-->
+<!--                                    <th>Cấp độ</th>-->
+<!--                                    <th>Giảng viên</th>-->
+<!--                                    <th>Mã giảm giá</th>-->
+<!--                                    <th>Lĩnh vực</th>-->
+<!--                                    <th>Trạng thái</th>-->
+<!--                                    <th></th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                <tr th:each="course, courseIndex : ${courses}">-->
+<!--                                    <td class="text-center" th:text="${courseIndex.index + 1}"></td>-->
+<!--                                    <td><a class="add-section-btn focused cursor-pointer text-dark"-->
+<!--                                           th:attr="course-id=${course.id}" th:text="${course.title}"></a></td>-->
+<!--                                    <td class="text-center" th:text="${course.courseFee}"></td>-->
+<!--                                    <td class="text-center" th:text="${course.courseFeeUnit}"></td>-->
+<!--                                    <td class="text-center" th:text="${course.difficultyLevel.name}"></td>-->
+<!--                                    <td class="text-center" th:text="${course.teacherName}"></td>-->
+<!--                                    <td class="text-center"-->
+<!--                                        th:text="${course.discountCodeName != null ? course.discountCodeName : '&#45;&#45;'}"></td>-->
+<!--                                    <td>-->
+<!--                                        <span th:each="field : ${course.trainingFields}" th:switch="${field}">-->
+<!--                                            <span th:case="'Lập trình'" class="badge badge-primary mr-1" th:text="${field}"></span>-->
+<!--                                            <span th:case="'Bảo mật'" class="badge badge-success mr-1" th:text="${field}"></span>-->
+<!--                                            <span th:case="'Đại cương'" class="badge badge-warning mr-1" th:text="${field}"></span>-->
+<!--                                        </span>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span th:each="type: ${course.courseStatus}">-->
+<!--                                            <span th:switch="${course.courseStatus.code}">-->
+<!--                                                <span th:case="'DRAFT'" th:text="${type.name}"></span>-->
+<!--                                                <span th:case="'WAITING_FOR_REVIEW'" th:text="${type.name}"></span>-->
+<!--                                                <span th:case="'APPROVED'" th:text="${type.name}"></span>-->
+<!--                                                <span th:case="'REJECTED'" th:text="${type.name}"></span>-->
+<!--                                                <span th:case="'UNPUBLISHED'" th:text="${type.name}"></span>-->
+<!--                                                <span th:case="'PUBLISHED'" th:text="${type.name}"></span>-->
+<!--                                                <span th:case="'ARCHIVED'" th:text="${type.name}"></span>-->
+<!--                                            </span>-->
+<!--                                            <span></span>-->
+<!--                                        </span>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <div class="dropdown dropleft">-->
+<!--                                            <button class="btn btn-primary" type="button" data-toggle="dropdown">-->
+<!--                                                <i class="fas fa-ellipsis-v"></i>-->
+<!--                                            </button>-->
+<!--                                            <div class="dropdown-menu">-->
+<!--                                                <button class="dropdown-item update-course-btn focused cursor-pointer"-->
+<!--                                                        th:attr="course-id=${course.id}">Cập nhật khóa học-->
+<!--                                                </button>-->
+<!--                                                <button class="dropdown-item focused cursor-pointer course-status-btn"-->
+<!--                                                        th:attr="course-id=${course.id}, course-status=${course.courseStatus.code}">-->
+<!--                                                    <span th:switch="${course.courseStatus.code}">-->
+<!--                                                        <span th:case="'DRAFT'">Yêu cầu xem xét khóa học</span>-->
+<!--                                                        <span id="WAITING_FOR_REVIEW" th:case="'WAITING_FOR_REVIEW'">Chấp thuận/ Từ chối khóa học</span>-->
+<!--                                                        <span id="APPROVED" th:case="'APPROVED'">Công bố khóa học</span>-->
+<!--                                                        <span id="REJECTED" th:case="'REJECTED'">Lưu trữ khóa học</span>-->
+<!--                                                        <span id="UNPUBLISHED"-->
+<!--                                                              th:case="'UNPUBLISHED'">Lưu trữ khóa học</span>-->
+<!--                                                        <span id="PUBLISHED"-->
+<!--                                                              th:case="'PUBLISHED'">Dừng công bố khóa học</span>-->
+<!--                                                        <span id="ARCHIVED"-->
+<!--                                                              th:case="'ARCHIVED'">Xem xét lại khóa học</span>-->
+<!--                                                    </span>-->
+<!--                                                </button>-->
+<!--                                                <button class="dropdown-item delete-course-btn focused cursor-pointer"-->
+<!--                                                        th:attr="course-id=${course.id}"-->
+<!--                                                        th:if="${course.courseStatus.code == 'DRAFT'}">Xóa khóa học-->
+<!--                                                </button>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>&lt;!&ndash; /row &ndash;&gt;-->
+
+<!--                    <div class="row my-3">-->
+<!--                        <div class="col-xl-2  col-lg-2  col-md-12  col-sm-12 col-12"-->
+<!--                             th:text="${'Tổng số ' + totalElement + ' bản ghi'}">-->
+<!--                        </div>-->
+<!--                        <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 d-flex justify-content-end align-items-center">-->
+<!--                            <div class="my-3">-->
+<!--                                <span>Hiển thị </span>-->
+<!--                                <select class="mr-1" id="course-page-size">-->
+<!--                                    <option value="6" th:selected="${pageSize==6}">6</option>-->
+<!--                                    <option value="12" th:selected="${pageSize==12}">12</option>-->
+<!--                                </select>-->
+<!--                                <span>bản ghi</span>-->
+<!--                            </div>-->
+<!--                            <div class="ml-2">-->
+<!--                                <ul class="pagination justify-content-end mb-0">-->
+<!--                                    <li class="page-item">-->
+<!--                                        <a class="page-link"-->
+<!--                                           th:href="@{'/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=0'}">-->
+<!--                                            <i class="fas fa-angle-double-left"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="page-item">-->
+<!--                                        <a th:class="${'page-link ' + (currentPage == 0 ? 'disabled-page' : '')}"-->
+<!--                                           th:href="@{${currentPage} != 0 ? ('/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage - 1}) : '#'}">-->
+<!--                                            <i class="fas fa-angle-left"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <th:block th:each="index : ${#numbers.sequence(0, totalPage - 1)}">-->
+<!--                                        <li th:class="${'page-item ' + (index == currentPage ? 'active' : '')}">-->
+<!--                                            <a class="page-link"-->
+<!--                                               th:href="@{'/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${index}}"-->
+<!--                                               th:text="${index + 1}"></a>-->
+<!--                                        </li>-->
+<!--                                    </th:block>-->
+<!--                                    <li class="page-item">-->
+<!--                                        <a th:class="${'page-link ' + (currentPage == (totalPage - 1) ? 'disabled-page' : '')}"-->
+<!--                                           th:href="@{${currentPage} != (${totalPage} - 1) ? ('/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${currentPage + 1}) : '#'}">-->
+<!--                                            <i class="fas fa-angle-right"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="page-item">-->
+<!--                                        <a class="page-link"-->
+<!--                                           th:href="@{'/courses/management?pageSize=' + ${pageSize} + '&' + 'currentPage=' + ${totalPage - 1}}">-->
+<!--                                            <i class="fas fa-angle-double-right"></i>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
                 </div><!-- /col -->
             </div><!-- /row -->
         </div><!-- /container -->

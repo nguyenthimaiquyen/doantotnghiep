@@ -8,9 +8,10 @@ import com.quyen.hust.entity.course.Lesson;
 import com.quyen.hust.entity.course.Section;
 import com.quyen.hust.entity.teacher.Teacher;
 import com.quyen.hust.exception.CourseNotFoundException;
-import com.quyen.hust.model.request.search.CourseSearchRequest;
+import com.quyen.hust.exception.UserNotFoundException;
 import com.quyen.hust.model.request.course.CourseRequest;
 import com.quyen.hust.model.request.course.CourseStatusRequest;
+import com.quyen.hust.model.request.search.CourseSearchRequest;
 import com.quyen.hust.model.response.admin.DiscountCodeDataResponse;
 import com.quyen.hust.model.response.admin.TrainingFieldResponse;
 import com.quyen.hust.model.response.course.CourseDataResponse;
@@ -85,17 +86,17 @@ public class CourseService {
 
     public void saveCourse(CourseRequest request) {
         Teacher teacher;
-        if (request.getTeacherID() != null) {
-            teacher = teacherJpaRepository.findById(request.getTeacherID()).get();
+        if (request.getTeacher() != null) {
+            teacher = teacherJpaRepository.findById(request.getTeacher()).get();
         } else {
             Optional<Long> id = SecurityUtils.getCurrentUserLoginId();
             teacher = teacherJpaRepository.findByUserId(id.get());
         }
         Optional<DiscountCode> discountCode = Optional.empty();
-        if (request.getDiscountID() != null) {
-            discountCode = discountCodeJpaRepository.findById(request.getDiscountID());
+        if (request.getDiscountCode() != null) {
+            discountCode = discountCodeJpaRepository.findById(request.getDiscountCode());
         }
-        List<TrainingField> trainingFields = trainingFieldJpaRepository.findAllById(request.getTrainingFieldID());
+        List<TrainingField> trainingFields = trainingFieldJpaRepository.findAllById(request.getTrainingFields());
         Course course = Course.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -110,18 +111,16 @@ public class CourseService {
         if (!ObjectUtils.isEmpty(request.getId())) {
             //update course
             Course courseNeedUpdate = courseJpaRepository.findById(request.getId()).orElse(null);
-            if (courseNeedUpdate != null) {
-                courseNeedUpdate.setTitle(request.getTitle());
-                courseNeedUpdate.setDescription(request.getDescription());
-                courseNeedUpdate.setLearningObjectives(request.getLearningObjectives());
-                courseNeedUpdate.setCourseFee(request.getCourseFee());
-                courseNeedUpdate.setCourseFeeUnit(request.getCourseFeeUnit());
-                courseNeedUpdate.setDifficultyLevel(request.getDifficultyLevel());
-                courseNeedUpdate.setTrainingField(trainingFields);
-                courseNeedUpdate.setTeacher(teacher);
-                courseNeedUpdate.setDiscountCode(discountCode.orElse(null));
-                courseJpaRepository.save(courseNeedUpdate);
-            }
+            courseNeedUpdate.setTitle(request.getTitle());
+            courseNeedUpdate.setDescription(request.getDescription());
+            courseNeedUpdate.setLearningObjectives(request.getLearningObjectives());
+            courseNeedUpdate.setCourseFee(request.getCourseFee());
+            courseNeedUpdate.setCourseFeeUnit(request.getCourseFeeUnit());
+            courseNeedUpdate.setDifficultyLevel(request.getDifficultyLevel());
+            courseNeedUpdate.setTrainingField(trainingFields);
+            courseNeedUpdate.setTeacher(teacher);
+            courseNeedUpdate.setDiscountCode(discountCode.orElse(null));
+            courseJpaRepository.save(courseNeedUpdate);
             return;
         }
         //create a new course
@@ -162,17 +161,27 @@ public class CourseService {
 
     public CourseDataResponse getCourseDetails(Long id) throws CourseNotFoundException {
         return courseJpaRepository.findById(id).map(
-                course -> CourseDataResponse.builder()
-                        .id(course.getId())
-                        .title(course.getTitle())
-                        .description(course.getDescription())
-                        .learningObjectives(course.getLearningObjectives())
-                        .courseFee(course.getCourseFee())
-                        .courseFeeUnit(course.getCourseFeeUnit())
-                        .difficultyLevel(course.getDifficultyLevel())
-                        .courseStatus(course.getCourseStatus())
-                        .build()
-        ).orElseThrow(() -> new CourseNotFoundException("Course with id " + id + " could not be found!"));
+                course -> {
+                    CourseDataResponse.CourseDataResponseBuilder builder = CourseDataResponse.builder()
+                            .id(course.getId())
+                            .title(course.getTitle())
+                            .description(course.getDescription())
+                            .learningObjectives(course.getLearningObjectives())
+                            .courseFee(course.getCourseFee())
+                            .courseFeeUnit(course.getCourseFeeUnit())
+                            .difficultyLevel(course.getDifficultyLevel())
+                            .courseStatus(course.getCourseStatus())
+                            .teacherName(course.getTeacher().getUser().getFullName())
+                            .trainingFields(course.getTrainingField().stream().map(
+                                    trainingField -> trainingField.getFieldName()
+                            ).collect(Collectors.toList()));
+                    if (course.getDiscountCode() != null) {
+                        builder.discountCodeName(course.getDiscountCode().getCodeName());
+                    } else {
+                        builder.discountCodeName(null);
+                    }
+                    return builder.build();
+                }).orElseThrow(() -> new CourseNotFoundException("Course with id " + id + " could not be found!"));
     }
 
     public void changeCourseStatus(Long courseId, CourseStatusRequest status) throws CourseNotFoundException {

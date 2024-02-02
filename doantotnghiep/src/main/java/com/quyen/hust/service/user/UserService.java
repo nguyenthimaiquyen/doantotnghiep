@@ -35,6 +35,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
@@ -138,6 +139,7 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
     public void logout() {
         Optional<Long> userIdOptional = SecurityUtils.getCurrentUserLoginId();
         if (userIdOptional.isEmpty()) {

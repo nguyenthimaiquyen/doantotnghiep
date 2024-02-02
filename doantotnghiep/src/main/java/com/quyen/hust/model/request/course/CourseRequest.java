@@ -20,10 +20,10 @@ public class CourseRequest {
     private Long id;
 
     @Min(value = 1, message = "Teacher ID must be positive number")
-    private Long teacherID;
+    private Long teacher;
 
     @Min(value = 1, message = "Discount ID must be positive number")
-    private Long discountID;
+    private Long discountCode;
 
     @NotBlank(message = "Title is required")
     @Length(max = 255, message = "Title must be less than 255 characters")
@@ -43,7 +43,7 @@ public class CourseRequest {
     private DifficultyLevel difficultyLevel;
 
     @NotNull(message = "Training fields is required")
-    private List<Long> trainingFieldID;
+    private List<Long> trainingFields;
 
 
 }

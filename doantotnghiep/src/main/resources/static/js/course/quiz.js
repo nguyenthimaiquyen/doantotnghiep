@@ -108,12 +108,12 @@ function createOrUpdateQuiz(sectionId, sectionTitle, quizData = {}) {
                                 </div><!-- /row -->
                                 <div class="row mt-4">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <label class="h6">Đáp án</label>
+                                        <label class="h6">Đáp án<span class="text-danger">*</span></label>
                                     </div><!-- /col -->
                                 </div><!-- /row -->
                                 <div class="row mt-2 answer-row" data-answer="1">
                                     <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
-                                        <input type="radio" class="form-check-input ml-15" name="answer">
+                                        <input type="radio" class="form-check-input ml-15" name="answer" id="answer-radio-1">
                                         <div class="input-group ml-5">
                                             <textarea id="answer1" name="answer1" rows="3" placeholder="Nhập đáp án"
                                                       class="form-control primary-border2"></textarea>                                            
@@ -122,7 +122,7 @@ function createOrUpdateQuiz(sectionId, sectionTitle, quizData = {}) {
                                 </div>
                                 <div class="row mt-3 answer-row" data-answer="2">
                                     <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
-                                        <input type="radio" class="form-check-input ml-15" name="answer">
+                                        <input type="radio" class="form-check-input ml-15" name="answer" id="answer-radio-2">
                                         <div class="input-group ml-5">
                                             <textarea id="answer2" name="answer2" rows="3" placeholder="Nhập đáp án"
                                                       class="form-control primary-border2"></textarea>
@@ -133,7 +133,7 @@ function createOrUpdateQuiz(sectionId, sectionTitle, quizData = {}) {
                                 </div>
                                 <div class="row mt-3 answer-row" data-answer="3">
                                     <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
-                                        <input type="radio" class="form-check-input ml-15" name="answer">
+                                        <input type="radio" class="form-check-input ml-15" name="answer" id="answer-radio-3">
                                         <div class="input-group ml-5">
                                             <textarea id="answer3" name="answer3" rows="3" placeholder="Nhập đáp án"
                                                       class="form-control primary-border2"></textarea>
@@ -144,7 +144,7 @@ function createOrUpdateQuiz(sectionId, sectionTitle, quizData = {}) {
                                 </div>
                                 <div class="row mt-3 answer-row" data-answer="4">
                                     <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
-                                        <input type="radio" class="form-check-input ml-15" name="answer">
+                                        <input type="radio" class="form-check-input ml-15" name="answer" id="answer-radio-4">
                                         <div class="input-group ml-5">
                                             <textarea id="answer4" name="answer4" rows="3" placeholder="Nhập đáp án"
                                                       class="form-control primary-border2"></textarea>
@@ -184,14 +184,16 @@ function createOrUpdateQuiz(sectionId, sectionTitle, quizData = {}) {
     $('#quiz-content-form #question').val(quizData.question || '');
     $('#explanation-form #explanation').val(quizData.explanation || '');
     //đổ dữ liệu vào các answer
-    let answerCount = quizData.answers.length ? quizData.answers.length : 0;
-    $('.answer-row').remove();
+    let answerCount = quizData.answers && quizData.answers.length ? quizData.answers.length : 0;
+    if (quizData.answers) {
+        $('.answer-row').remove();
+    }
     for (let i = 0; i < answerCount; i++) {
         addAnswer();
         $(`#quiz-content-form #answer${i+1}`).val(quizData.answers[i].content || '');
         //chưa xử lý được radio là checked khi đáp án đó là đúng
-        if (quizData.answers[i].isCorrect) {
-            $(`#quiz-content-form .answer-row[data-answer="${i+1}"] input[type="radio"]`).prop("checked", "checked");
+        if (quizData.answers[i].correct) {
+            $(`#quiz-content-form #answer-radio-${i+1}`).prop('checked', true);
         }
     }
     if (quizData.id) {
@@ -296,7 +298,6 @@ function saveQuizContent(sectionId) {
     let answerList = [];
     $('.answer-row').each(function () {
         let radio = $(this).find('input[type="radio"]');
-        console.log(radio)
         let textarea = $(this).find('textarea');
         let data;
         if (radio.prop("checked")) {

@@ -12,7 +12,7 @@ public enum CourseStatus {
     APPROVED("APPROVED", "Chấp thuận"),
     REJECTED("REJECTED", "Bị từ chối"),
     PUBLISHED("PUBLISHED", "Đã công bố"),
-    UNPUBLISHED("UNPUBLISHED", "Hủy công bố"),
+    UNPUBLISHED("UNPUBLISHED", "Đã hủy công bố"),
     ARCHIVED("ARCHIVED", "Lưu trữ");
 
     public String code;

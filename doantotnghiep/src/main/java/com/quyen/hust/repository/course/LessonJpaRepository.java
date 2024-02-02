@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface LessonJpaRepository extends JpaRepository<Lesson, Long> {
 
+    List<Lesson> findBySectionIdOrderByIdAsc(Long sectionId);
+
     List<Lesson> findBySectionId(Long sectionId);
 }

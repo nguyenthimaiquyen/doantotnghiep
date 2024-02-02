@@ -41,6 +41,15 @@ public class Course extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Unit courseFeeUnit;
 
+    @Column(name = "rating")
+    private Double rating;
+
+    @Column(name = "learner_count")
+    private Long learnerCount;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "course_status")
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
@@ -74,8 +83,8 @@ public class Course extends BaseEntity {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinTable(name = "courses_training_fields",
-            joinColumns = @JoinColumn(name = "training_field_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "training_field_id"))
     private List<TrainingField> trainingField;
 
 
