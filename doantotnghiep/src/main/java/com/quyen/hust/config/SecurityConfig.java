@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -72,7 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/v1/training-fields/**").hasAuthority(Roles.ADMIN.getCode())
                 .antMatchers(HttpMethod.DELETE, "/api/v1/training-fields/**").hasAuthority(Roles.ADMIN.getCode())
                 //manage course
-                .antMatchers(HttpMethod.GET, "/api/v1/courses/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.POST, "/api/v1/courses/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.PUT, "/api/v1/courses/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.DELETE, "/api/v1/courses/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
@@ -84,10 +84,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //manage lesson
                 .antMatchers(HttpMethod.POST, "/api/v1/lessons/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.GET, "/api/v1/lessons/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
-                .antMatchers(HttpMethod.PUT, "/api/v1/lessons/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
+                .antMatchers(HttpMethod.PUT, "/api/v1/lessons").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.DELETE, "/api/v1/lessons/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 //manage quiz
-                .antMatchers(HttpMethod.GET, "/api/v1/quizzes/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.POST, "/api/v1/quizzes/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.PUT, "/api/v1/quizzes/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
                 .antMatchers(HttpMethod.DELETE, "/api/v1/quizzes/**").hasAnyAuthority(Roles.ADMIN.getCode(), Roles.TEACHER.getCode())
@@ -105,6 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         configurer -> configurer.accessDeniedPage("/403")
                 ).headers().frameOptions().sameOrigin();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new EncodingFilter(), ChannelProcessingFilter.class);
     }
 
 }

@@ -37,6 +37,12 @@ public class Lesson extends BaseEntity {
     @Column(name = "activated", columnDefinition = "bit default 0")
     private Boolean activated;
 
+    @Column(name = "preview", columnDefinition = "bit default 0")
+    private Boolean preview;
+
+    @Column(name = "video_duration")
+    private String videoDuration;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})

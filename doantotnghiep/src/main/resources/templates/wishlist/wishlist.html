@@ -20,7 +20,7 @@
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="page-content text-center mt-110">
                             <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
-                                data-aos-delay="150"><span class="f-700">Mong muốn</span></h1>
+                                data-aos-delay="150"><span class="f-700">Danh sách mong muốn</span></h1>
                         </div>
                     </div><!-- /col -->
                 </div><!-- /row -->
@@ -32,91 +32,95 @@
     <!-- ====== cart-area-start=============================================== -->
     <div class="cart-area mt-100 mb-100">
         <div class="container">
-            <h3 class="mb-40 cart-title">1 khóa học trong danh sách mong muốn</h3>
+            <h3 class="mb-40 cart-title">[[${totalCourses}]] khóa học trong danh sách mong muốn</h3>
             <div class="cart-table table-responsive">
-                <table class="table border-0">
+                <table class="table border-0" th:if="${totalCourses != 0}">
                     <thead>
                     <tr>
-                        <th scope="col" class="pl-0" style="width: 60%">Item Name</th>
-                        <th scope="col" style="width: 10%">Price</th>
+                        <th scope="col" class="pl-0" style="width: 60%">Khóa học</th>
+                        <th scope="col" style="width: 10%">Giá</th>
                         <th scope="col" style="width: 20%"></th>
                         <th scope="col" style="width: 10%"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr th:each="wishlistItem : ${wishlistItems}">
                         <td class="w-50 pl-0">
                             <div class="cart-item-wrapper d-flex align-items-center">
-                                <a href="#" class="cart-img d-block mr-30">
-                                    <img src="/images/cart/cart-img1.jpg" alt="images01">
-                                </a>
-                                <h5>
-                                    <a href="#" class="p-name main-color">Larna mervelous pen</a>
-                                </h5>
+                                <div class="col-md-4 pr-0 mr-0">
+                                    <img class="w-75 img" th:src="@{'/api/v1/files/' + ${wishlistItem.course.imageUrl}}"
+                                         alt="course-image01">
+                                </div>
+                                <div class="col-md-8 ml-0 pl-0">
+                                    <h5 class="ml-0">
+                                        <a class="p-name main-color cursor-pointer show-course-btn" th:attr="course-id=${wishlistItem.course.id}">[[${wishlistItem.course.title}]]</a>
+                                    </h5>
+                                    <p class="admin mb-0">
+                                        Bởi<span
+                                            class="theme-color f-500 d-inline-block pl-2" th:text="${wishlistItem.course.teacherName}"></span>
+                                    </p>
+                                    <div class="pc-info d-md-flex align-items-center">
+                                        <div class="popular-course-review d-flex align-items-center">
+                                            <ul class="review-ratting mr-10">
+                                                <li th:if="${wishlistItem.course.rating == 5}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span>
+                                                </li>
+                                                <li th:if="${wishlistItem.course.rating == 4.5}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fas fa-star-half-alt"></i></span>
+                                                </li>
+                                                <li th:if="${wishlistItem.course.rating == 4}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="far fa-star"></i></span>
+                                                </li>
+                                                <li th:if="${wishlistItem.course.rating == 3.5}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fas fa-star-half-alt"></i></span><span><i
+                                                        class="far fa-star"></i></span>
+                                                </li>
+                                                <li th:if="${wishlistItem.course.rating == 3}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="far fa-star"></i></span><span><i
+                                                        class="far fa-star"></i></span>
+                                                </li>
+                                            </ul><!-- /review-ratting -->
+                                            <p class="pc-student mb-0 ml-15">
+                                                <span><i class="fal fa-user"></i> [[${wishlistItem.course.learnerCount}]]</span>
+                                            </p>
+                                        </div><!-- /popular-course-review -->
+                                    </div>
+                                </div>
                             </div>
                         </td>
                         <td>
-                            <div class="cart-price primary-color">$35.00</div>
+                            <span class="primary-color f-500 d-inline-block"
+                                  th:text="${#numbers.formatDecimal(wishlistItem.course.courseFee, 0, 'COMMA', 0, 'POINT')}"></span>
+                            <span class="primary-color f-500 d-inline-block"
+                                  th:text="${wishlistItem.course.courseFeeUnit}"></span>
                         </td>
                         <td>
                             <div class="my-btn d-none d-sm-block text-center">
-                                <a href="#" class="btn theme-bg">Chuyển vào giỏ hàng</a>
+                                <a class="btn theme-bg cursor-pointer move-to-cart"
+                                   th:attr="course-id=${wishlistItem.course.id}">Chuyển vào giỏ hàng</a>
                             </div>
                         </td>
                         <td class="text-right">
-                            <a href="#"
-                               class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center">
-                                <span><i class="fal fa-times"></i></span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="w-50 pl-0">
-                            <div class="cart-item-wrapper d-flex align-items-center">
-                                <a href="#" class="cart-img d-block mr-30">
-                                    <img src="/images/cart/cart-img2.jpg" alt="images02">
-                                </a>
-                                <h5>
-                                    <a href="#" class="p-name main-color">Photoshop anvanced tutorial</a>
-                                </h5>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="cart-price primary-color">$35.00</div>
-                        </td>
-                        <td>
-                            <div class="my-btn d-none d-sm-block text-center">
-                                <a href="#" class="btn theme-bg">Chuyển vào giỏ hàng</a>
-                            </div>
-                        </td>
-                        <td class="text-right">
-                            <a href="#"
-                               class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center"><span><i
-                                    class="fal fa-times"></i></span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="w-50 pl-0">
-                            <div class="cart-item-wrapper d-flex align-items-center">
-                                <a href="#" class="cart-img d-block mr-30">
-                                    <img src="/images/cart/cart-img3.jpg" alt="images03">
-                                </a>
-                                <h5>
-                                    <a href="#" class="p-name main-color">Larna smart cap</a>
-                                </h5>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="cart-price primary-color">$35.00</div>
-                        </td>
-                        <td>
-                            <div class="my-btn d-none d-sm-block text-center">
-                                <a href="#" class="btn theme-bg">Chuyển vào giỏ hàng</a>
-                            </div>
-                        </td>
-                        <td class="text-right">
-                            <a href="#"
-                               class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center"><span><i
-                                    class="fal fa-times"></i></span></a>
+                            <a class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center cursor-pointer
+                                remove-wishlistItem" th:attr="wishlistItem-id=${wishlistItem.id}"><span><i class="fal fa-times"></i></span></a>
                         </td>
                     </tr>
                     </tbody>
@@ -141,4 +145,6 @@
 
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>
+<script src="/js/course/user-course.js"></script>
+
 </html>

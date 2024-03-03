@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -26,4 +25,7 @@ public class QuizResponse {
     private Long sectionId;
 
     private String sectionTitle;
+
+    private String timeCount;
+
 }

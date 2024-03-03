@@ -12,7 +12,7 @@
 
             <div class="modal-body">
                 <form id="course-form">
-                    <div class="row" id="course-common-data">
+                    <div class="row">
                         <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
                             <div class="mb-3">
                                 <label for="title">Tiêu đề<span class="text-danger">*</span></label>
@@ -20,7 +20,8 @@
                                        name="title">
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12 order-notes">
                             <div class="mb-3">
                                 <label for="description">Mô tả</label>
@@ -28,7 +29,8 @@
                                           class="primary-border2 w-100 pl-15 py-10 form-control"></textarea>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12 order-notes">
                             <div class="mb-3">
                                 <label for="learningObjectives">Mục tiêu học tập</label>
@@ -37,7 +39,8 @@
                                           class="primary-border2 w-100 pl-15 py-10 form-control"></textarea>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row">
                         <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-12">
                             <div class="mb-3">
                                 <label for="courseFee">Giá khóa học<span class="text-danger">*</span></label>
@@ -54,9 +57,10 @@
                                 </select>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row mb-2">
                         <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
-                            <div class="country-select mb-2">
+                            <div class="country-select">
                                 <label for="difficultyLevel">Cấp độ<span class="text-danger">*</span></label>
                                 <select class="w-100 form-control" id="difficultyLevel" name="difficultyLevel">
 
@@ -65,15 +69,27 @@
                         </div>
 
                         <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
-                            <div class="country-select mb-2">
+                            <div class="country-select">
                                 <label for="trainingFields">Lĩnh vực<span class="text-danger">*</span></label>
-                                <select class="w-100 form-control selectpicker h-25" id="trainingFields" name="trainingFields" multiple data-live-search="true">
+                                <select class="w-100 form-control selectpicker h-25" id="trainingFields"
+                                        name="trainingFields" multiple data-live-search="true">
 
                                 </select>
                             </div>
                         </div>
-
-                    </div><!-- /row -->
+                    </div>
+                    <div class="row mb-2" id="course-common-data">
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
+                            <div class="form-group">
+                                <label for="course-image">Ảnh khóa học</label>
+                                <input type="file" id="course-image" class="form-control" hidden="hidden" accept="image/*">
+                                <br>
+                                <img src="" id="course-img-show" width="100px"/>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
 

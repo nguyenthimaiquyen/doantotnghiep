@@ -1,6 +1,7 @@
 function setHeader() {
     const isLoggedIn = localStorage.getItem('access-token') !== null;
     const userInfo = JSON.parse(localStorage.getItem('user-info'));
+    const userId = userInfo ? userInfo.id : null;
     const userRole = userInfo ? userInfo.roles : null;
     const fullName = userInfo ? userInfo.fullName : null;
     const email = userInfo ? userInfo.email : null;
@@ -62,17 +63,17 @@ function setHeader() {
                     <li><a href="/courses">Khóa học</a></li>
                     <li><a href="/teachers">Giảng viên</a></li>
                     <li><a href="/contact">Liên hệ</a></li>
-                    <li><a href="/my-learning">Quá trình học tập</a></li>                                                                                               
+                    <li><a href="/reminders/${userId}">Quá trình học tập</a></li>                                                                                               
                 </ul>
             `;
             subHeader = `
                             <ul>
                                 <li class="d-inline-block fa-lg">
-                                    <a class="pr-35 d-inline-block transition-3" href="/wishlist">
+                                    <a class="pr-35 d-inline-block transition-3 cursor-pointer" href="/wishlists/${userId}">
                                         <i class="far fa-heart"></i></a>
                                 </li>
                                 <li class="d-inline-block fa-lg">
-                                    <a class="pr-35 d-inline-block transition-3" href="/cart">
+                                    <a class="pr-35 d-inline-block transition-3 cursor-pointer" href="/carts/${userId}">
                                         <i class="fas fa-shopping-cart"></i></a>
                                 </li>
                             </ul><!-- social-link -->
@@ -84,10 +85,10 @@ function setHeader() {
                                     <p class="dropdown-item font-weight-bold pt-3" id="user-fullName">[full-name]</p>
                                     <p class="dropdown-item" id="user-email">[email]</p>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item mb-1 cursor-pointer" href="/my-learning">Quá trình học tập của
+                                    <a class="dropdown-item mb-1 cursor-pointer" href="/reminders/${userId}">Quá trình học tập của
                                         tôi</a>
-                                    <a class="dropdown-item mb-1 cursor-pointer" href="/cart">Giỏ hàng của tôi</a>
-                                    <a class="dropdown-item cursor-pointer" href="/wishlist">Mong muốn</a>
+                                    <a class="dropdown-item mb-1 cursor-pointer" href="/carts/${userId}">Giỏ hàng của tôi</a>
+                                    <a class="dropdown-item cursor-pointer" href="/wishlists/${userId}">Mong muốn</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item cursor-pointer" href="/profile">Chỉnh sửa hồ sơ</a>
                                     <div class="dropdown-divider"></div>
@@ -124,4 +125,3 @@ function setHeader() {
 }
 
 setHeader();
-

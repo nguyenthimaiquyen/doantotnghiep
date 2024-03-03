@@ -1,5 +1,6 @@
 package com.quyen.hust.controller.admin;
 
+import com.quyen.hust.util.FileUtil;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,12 +24,19 @@ public class FileController {
 
     @GetMapping("/{fileName}")
     public ResponseEntity<?> download(@PathVariable String fileName) throws IOException {
-
         if (!StringUtils.hasText(fileName)) {
             return ResponseEntity.badRequest().body("File name is empty");
         }
-
-        File file = new File("course_data/file/" + fileName); //check là file hay video
+        File file = null;
+        if (FileUtil.isValidImageFormat(fileName)) {
+            file = new File("course_data/image/" + fileName);
+        } else if (FileUtil.isValidVideoFormat(fileName)) {
+            file = new File("course_data/video/" + fileName);
+        } else if (FileUtil.isValidFileFormat(fileName)) {
+            file = new File("course_data/file/" + fileName);
+        } else {
+            return ResponseEntity.badRequest().body("Invalid file format");
+        }
         HttpHeaders headers = new HttpHeaders();
         List<String> customHeaders = new ArrayList<>();
         customHeaders.add(HttpHeaders.CONTENT_DISPOSITION);
@@ -36,11 +44,11 @@ public class FileController {
         headers.setAccessControlExposeHeaders(customHeaders);
         headers.set("Content-disposition", "attachment;filename=" + file.getName());
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        byte[] imageData = Files.readAllBytes(file.toPath());
-        if (ObjectUtils.isEmpty(imageData)) {
+        byte[] data = Files.readAllBytes(file.toPath());
+        if (ObjectUtils.isEmpty(data)) {
             return ResponseEntity.noContent().build();
         }
-        ByteArrayResource resource = new ByteArrayResource(imageData);
+        ByteArrayResource resource = new ByteArrayResource(data);
         return ResponseEntity.ok()
                 .headers(headers)
                 .contentLength(resource.contentLength())

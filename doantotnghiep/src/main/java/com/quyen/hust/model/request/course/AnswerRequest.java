@@ -14,13 +14,12 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class AnswerRequest {
 
-    private Long id;
+    private Long quizId;
 
     @NotBlank(message = "Content is required")
     @Length(max = 255, message = "Content must be less than 255 characters")
     private String content;
 
     private Boolean isCorrect;
-
 
 }

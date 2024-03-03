@@ -7,17 +7,15 @@ import com.quyen.hust.entity.course.Course;
 import com.quyen.hust.entity.course.Lesson;
 import com.quyen.hust.entity.course.Section;
 import com.quyen.hust.entity.teacher.Teacher;
+import com.quyen.hust.entity.user.Enrollment;
 import com.quyen.hust.exception.CourseNotFoundException;
-import com.quyen.hust.exception.UserNotFoundException;
+import com.quyen.hust.exception.UnsupportedFormatException;
 import com.quyen.hust.model.request.course.CourseRequest;
 import com.quyen.hust.model.request.course.CourseStatusRequest;
 import com.quyen.hust.model.request.search.CourseSearchRequest;
 import com.quyen.hust.model.response.admin.DiscountCodeDataResponse;
 import com.quyen.hust.model.response.admin.TrainingFieldResponse;
-import com.quyen.hust.model.response.course.CourseDataResponse;
-import com.quyen.hust.model.response.course.CourseFeeUnitResponse;
-import com.quyen.hust.model.response.course.CourseResponse;
-import com.quyen.hust.model.response.course.DifficultyLevelResponse;
+import com.quyen.hust.model.response.course.*;
 import com.quyen.hust.repository.admin.DiscountCodeJpaRepository;
 import com.quyen.hust.repository.admin.TrainingFieldJpaRepository;
 import com.quyen.hust.repository.course.CourseJpaRepository;
@@ -25,18 +23,29 @@ import com.quyen.hust.repository.course.CourseRepository;
 import com.quyen.hust.repository.course.LessonJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import com.quyen.hust.repository.teacher.TeacherJpaRepository;
+import com.quyen.hust.repository.user.EnrollmentJpaRepository;
 import com.quyen.hust.security.SecurityUtils;
 import com.quyen.hust.statics.CourseStatus;
 import com.quyen.hust.statics.DifficultyLevel;
 import com.quyen.hust.statics.Unit;
+import com.quyen.hust.util.FileUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -48,6 +57,7 @@ public class CourseService {
     private final TeacherJpaRepository teacherJpaRepository;
     private final SectionJpaRepository sectionJpaRepository;
     private final LessonJpaRepository lessonJpaRepository;
+    private final EnrollmentJpaRepository enrollmentJpaRepository;
 
     public List<CourseFeeUnitResponse> getCourseFeeUnit() {
         return List.of(
@@ -84,7 +94,23 @@ public class CourseService {
         ).collect(Collectors.toList());
     }
 
-    public void saveCourse(CourseRequest request) {
+    public void saveCourse(CourseRequest request, MultipartFile image) throws UnsupportedFormatException {
+        String imageDB = null;
+        if (image != null) {
+            //kiểm tra định dạng image tải lên
+            if (!FileUtil.isValidImageFormat(image.getOriginalFilename())) {
+                throw new UnsupportedFormatException("Image formats do not support");
+            }
+            //lưu ảnh
+            imageDB = FileUtil.getFileNameWithTime(image.getOriginalFilename());
+            String imagePath = "course_data" + File.separator + "image" + File.separator + imageDB;
+            try (InputStream videoInputStream = image.getInputStream()) {
+                Files.copy(videoInputStream, Paths.get(imagePath), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //get teacher, discount code
         Teacher teacher;
         if (request.getTeacher() != null) {
             teacher = teacherJpaRepository.findById(request.getTeacher()).get();
@@ -107,6 +133,7 @@ public class CourseService {
                 .trainingField(trainingFields)
                 .teacher(teacher)
                 .discountCode(discountCode.orElse(null))
+                .imageUrl(imageDB)
                 .build();
         if (!ObjectUtils.isEmpty(request.getId())) {
             //update course
@@ -120,6 +147,7 @@ public class CourseService {
             courseNeedUpdate.setTrainingField(trainingFields);
             courseNeedUpdate.setTeacher(teacher);
             courseNeedUpdate.setDiscountCode(discountCode.orElse(null));
+            courseNeedUpdate.setImageUrl(imageDB);
             courseJpaRepository.save(courseNeedUpdate);
             return;
         }
@@ -160,6 +188,39 @@ public class CourseService {
 //    }
 
     public CourseDataResponse getCourseDetails(Long id) throws CourseNotFoundException {
+        Optional<Course> courseOptional = courseJpaRepository.findById(id);
+        if (!courseOptional.isPresent()) {
+            throw new CourseNotFoundException("Course with id " + id + " could not be found!");
+        }
+
+        List<Section> sections = sectionJpaRepository.findByCourseId(id);
+        int totalLessons = 0;
+        int totalQuizzes = 0;
+        int courseTotalHours = 0;
+        int courseTotalMinutes = 0;
+        int courseTotalSeconds = 0;
+        for (Section section : sections) {
+            totalLessons += section.getTotalLessons();
+            totalQuizzes += section.getTotalQuizzes();
+            String[] timeParts = section.getTotalTime().split(":");
+            int minutes = Integer.parseInt(timeParts[0]);
+            int seconds = Integer.parseInt(timeParts[1]);
+            courseTotalMinutes += minutes;
+            courseTotalSeconds += seconds;
+        }
+        int overflowSeconds = courseTotalSeconds / 60;
+        courseTotalMinutes += overflowSeconds;
+        courseTotalSeconds = courseTotalSeconds % 60;
+        courseTotalHours = courseTotalMinutes / 60;
+        courseTotalMinutes = courseTotalMinutes % 60;
+        String totalTime = String.format("%dh:%02dm:%02ds", courseTotalHours, courseTotalMinutes, courseTotalSeconds);
+
+        Course courseNeedUpdate = courseOptional.get();
+        courseNeedUpdate.setTotalLessons(totalLessons);
+        courseNeedUpdate.setTotalQuizzes(totalQuizzes);
+        courseNeedUpdate.setTotalTime(totalTime);
+        courseJpaRepository.save(courseNeedUpdate);
+
         return courseJpaRepository.findById(id).map(
                 course -> {
                     CourseDataResponse.CourseDataResponseBuilder builder = CourseDataResponse.builder()
@@ -169,25 +230,45 @@ public class CourseService {
                             .learningObjectives(course.getLearningObjectives())
                             .courseFee(course.getCourseFee())
                             .courseFeeUnit(course.getCourseFeeUnit())
+                            .imageUrl(course.getImageUrl())
+                            .learnerCount(course.getLearnerCount())
+                            .rating(course.getRating())
                             .difficultyLevel(course.getDifficultyLevel())
                             .courseStatus(course.getCourseStatus())
+                            .teacherId(course.getTeacher().getId())
                             .teacherName(course.getTeacher().getUser().getFullName())
-                            .trainingFields(course.getTrainingField().stream().map(
+                            .totalLessons(course.getTotalLessons())
+                            .totalQuizzes(course.getTotalQuizzes())
+                            .totalTime(course.getTotalTime())
+                            .trainingFieldsId(course.getTrainingField().stream().map(
+                                    trainingField -> trainingField.getId()
+                                    ).collect(Collectors.toList())
+                            ).trainingFields(course.getTrainingField().stream().map(
                                     trainingField -> trainingField.getFieldName()
                             ).collect(Collectors.toList()));
                     if (course.getDiscountCode() != null) {
                         builder.discountCodeName(course.getDiscountCode().getCodeName());
+                        builder.discountCodeId(course.getDiscountCode().getId());
                     } else {
                         builder.discountCodeName(null);
                     }
                     return builder.build();
-                }).orElseThrow(() -> new CourseNotFoundException("Course with id " + id + " could not be found!"));
+                }).get();
     }
 
     public void changeCourseStatus(Long courseId, CourseStatusRequest status) throws CourseNotFoundException {
         Course course = courseJpaRepository.findById(courseId).orElse(null);
         if (ObjectUtils.isEmpty(course)) {
             throw new CourseNotFoundException("Course with id " + courseId + " could not be found!");
+        }
+        if (status.equals("PUBLISHED")) {
+            Random random = new Random();
+            //sinh số người học của course
+            Long learnerCount = 100 + random.nextLong(900);
+            course.setLearnerCount(learnerCount);
+            //sinh số sao cho course
+            Double starCount = 3 + random.nextDouble(2);
+            course.setRating(starCount);
         }
         course.setCourseStatus(status.getCourseStatus());
         courseJpaRepository.save(course);
@@ -211,6 +292,55 @@ public class CourseService {
                 .currentPage(request.getPageIndex())
                 .pageSize(request.getPageSize())
                 .build();
+    }
+
+    public LessonInfo getLessonInfo(Long courseId, Long lessonId, String action) {
+        Optional<Lesson> lessonOptional = lessonJpaRepository.findById(lessonId);
+        if ("previous".equals(action)) {
+            List<Section> sections = sectionJpaRepository.findByCourseId(courseId);
+            for (int i = 0; i < sections.size(); i++) {
+                List<Lesson> lessons = lessonJpaRepository.findBySectionId(sections.get(i).getId());
+                Lesson lesson1 = lessons.stream().filter(lesson -> lesson.getId() == lessonId).findFirst().get();
+                int currentIndex  = lessons.indexOf(lessonOptional.get());
+                if (currentIndex == 0) {
+                    return LessonInfo.builder()
+                            .courseId(courseId)
+                            .lessonId(lessons.get(1).getId())
+                            .build();
+                } else if (currentIndex > 0 && currentIndex < lessons.size() - 1) {
+                    return LessonInfo.builder()
+                            .courseId(courseId)
+                            .lessonId(lessons.get(1).getId())
+                            .build();
+                }
+
+            }
+            return null;
+        } else if ("next".equals(action)) {
+            return null;
+        }
+        return null;
+    }
+
+    public List<CourseDataResponse> getEnrolledCourse(Long userId) {
+        List<Enrollment> enrollments = enrollmentJpaRepository.findByUserId(userId);
+        return enrollments.stream().map(
+                enrollment -> CourseDataResponse.builder()
+                        .id(enrollment.getCourse().getId())
+                        .title(enrollment.getCourse().getTitle())
+                        .courseFee(enrollment.getCourse().getCourseFee())
+                        .courseFeeUnit(enrollment.getCourse().getCourseFeeUnit())
+                        .trainingFields(enrollment.getCourse().getTrainingField().stream().map(
+                                trainingField -> trainingField.getFieldName()
+                        ).collect(Collectors.toList()))
+                        .teacherName(enrollment.getCourse().getTeacher().getUser().getFullName())
+                        .difficultyLevel(enrollment.getCourse().getDifficultyLevel())
+                        .learnerCount(enrollment.getCourse().getLearnerCount())
+                        .rating(enrollment.getCourse().getRating())
+                        .imageUrl(enrollment.getCourse().getImageUrl())
+                        .courseStatus(enrollment.getCourse().getCourseStatus())
+                        .build()
+        ).collect(Collectors.toList());
     }
 
 

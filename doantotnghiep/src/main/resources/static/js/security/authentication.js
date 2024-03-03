@@ -70,6 +70,7 @@ $(document).ready(function () {
                 localStorage.setItem("access-token", data.jwt);
                 localStorage.setItem("refresh-token", data.refreshToken);
                 const userInfo = {
+                    id: data.id,
                     roles: data.roles,
                     email: data.email,
                     fullName: data.fullName,

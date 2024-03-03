@@ -22,4 +22,7 @@ public class TrainingField extends BaseEntity {
     @Column
     private String description;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
 }

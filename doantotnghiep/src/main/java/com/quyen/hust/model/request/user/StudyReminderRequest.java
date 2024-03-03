@@ -38,12 +38,11 @@ public class StudyReminderRequest {
     @Length(max = 255, message = "Event name must be less than 255 characters")
     private String eventName;
 
-    @NotBlank(message = "Frequency is required")
-    @Length(max = 20, message = "Frequency must be less than 20 characters")
+    @NotNull(message = "Frequency is required")
     private Frequency frequency;
 
     @NotNull(message = "Time is required")
-    @JsonFormat(pattern = "hh-mm", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalTime time;
 
     @NotNull(message = "Start date is required")

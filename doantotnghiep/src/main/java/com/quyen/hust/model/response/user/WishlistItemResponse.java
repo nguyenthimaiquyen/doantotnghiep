@@ -1,12 +1,11 @@
 package com.quyen.hust.model.response.user;
 
+import com.quyen.hust.model.response.course.CourseDataResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +15,8 @@ public class WishlistItemResponse {
 
     private Long id;
 
-    private LocalDateTime createdAt;
+    private Long wishlistId;
 
-    private LocalDateTime modifiedAt;
+    private CourseDataResponse course;
+
 }

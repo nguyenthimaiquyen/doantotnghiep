@@ -3,6 +3,7 @@ package com.quyen.hust.entity.user;
 import com.quyen.hust.entity.BaseEntity;
 import com.quyen.hust.entity.course.Course;
 import com.quyen.hust.entity.course.Lesson;
+import com.quyen.hust.entity.course.Quiz;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,13 +20,16 @@ import java.time.LocalDateTime;
 @Table(name = "enrollments")
 public class Enrollment extends BaseEntity {
 
-    @Column(name = "enrolled_at")
-    private LocalDateTime enrolledAt;
+    @Column(name = "total_lesson_and_quiz")
+    private Integer totalLessonAndQuiz;
+
+    @Column(name = "completed_lesson")
+    private Integer completedLesson;
 
     @Column(name = "completed_rate")
     private Float completedRate;
 
-    @OneToOne(cascade = {
+    @OneToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "course_id", nullable = false)
@@ -34,12 +38,20 @@ public class Enrollment extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinColumn(name = "lesson_id", nullable = false)
+    @JoinColumn(name = "lesson_id")
     private Lesson lesson;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinColumn(name = "quiz_id")
+    private Quiz quiz;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+
 }

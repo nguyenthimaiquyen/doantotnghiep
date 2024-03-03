@@ -30,6 +30,15 @@ public class LessonResponse {
 
     private String sectionTitle;
 
-//    private Long sectionIndex;
+    private String videoDuration;
+
+    private Boolean activated;
+
+    private Boolean preview;
+
+    private Long previousLessonId;
+
+    private Long nextLessonId;
+
 
 }

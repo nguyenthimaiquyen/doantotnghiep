@@ -355,7 +355,7 @@ function addAnswer() {
     let newAnswerRow = `
         <div class="row mt-3 answer-row" data-answer="${answerCount}">
             <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
-                 <input type="radio" class="form-check-input ml-15" name="answer" >
+                 <input type="radio" class="form-check-input ml-15" name="answer" id="answer-radio-${answerCount}">
                  <div class="input-group ml-5">
                      <textarea id="answer${answerCount}" name="answer${answerCount}" placeholder="Nhập đáp án"
                          rows="3" class="form-control primary-border2"></textarea>

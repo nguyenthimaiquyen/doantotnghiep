@@ -38,14 +38,11 @@
                             <div class="row">
                                 <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
                                     <div class="course-search position-relative">
-                                        <form id="search-course-form">
-                                            <h4 class="sidebar-title mb-22">Tìm kiếm khóa học</h4>
-                                            <input class="w-100 pl-20 pr-20 form-control" type="text" name="courseName"
-                                                   th:value="${requestSearch}" placeholder="Nhập tên khóa học"
-                                                   id="search-course">
-                                            <span class="position-absolute d-inline-block secondary-color"><i
-                                                    class="fa fa-search"></i></span>
-                                        </form>
+                                        <h4 class="sidebar-title mb-22">Tìm kiếm khóa học</h4>
+                                        <input class="w-100 pl-20 pr-20 form-control" type="text" name="courseName"
+                                               placeholder="Nhập tên khóa học" id="search-course">
+                                        <span class="position-absolute d-inline-block secondary-color"><i
+                                                class="fa fa-search"></i></span>
                                     </div>
                                 </div><!-- /col -->
 
@@ -55,7 +52,7 @@
                                         <ul>
                                             <li>
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="radio" class="radio" name="rating" id="4.5">
+                                                    <input type="radio" class=" radio" name="rating" id="4.5">
                                                     <a class="pl-10 review-ratting">
                                                         <span><i class="r-star-color fa fa-star"></i></span>
                                                         <span><i class="r-star-color fa fa-star"></i></span>
@@ -68,7 +65,7 @@
                                             </li>
                                             <li>
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="radio" class="radio" name="rating" id="4.0">
+                                                    <input type="radio" class=" radio" name="rating" id="4.0">
                                                     <a class="secondary-color pl-10 review-ratting">
                                                         <span><i class="r-star-color fa fa-star"></i></span>
                                                         <span><i class="r-star-color fa fa-star"></i></span>
@@ -81,7 +78,7 @@
                                             </li>
                                             <li>
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="radio" class="radio" name="rating" id="3.5">
+                                                    <input type="radio" class=" radio" name="rating" id="3.5">
                                                     <a class="secondary-color pl-10 review-ratting">
                                                         <span><i class="r-star-color fa fa-star"></i></span>
                                                         <span><i class="r-star-color fa fa-star"></i></span>
@@ -100,22 +97,12 @@
                                     <div class="sidebar-widget mt-10 mb-30 f-category">
                                         <h4 class="sidebar-title mb-20">Lĩnh vực</h4>
                                         <ul>
-                                            <li>
+                                            <li th:each="trainingField : ${trainingFields}">
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="training-field" id="programming">
-                                                    <a class="secondary-color pl-10">Lập trình</a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="training-field" id="security">
-                                                    <a class="secondary-color pl-10">Bảo mật</a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="training-field" id="general">
-                                                    <a class="secondary-color pl-10">Đại cương</a>
+                                                    <input type="checkbox" class="option-input radio"
+                                                           name="training-field" th:id="${trainingField.id}">
+                                                    <a class="secondary-color pl-10"
+                                                       th:text="${trainingField.fieldName}"></a>
                                                 </div>
                                             </li>
                                         </ul><!-- /f-category -->
@@ -126,16 +113,12 @@
                                     <div class="sidebar-widget mt-10 mb-30 Instructor-wrapper">
                                         <h4 class="sidebar-title mb-20">Giảng viên</h4>
                                         <ul>
-                                            <li>
+                                            <li th:each="teacher : ${teachers}">
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="teacher" id="admin">
-                                                    <a class="secondary-color pl-10">admin</a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="teacher" id="maiquyen2403@gmail.com">
-                                                    <a class="secondary-color pl-10">Nguyễn Thị Mai Quyên</a>
+                                                    <input type="checkbox" class="option-input radio" name="teacher"
+                                                           th:id="${teacher.id}">
+                                                    <a class="secondary-color pl-10"
+                                                       th:text="${teacher.user.fullName}"></a>
                                                 </div>
                                             </li>
                                         </ul><!-- /f-category -->
@@ -148,19 +131,22 @@
                                         <ul>
                                             <li>
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="difficultyLevel" id="beginner-checkbox">
+                                                    <input type="checkbox" class="option-input radio"
+                                                           name="difficultyLevel" id="BEGINNER">
                                                     <a class="secondary-color pl-10">Mới bắt đầu</a>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="difficultyLevel" id="intermediate-checkbox">
+                                                    <input type="checkbox" class="option-input radio"
+                                                           name="difficultyLevel" id="INTERMEDIATE">
                                                     <a class="secondary-color pl-10">Trung cấp</a>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="difficultyLevel" id="advanced-checkbox">
+                                                    <input type="checkbox" class="option-input radio"
+                                                           name="difficultyLevel" id="ADVANCED">
                                                     <a class="secondary-color pl-10">Nâng cao</a>
                                                 </div>
                                             </li>
@@ -174,13 +160,15 @@
                                         <ul>
                                             <li>
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="course-fee" id="free-course">
+                                                    <input type="checkbox" class="option-input radio" name="course-fee"
+                                                           id="0">
                                                     <a class="secondary-color pl-10">Miễn phí</a>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="d-flex align-items-center mb-10">
-                                                    <input type="checkbox" class="option-input radio" name="course-fee" id="priced-course">
+                                                    <input type="checkbox" class="option-input radio" name="course-fee"
+                                                           id="1">
                                                     <a class="secondary-color pl-10">Có phí</a>
                                                 </div>
                                             </li>
@@ -194,7 +182,7 @@
                 </div><!-- /col -->
 
                 <div class="col-xl-8  col-lg-8  col-md-12  col-sm-12 col-12">
-                    <div class="my-3 mx-3">
+                    <div class="my-3 mx-3" id="result-count">
                         <span>Hiển thị </span>
                         <select id="course-page-size">
                             <option value="6" th:selected="${pageSize==6}">6</option>
@@ -210,15 +198,15 @@
                                 <div class="single-course-tab-content tab-content" id="myTabContent">
                                     <div class="tab-pane show active" id="s-p-list1" role="tabpanel"
                                          aria-labelledby="s-p-list1">
-                                        <div class="row courses-tab-grid pt-18 pl-lg-3">
+                                        <div class="row courses-tab-grid pt-18 pl-lg-3" id="course-container">
                                             <div class="col-xl-6 col-lg-6  col-md-6 col-sm-12 col-12"
                                                  th:each="course : ${courses}">
                                                 <div class="single-popular-course zoom-img-hover">
                                                     <div class="position-relative">
                                                         <div class="p-course-img over-hidden position-relative">
-                                                            <img class="w-100 img"
-                                                                 src="images/about-page/about-page5.jpg"
-                                                                 alt="course-image01">
+                                                            <img class="w-100 h-200px img"
+                                                                 th:src="@{'/api/v1/files/' + ${course.imageUrl}}"
+                                                                 alt="course-image">
                                                             <div class="pc-category z-index1 position-absolute">
                                                                 <span class="text-white f-500 theme-bg d-inline-block py-1 px-3"
                                                                       th:text="${course.trainingFields.get(0)}"></span>
@@ -228,12 +216,40 @@
                                                     <div class="popular-course-content-wrapper bg-white pt-25 pl-20 pr-20">
                                                         <div class="pc-info d-flex align-items-center justify-content-between pb-15">
                                                             <ul class="review-ratting mr-800">
-                                                                <li>
-                                                                    <span><i class="fa fa-star"></i></span>
-                                                                    <span><i class="fa fa-star"></i></span>
-                                                                    <span><i class="fa fa-star"></i></span>
-                                                                    <span><i class="fa fa-star"></i></span>
-                                                                    <span><i class="fa fa-star"></i></span>
+                                                                <li th:if="${course.rating == 5}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span>
+                                                                </li>
+                                                                <li th:if="${course.rating == 4.5}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fas fa-star-half-alt"></i></span>
+                                                                </li>
+                                                                <li th:if="${course.rating == 4}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="far fa-star"></i></span>
+                                                                </li>
+                                                                <li th:if="${course.rating == 3.5}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fas fa-star-half-alt"></i></span><span><i
+                                                                        class="far fa-star"></i></span>
+                                                                </li>
+                                                                <li th:if="${course.rating == 3}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="far fa-star"></i></span><span><i
+                                                                        class="far fa-star"></i></span>
                                                                 </li>
                                                             </ul><!-- /review-ratting -->
                                                             <p class="badge badge-primary ml-35"
@@ -251,11 +267,12 @@
                                                         </div><!-- /course-content -->
                                                         <div class="pc-info d-flex align-items-center justify-content-between pt-12 pb-15">
                                                             <p class="pc-student mb-0">
-                                                                <span><i class="fal fa-user"></i></span> 3584
+                                                                <span><i class="fal fa-user"></i></span>
+                                                                <span th:text="${course.learnerCount}"></span>
                                                             </p>
                                                             <div class="pc-price">
                                                                 <span class="primary-color f-500 d-inline-block"
-                                                                      th:text="${course.courseFee}"></span>
+                                                                      th:text="${#numbers.formatDecimal(course.courseFee, 0, 'COMMA', 0, 'POINT')}"></span>
                                                                 <span class="primary-color f-500 d-inline-block"
                                                                       th:text="${course.courseFeeUnit}"></span>
                                                             </div>
@@ -267,11 +284,6 @@
                                     </div>
                                 </div>
                             </div><!-- /course-content -->
-
-                            <!-- ====== pagination-area-start================================ -->
-
-                            <!-- pagination-area-end -->
-
                         </div>
                         <!-- course-area-end  -->
                     </div><!-- /course-page2-tab-wrapper -->

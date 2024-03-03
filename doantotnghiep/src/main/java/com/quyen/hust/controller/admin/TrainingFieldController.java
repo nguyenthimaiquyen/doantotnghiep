@@ -1,12 +1,20 @@
 package com.quyen.hust.controller.admin;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.quyen.hust.exception.TrainingFieldNotFoundException;
+import com.quyen.hust.exception.UnsupportedFormatException;
 import com.quyen.hust.model.request.admin.TrainingFieldRequest;
+import com.quyen.hust.model.request.course.CourseRequest;
 import com.quyen.hust.service.admin.TrainingFieldService;
+import com.quyen.hust.util.LongTypeAdapter;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
@@ -20,14 +28,20 @@ public class TrainingFieldController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createDiscountCode(@RequestBody TrainingFieldRequest request) {
-        trainingFieldService.saveTrainingField(request);
+    public ResponseEntity<?> createDiscountCode(@RequestPart("trainingFieldRequest") @Valid String trainingFieldRequest,
+                                                @RequestPart(value = "image", required = false) MultipartFile image) throws UnsupportedFormatException {
+        Gson gson = new GsonBuilder().registerTypeAdapter(Long.class, new LongTypeAdapter()).create();
+        TrainingFieldRequest request = gson.fromJson(trainingFieldRequest, TrainingFieldRequest.class);
+        trainingFieldService.saveTrainingField(request, image);
         return ResponseEntity.ok(null);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateTrainingField(@RequestBody TrainingFieldRequest request) {
-        trainingFieldService.saveTrainingField(request);
+    public ResponseEntity<?> updateTrainingField(@RequestPart("trainingFieldRequest") @Valid String trainingFieldRequest,
+                                                 @RequestPart(value = "image", required = false) MultipartFile image) throws UnsupportedFormatException {
+        Gson gson = new GsonBuilder().registerTypeAdapter(Long.class, new LongTypeAdapter()).create();
+        TrainingFieldRequest request = gson.fromJson(trainingFieldRequest, TrainingFieldRequest.class);
+        trainingFieldService.saveTrainingField(request, image);
         return ResponseEntity.ok(null);
     }
 

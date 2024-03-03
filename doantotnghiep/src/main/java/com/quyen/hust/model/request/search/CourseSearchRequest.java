@@ -2,23 +2,21 @@ package com.quyen.hust.model.request.search;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CourseSearchRequest extends BaseSearchRequest{
 
     private String courseName;
 
-    private Double courseFeeStart;
+    private List<Double> courseFee;
 
-    private Double courseFeeEnd;
+    private List<Long> teacherId;
 
-    private Long teacherId;
+    private List<Long> trainingFieldId;
 
-    private String trainingFieldName;
+    private Double ratingValue;
 
-    private Integer ratingValueStart;
-
-    private Integer ratingValueEnd;
-
-    private String difficultyLevel;
+    private List<String> difficultyLevel;
 
 }

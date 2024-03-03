@@ -38,5 +38,8 @@ public class LessonRequest {
     @Length(max = 1000, message = "File Url must be less than 1000 characters")
     private String fileUrl;
 
+    private Boolean activated;
+
+    private String videoDuration;
 
 }

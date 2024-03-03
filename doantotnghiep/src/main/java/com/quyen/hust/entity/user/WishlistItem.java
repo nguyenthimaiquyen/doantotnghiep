@@ -17,11 +17,13 @@ import javax.persistence.*;
 @Table(name = "wishlist_items")
 public class WishlistItem extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {
+            CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "wishlist_id", nullable = false)
     private Wishlist wishlist;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = {
+    @OneToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinColumn(name = "course_id", nullable = false)

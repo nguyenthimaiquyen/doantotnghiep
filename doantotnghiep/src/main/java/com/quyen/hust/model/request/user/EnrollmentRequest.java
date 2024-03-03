@@ -25,14 +25,16 @@ public class EnrollmentRequest {
 
     @NotNull(message = "Course is required")
     @Min(value = 1, message = "Course ID must be positive number")
-    private Long courseID;
+    private Long courseId;
 
-    @NotNull(message = "Lesson is required")
     @Min(value = 1, message = "Lesson ID must be positive number")
     private Long lessonID;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
-    private LocalDateTime enrolledAt;
+    @Min(value = 1, message = "Total lesson must be positive number")
+    private Integer totalLesson;
+
+    @Min(value = 1, message = "Completed lesson must be positive number")
+    private Integer completedLesson;
 
     private Float completedRate;
 

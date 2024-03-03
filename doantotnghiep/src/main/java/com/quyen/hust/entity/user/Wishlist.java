@@ -14,13 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "carts")
+@Table(name = "wishlists")
 public class Wishlist extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-
 
 }

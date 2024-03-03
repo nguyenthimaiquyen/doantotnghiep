@@ -45,12 +45,9 @@
                                aria-selected="true">Tất cả khóa học</a>
 
                             <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab2"
-                               aria-selected="false">Mong muốn</a>
-
-                            <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3"
                                aria-selected="false">Đã lưu trữ</a>
 
-                            <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4"
+                            <a href="#tab3" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab3"
                                aria-selected="false">Nhắc nhở học tập</a>
 
                         </div>
@@ -59,22 +56,94 @@
                             <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
                                 <div class="row">
                                     <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
-                                        <h5 class="mb-20">Danh sách tất cả khóa học của tôi</h5>
-
-
+                                        <h5 class="mb-20">Danh sách các khóa học đã đăng ký học</h5>
+                                        <div class="row courses-tab-grid pt-18 pl-lg-3">
+                                            <div class="col-xl-5 col-lg-5  col-md-6 col-sm-10 col-12"
+                                                 th:each="course : ${courses}">
+                                                <div class="single-popular-course zoom-img-hover">
+                                                    <div class="position-relative">
+                                                        <div class="p-course-img over-hidden position-relative">
+                                                            <img class="w-100 h-200px img" th:src="@{'/api/v1/files/' + ${course.imageUrl}}"
+                                                                 alt="course-image">
+                                                            <div class="pc-category z-index1 position-absolute">
+                                                                <span class="text-white f-500 theme-bg d-inline-block py-1 px-3"
+                                                                      th:text="${course.trainingFields.get(0)}"></span>
+                                                            </div><!-- /pc-category  -->
+                                                        </div><!-- /p-course img -->
+                                                    </div>
+                                                    <div class="popular-course-content-wrapper bg-white pt-25 pl-20 pr-20">
+                                                        <div class="pc-info d-flex align-items-center justify-content-between pb-15">
+                                                            <ul class="review-ratting mr-800">
+                                                                <li th:if="${course.rating == 5}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span>
+                                                                </li>
+                                                                <li th:if="${course.rating == 4.5}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fas fa-star-half-alt"></i></span>
+                                                                </li>
+                                                                <li th:if="${course.rating == 4}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="far fa-star"></i></span>
+                                                                </li>
+                                                                <li th:if="${course.rating == 3.5}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fas fa-star-half-alt"></i></span><span><i
+                                                                        class="far fa-star"></i></span>
+                                                                </li>
+                                                                <li th:if="${course.rating == 3}">
+                                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="fa fa-star"></i></span><span><i
+                                                                        class="far fa-star"></i></span><span><i
+                                                                        class="far fa-star"></i></span>
+                                                                </li>
+                                                            </ul><!-- /review-ratting -->
+                                                            <p class="badge badge-primary ml-35"
+                                                               th:text="${course.difficultyLevel.name}"></p>
+                                                        </div>
+                                                        <div class="single-popular-course-content primary-border-bottom pb-6">
+                                                            <h3>
+                                                                <a class="show-course-btn focused cursor-pointer text-dark"
+                                                                   th:attr="course-id=${course.id}"
+                                                                   th:text="${course.title}"></a></h3>
+                                                            <p class="admin mb-2">
+                                                                Bởi <span class="theme-color f-500 d-inline-block"
+                                                                          th:text="${course.teacherName}"></span>
+                                                            </p>
+                                                        </div><!-- /course-content -->
+                                                        <div class="pc-info d-flex align-items-center justify-content-between pt-12 pb-15">
+                                                            <p class="pc-student mb-0">
+                                                                <span><i class="fal fa-user"></i></span>
+                                                                <span th:text="${course.learnerCount}"></span>
+                                                            </p>
+                                                            <div class="pc-price">
+                                                                <span class="primary-color f-500 d-inline-block"
+                                                                      th:text="${#numbers.formatDecimal(course.courseFee, 0, 'COMMA', 0, 'POINT')}"></span>
+                                                                <span class="primary-color f-500 d-inline-block"
+                                                                      th:text="${course.courseFeeUnit}"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- /popular-course-content-wrapper -->
+                                                </div><!-- /single-course -->
+                                            </div><!-- /col -->
+                                        </div><!-- /row -->
                                     </div><!-- /col -->
                                 </div><!-- /row -->
                             </div>
+
                             <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="tab2">
-                                <div class="row">
-                                    <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
-                                        <h5 class="mb-20">Danh sách các khóa học mong muốn</h5>
-
-
-                                    </div><!-- /col -->
-                                </div><!-- /row -->
-                            </div>
-                            <div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="tab3">
                                 <div class="row">
                                     <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
                                         <h5 class="mb-20">Các khóa học đã hoàn thành</h5>
@@ -83,7 +152,7 @@
                                     </div><!-- /col -->
                                 </div><!-- /row -->
                             </div>
-                            <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="tab4">
+                            <div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="tab3">
                                 <div class="row">
                                     <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12">
                                         <h5 class="mb-20">Nhắc nhở học tập</h5>
@@ -162,4 +231,5 @@
 </body>
 
 <script src="/js/user/reminder.js"></script>
+<script src="/js/course/user-course.js"></script>
 </html>

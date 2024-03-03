@@ -3,6 +3,7 @@ package com.quyen.hust.controller.webstatics;
 import com.quyen.hust.model.request.search.CourseSearchRequest;
 import com.quyen.hust.model.response.course.CourseDataResponse;
 import com.quyen.hust.model.response.course.CourseResponse;
+import com.quyen.hust.service.admin.TrainingFieldService;
 import com.quyen.hust.service.course.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 public class CommonWebController {
     private final CourseService courseService;
+    private final TrainingFieldService trainingFieldService;
 
     @GetMapping("/")
     public String getHomePage(Model model, CourseSearchRequest request) {
         CourseResponse courseResponse = courseService.searchCourse(request);
         model.addAttribute("requestSearch", request.getCourseName());
         model.addAttribute("courses", courseResponse.getCourses());
+        model.addAttribute("trainingFields", trainingFieldService.getAll());
         return "index";
     }
 

@@ -19,5 +19,8 @@ public class TrainingFieldResponse {
 
     private String description;
 
+    private Integer totalCourses;
+
+    private String imageUrl;
 
 }

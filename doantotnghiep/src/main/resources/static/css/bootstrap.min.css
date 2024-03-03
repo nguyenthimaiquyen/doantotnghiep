@@ -8082,6 +8082,10 @@ button.bg-dark:hover {
     height: 100% !important
 }
 
+.h-200px {
+    height: 200px
+}
+
 .mw-100 {
     max-width: 100% !important
 }

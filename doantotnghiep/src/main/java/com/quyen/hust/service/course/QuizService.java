@@ -19,6 +19,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 
@@ -36,7 +37,7 @@ public class QuizService {
                 answer -> AnswerResponse.builder()
                         .id(answer.getId())
                         .content(answer.getContent())
-                        .isCorrect(answer.getIsCorrect())
+                        .isCorrect(answer.isCorrect())
                         .build()
         ).collect(Collectors.toList());
         return quizJpaRepository.findById(quizId).map(
@@ -78,12 +79,18 @@ public class QuizService {
             answerJpaRepository.saveAll(answers);
             quizJpaRepository.save(quizNeedUpdate);
         } else {
+            //sinh số thời gian đọc quiz ngẫu nhiên từ 1p đến 3p
+            Random random = new Random();
+            int minutes = 1 + random.nextInt(2);
+            int seconds = random.nextInt(60);
+            String timeCount = minutes + ":" + seconds;
             //create quiz
             Quiz quiz = Quiz.builder()
                     .title(request.getTitle())
                     .question(request.getQuestion())
                     .explanation(request.getExplanation())
                     .section(sectionOptional.get())
+                    .timeCount(timeCount)
                     .build();
             List<Answer> answers = request.getAnswers().stream().map(
                     answerRequest -> Answer.builder()
@@ -96,8 +103,6 @@ public class QuizService {
             answerJpaRepository.saveAll(answers);
         }
     }
-
-
 
     public void deleteQuiz(Long quizId) throws QuizNotFoundException {
         Optional<Quiz> quiz = quizJpaRepository.findById(quizId);

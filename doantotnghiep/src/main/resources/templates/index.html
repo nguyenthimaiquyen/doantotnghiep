@@ -19,15 +19,12 @@
                     <div class="col-xl-8 col-lg-8  col-md-9  col-sm-12 col-12 d-flex align-items-center">
                         <div class="slider-content mt--10 text-center">
                             <h1 class="mb-20 text-white px-lg-4" data-aos="fade-up" data-aos-duration="2000"
-                                data-aos-delay="150">Chọn một <span class="f-700">Khóa học</span> từ <span
-                                    class="f-700">hàng chục </span>
-                                khóa chúng tôi có</h1>
+                                data-aos-delay="150">Chọn một Khóa học từ hàng chục khóa chúng tôi có</h1>
 
-                            <form action="#" class="hero-search position-relative mt-45">
-                                <input class="w-100 rounded-0 border-0 pl-20 pr-20 pt-20 pb-20" type="text"
-                                       placeholder="Nhập từ khóa">
-                                <a class="position-absolute right-0 top-0 f-500 pt-20 pb-20 pl-45 pr-45 text-uppercase main-color d-block h-100"
-                                   href="#">Tìm kiếm ngay</a>
+                            <form id="search-course-form" class="hero-search position-relative mt-45">
+                                <input class="w-100 rounded-0 border-0 pl-20 pr-20 pt-20 pb-20" type="text" name="courseName"
+                                       th:value="${requestSearch}" placeholder="Nhập tên khóa học" id="search-course">
+                                <a class="position-absolute right-0 top-0 f-500 pt-20 pb-20 pl-45 pr-45 text-uppercase main-color d-block h-100 cursor-pointer" >Tìm kiếm ngay</a>
                             </form>
                         </div>
                     </div><!-- /col -->
@@ -71,311 +68,80 @@
                     <div class="single-popular-course zoom-img-hover">
                         <div class="position-relative">
                             <div class="p-course-img over-hidden position-relative">
-                                <img class="w-100 img" src="/images/about-page/about-page2.jpg" alt="course-image01">
+                                <img class="w-100 h-200px img" th:src="@{'/api/v1/files/' + ${course.imageUrl}}"
+                                     alt="course-image">
                                 <div class="pc-category z-index1 position-absolute">
-                                    <span class="text-white f-500 theme-bg d-inline-block py-1 px-3"
-                                          th:text="${course.trainingFields.get(0)}"></span>
+                                    <span class="text-white f-500 theme-bg d-inline-block py-1 px-3" th:text="${course.trainingFields.get(0)}"></span>
                                 </div><!-- /pc-category  -->
                             </div><!-- /p-course img -->
                         </div>
-
-                        <div class="popular-course-content-wrapper bg-white pt-25 pl-30 pr-30">
-                            <div class="popular-course-review d-flex align-items-center mb-1">
-                                <ul class="review-ratting mr-10">
-                                    <li>
-                                        <span><i class="fa fa-star"></i></span><span><i
-                                            class="fa fa-star"></i></span><span><i
-                                            class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span> <span><i
-                                            class="fa fa-star"></i></span>
+                        <div class="popular-course-content-wrapper bg-white pt-25 pl-20 pr-20">
+                            <div class="pc-info d-flex align-items-center justify-content-between pb-15">
+                                <ul class="review-ratting mr-800">
+                                    <li th:if="${course.rating == 5}">
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                    </li>
+                                    <li th:if="${course.rating == 4.5}">
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fas fa-star-half-alt"></i></span>
+                                    </li>
+                                    <li th:if="${course.rating == 4}">
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="far fa-star"></i></span>
+                                    </li>
+                                    <li th:if="${course.rating == 3.5}">
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fas fa-star-half-alt"></i></span>
+                                        <span><i class="far fa-star"></i></span>
+                                    </li>
+                                    <li th:if="${course.rating == 3}">
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="fa fa-star"></i></span>
+                                        <span><i class="far fa-star"></i></span>
+                                        <span><i class="far fa-star"></i></span>
                                     </li>
                                 </ul><!-- /review-ratting -->
-                                <div class="p-c-review">
-                                    <p class="mb-0">243 Review</p>
-                                </div><!-- /p-c-review -->
-                            </div><!-- /popular-course-review -->
-
+                                <p class="badge badge-primary ml-35"
+                                   th:text="${course.difficultyLevel.name}"></p>
+                            </div>
                             <div class="single-popular-course-content primary-border-bottom pb-6">
-                                <h3><a class="show-course-btn focused cursor-pointer text-dark"
-                                       th:attr="course-id=${course.id}" th:text="${course.title}"></a></h3>
+                                <h3>
+                                    <a class="show-course-btn focused cursor-pointer text-dark"
+                                       th:attr="course-id=${course.id}"
+                                       th:text="${course.title}"></a></h3>
                                 <p class="admin mb-2">
-                                    By <span class="theme-color f-500 d-inline-block" th:text="${course.teacherName}"></span>
+                                    Bởi <span class="theme-color f-500 d-inline-block"
+                                              th:text="${course.teacherName}"></span>
                                 </p>
-                                <p class="badge badge-primary mr-1" th:text="${course.difficultyLevel.name}"></p>
                             </div><!-- /course-content -->
-
                             <div class="pc-info d-flex align-items-center justify-content-between pt-12 pb-15">
                                 <p class="pc-student mb-0">
                                     <span><i class="fal fa-user"></i></span>
-                                    3584
+                                    <span th:text="${course.learnerCount}"></span>
                                 </p>
                                 <div class="pc-price">
-                                    <span class="primary-color f-500 d-inline-block" th:text="${course.courseFee}"></span>
-                                    <span class="primary-color f-500 d-inline-block" th:text="${course.courseFeeUnit}"></span>
+                                    <span class="primary-color f-500 d-inline-block"
+                                          th:text="${#numbers.formatDecimal(course.courseFee, 0, 'COMMA', 0, 'POINT')}"></span>
+                                    <span class="primary-color f-500 d-inline-block"
+                                          th:text="${course.courseFeeUnit}"></span>
                                 </div>
                             </div>
                         </div><!-- /popular-course-content-wrapper -->
                     </div><!-- /single-course -->
                 </div><!-- /col -->
-
-<!--                <div class="col-xl-4 col-lg-4  col-md-6 col-sm-12 col-12">-->
-<!--                    <div class="single-popular-course zoom-img-hover">-->
-
-<!--                        <div class="position-relative">-->
-<!--                            <div class="p-course-img over-hidden position-relative">-->
-<!--                                <img class="w-100 img" src="/images/course/course2.jpg" alt="course-image01">-->
-
-<!--                                <div class="pc-category z-index1 position-absolute">-->
-<!--                                    <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>-->
-<!--                                </div>&lt;!&ndash; /pc-category  &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /p-course img &ndash;&gt;-->
-<!--                        </div>-->
-
-<!--                        <div class="popular-course-content-wrapper bg-white pt-25 pl-30 pr-30">-->
-<!--                            <div class="popular-course-review d-flex align-items-center mb-1">-->
-<!--                                <ul class="review-ratting mr-10">-->
-<!--                                    <li>-->
-<!--                                        <span><i class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span> <span><i-->
-<!--                                            class="fa fa-star"></i></span>-->
-<!--                                    </li>-->
-<!--                                </ul>&lt;!&ndash; /review-ratting &ndash;&gt;-->
-<!--                                <div class="p-c-review">-->
-<!--                                    <p class="mb-0">243 Review</p>-->
-<!--                                </div>&lt;!&ndash; /p-c-review &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /popular-course-review &ndash;&gt;-->
-
-<!--                            <div class="single-popular-course-content primary-border-bottom bg-white pb-6">-->
-<!--                                <h3>-->
-<!--                                    <a href="course.html">Design for the web with Abobe Illustrator and photoshop</a>-->
-<!--                                </h3>-->
-<!--                                <p class="admin mb-2">-->
-<!--                                    By <span class="theme-color f-500 d-inline-block">Cristofer Neilson</span>-->
-<!--                                </p>-->
-<!--                                <p>At torem ipsum conse icing elit, sed do eiusmod tempor iur onre dol ...</p>-->
-<!--                            </div>&lt;!&ndash; /course-content &ndash;&gt;-->
-
-<!--                            <div class="pc-info d-flex align-items-center justify-content-between pt-12 pb-15">-->
-<!--                                <p class="pc-student mb-0">-->
-<!--                                    <span><i class="fal fa-user"></i></span>-->
-<!--                                    3584-->
-<!--                                </p>-->
-<!--                                <div class="pc-price">-->
-<!--                                    <span class="primary-color f-500 d-inline-block">$199</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>&lt;!&ndash; /popular-course-content-wrapper &ndash;&gt;-->
-
-<!--                    </div>&lt;!&ndash; /single-course &ndash;&gt;-->
-<!--                </div>&lt;!&ndash; /col &ndash;&gt;-->
-
-<!--                <div class="col-xl-4 col-lg-4  col-md-6 col-sm-12 col-12">-->
-<!--                    <div class="single-popular-course zoom-img-hover">-->
-
-<!--                        <div class="position-relative">-->
-<!--                            <div class="p-course-img over-hidden position-relative">-->
-<!--                                <img class="w-100 img" src="/images/course/course3.jpg" alt="course-image01">-->
-
-<!--                                <div class="pc-category z-index1 position-absolute">-->
-<!--                                    <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>-->
-<!--                                </div>&lt;!&ndash; /pc-category  &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /p-course img &ndash;&gt;-->
-<!--                        </div>-->
-
-<!--                        <div class="popular-course-content-wrapper bg-white pt-25 pl-30 pr-30">-->
-<!--                            <div class="popular-course-review d-flex align-items-center mb-1">-->
-<!--                                <ul class="review-ratting mr-10">-->
-<!--                                    <li>-->
-<!--                                        <span><i class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span> <span><i-->
-<!--                                            class="fa fa-star"></i></span>-->
-<!--                                    </li>-->
-<!--                                </ul>&lt;!&ndash; /review-ratting &ndash;&gt;-->
-<!--                                <div class="p-c-review">-->
-<!--                                    <p class="mb-0">243 Review</p>-->
-<!--                                </div>&lt;!&ndash; /p-c-review &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /popular-course-review &ndash;&gt;-->
-
-<!--                            <div class="single-popular-course-content primary-border-bottom bg-white pb-6">-->
-<!--                                <h3>-->
-<!--                                    <a href="course.html">Design for the web with Abobe Illustrator and photoshop</a>-->
-<!--                                </h3>-->
-<!--                                <p class="admin mb-2">-->
-<!--                                    By <span class="theme-color f-500 d-inline-block">Cristofer Neilson</span>-->
-<!--                                </p>-->
-<!--                                <p>At torem ipsum conse icing elit, sed do eiusmod tempor iur onre dol ...</p>-->
-<!--                            </div>&lt;!&ndash; /course-content &ndash;&gt;-->
-
-<!--                            <div class="pc-info d-flex align-items-center justify-content-between pt-12 pb-15">-->
-<!--                                <p class="pc-student mb-0">-->
-<!--                                    <span><i class="fal fa-user"></i></span>-->
-<!--                                    3584-->
-<!--                                </p>-->
-<!--                                <div class="pc-price">-->
-<!--                                    <span class="primary-color f-500 d-inline-block">$199</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>&lt;!&ndash; /popular-course-content-wrapper &ndash;&gt;-->
-
-<!--                    </div>&lt;!&ndash; /single-course &ndash;&gt;-->
-<!--                </div>&lt;!&ndash; /col &ndash;&gt;-->
-
-<!--                <div class="col-xl-4 col-lg-4  col-md-6 col-sm-12 col-12">-->
-<!--                    <div class="single-popular-course zoom-img-hover">-->
-
-<!--                        <div class="position-relative">-->
-<!--                            <div class="p-course-img over-hidden position-relative z-index-1">-->
-<!--                                <img class="w-100 img" src="/images/course/course4.jpg" alt="course-image01">-->
-
-<!--                                <div class="pc-category z-index1 position-absolute">-->
-<!--                                    <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>-->
-<!--                                </div>&lt;!&ndash; /pc-category  &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /p-course img &ndash;&gt;-->
-<!--                        </div>-->
-
-<!--                        <div class="popular-course-content-wrapper bg-white pt-25 pl-30 pr-30">-->
-<!--                            <div class="popular-course-review d-flex align-items-center mb-1">-->
-<!--                                <ul class="review-ratting mr-10">-->
-<!--                                    <li>-->
-<!--                                        <span><i class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span> <span><i-->
-<!--                                            class="fa fa-star"></i></span>-->
-<!--                                    </li>-->
-<!--                                </ul>&lt;!&ndash; /review-ratting &ndash;&gt;-->
-<!--                                <div class="p-c-review">-->
-<!--                                    <p class="mb-0">243 Review</p>-->
-<!--                                </div>&lt;!&ndash; /p-c-review &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /popular-course-review &ndash;&gt;-->
-
-<!--                            <div class="single-popular-course-content primary-border-bottom bg-white pb-6">-->
-<!--                                <h3>-->
-<!--                                    <a href="course.html">Design for the web with Abobe Illustrator and photoshop</a>-->
-<!--                                </h3>-->
-<!--                                <p class="admin mb-2">-->
-<!--                                    By <span class="theme-color f-500 d-inline-block">Cristofer Neilson</span>-->
-<!--                                </p>-->
-<!--                                <p>At torem ipsum conse icing elit, sed do eiusmod tempor iur onre dol ...</p>-->
-<!--                            </div>&lt;!&ndash; /course-content &ndash;&gt;-->
-
-<!--                            <div class="pc-info d-flex align-items-center justify-content-between pt-12 pb-15">-->
-<!--                                <p class="pc-student mb-0">-->
-<!--                                    <span><i class="fal fa-user"></i></span>-->
-<!--                                    3584-->
-<!--                                </p>-->
-<!--                                <div class="pc-price">-->
-<!--                                    <span class="primary-color f-500 d-inline-block">$199</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>&lt;!&ndash; /popular-course-content-wrapper &ndash;&gt;-->
-
-<!--                    </div>&lt;!&ndash; /single-course &ndash;&gt;-->
-<!--                </div>&lt;!&ndash; /col &ndash;&gt;-->
-
-<!--                <div class="col-xl-4 col-lg-4  col-md-6 col-sm-12 col-12">-->
-<!--                    <div class="single-popular-course zoom-img-hover">-->
-
-<!--                        <div class="position-relative">-->
-<!--                            <div class="p-course-img over-hidden position-relative">-->
-<!--                                <img class="w-100 img" src="/images/course/course5.png" alt="course-image01">-->
-
-<!--                                <div class="pc-category z-index1 position-absolute">-->
-<!--                                    <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>-->
-<!--                                </div>&lt;!&ndash; /pc-category  &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /p-course img &ndash;&gt;-->
-<!--                        </div>-->
-
-<!--                        <div class="popular-course-content-wrapper bg-white pt-25 pl-30 pr-30">-->
-<!--                            <div class="popular-course-review d-flex align-items-center mb-1">-->
-<!--                                <ul class="review-ratting mr-10">-->
-<!--                                    <li>-->
-<!--                                        <span><i class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span> <span><i-->
-<!--                                            class="fa fa-star"></i></span>-->
-<!--                                    </li>-->
-<!--                                </ul>&lt;!&ndash; /review-ratting &ndash;&gt;-->
-<!--                                <div class="p-c-review">-->
-<!--                                    <p class="mb-0">243 Review</p>-->
-<!--                                </div>&lt;!&ndash; /p-c-review &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /popular-course-review &ndash;&gt;-->
-
-<!--                            <div class="single-popular-course-content primary-border-bottom bg-white pb-6">-->
-<!--                                <h3>-->
-<!--                                    <a href="course.html">Design for the web with Abobe Illustrator and photoshop</a>-->
-<!--                                </h3>-->
-<!--                                <p class="admin mb-2">-->
-<!--                                    By <span class="theme-color f-500 d-inline-block">Cristofer Neilson</span>-->
-<!--                                </p>-->
-<!--                                <p>At torem ipsum conse icing elit, sed do eiusmod tempor iur onre dol ...</p>-->
-<!--                            </div>&lt;!&ndash; /course-content &ndash;&gt;-->
-
-<!--                            <div class="pc-info d-flex align-items-center justify-content-between pt-12 pb-15">-->
-<!--                                <p class="pc-student mb-0">-->
-<!--                                    <span><i class="fal fa-user"></i></span>-->
-<!--                                    3584-->
-<!--                                </p>-->
-<!--                                <div class="pc-price">-->
-<!--                                    <span class="primary-color f-500 d-inline-block">$199</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>&lt;!&ndash; /popular-course-content-wrapper &ndash;&gt;-->
-
-<!--                    </div>&lt;!&ndash; /single-course &ndash;&gt;-->
-<!--                </div>&lt;!&ndash; /col &ndash;&gt;-->
-
-<!--                <div class="col-xl-4 col-lg-4  col-md-6 col-sm-12 col-12">-->
-<!--                    <div class="single-popular-course zoom-img-hover">-->
-
-<!--                        <div class="position-relative">-->
-<!--                            <div class="p-course-img over-hidden position-relative">-->
-<!--                                <img class="w-100 img" src="/images/course/course6.jpg" alt="course-image01">-->
-
-<!--                                <div class="pc-category z-index1 position-absolute">-->
-<!--                                    <span class="text-white f-500 theme-bg d-inline-block py-1 px-3">Software</span>-->
-<!--                                </div>&lt;!&ndash; /pc-category  &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /p-course img &ndash;&gt;-->
-<!--                        </div>-->
-
-<!--                        <div class="popular-course-content-wrapper bg-white pt-25 pl-30 pr-30">-->
-<!--                            <div class="popular-course-review d-flex align-items-center mb-1">-->
-<!--                                <ul class="review-ratting mr-10">-->
-<!--                                    <li>-->
-<!--                                        <span><i class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i-->
-<!--                                            class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span> <span><i-->
-<!--                                            class="fa fa-star"></i></span>-->
-<!--                                    </li>-->
-<!--                                </ul>&lt;!&ndash; /review-ratting &ndash;&gt;-->
-<!--                                <div class="p-c-review">-->
-<!--                                    <p class="mb-0">243 Review</p>-->
-<!--                                </div>&lt;!&ndash; /p-c-review &ndash;&gt;-->
-<!--                            </div>&lt;!&ndash; /popular-course-review &ndash;&gt;-->
-
-<!--                            <div class="single-popular-course-content primary-border-bottom bg-white pb-6">-->
-<!--                                <h3>-->
-<!--                                    <a href="course.html">Design for the web with Abobe Illustrator and photoshop</a>-->
-<!--                                </h3>-->
-<!--                                <p class="admin mb-2">-->
-<!--                                    By <span class="theme-color f-500 d-inline-block">Cristofer Neilson</span>-->
-<!--                                </p>-->
-<!--                                <p>At torem ipsum conse icing elit, sed do eiusmod tempor iur onre dol ...</p>-->
-<!--                            </div>&lt;!&ndash; /course-content &ndash;&gt;-->
-
-<!--                            <div class="pc-info d-flex align-items-center justify-content-between pt-12 pb-15">-->
-<!--                                <p class="pc-student mb-0">-->
-<!--                                    <span><i class="fal fa-user"></i></span>-->
-<!--                                    3584-->
-<!--                                </p>-->
-<!--                                <div class="pc-price">-->
-<!--                                    <span class="primary-color f-500 d-inline-block">$199</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>&lt;!&ndash; /popular-course-content-wrapper &ndash;&gt;-->
-
-<!--                    </div>&lt;!&ndash; /single-course &ndash;&gt;-->
-<!--                </div>&lt;!&ndash; /col &ndash;&gt;-->
             </div><!-- /row -->
 
             <div class="row ">
@@ -450,58 +216,23 @@
 
                 <div class="row course-category home3-course-category mt-75 mb-35">
                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 aos-init aos-animate" data-aos="fade-up"
-                         data-aos-duration="1000">
+                         data-aos-duration="1000" th:each="trainingField : ${trainingFields}">
                         <div class="single-course-category position-relative over-hidden mb-30">
                             <div class="single-cc-img position-relative">
-                                <img class="w-100" src="/images/category/category1.png"
+                                <img class="w-100" th:src="@{'/api/v1/files/' + ${trainingField.imageUrl}}"
                                      alt="course-image01">
                             </div>
                             <div class="course-category-content text-center position-absolute transition5 z-index11">
                                 <h3>
-                                    <a class="text-white text-uppercase" href="course.html">Lập trình</a>
+                                    <a class="text-white text-uppercase">[[${trainingField.fieldName}]]</a>
                                 </h3>
                             </div><!-- /course-category-content -->
                             <div class="course-category-over-content position-absolute text-center pb-30 pt-10 pl-40 pr-40 z-index11">
-                                <span class="text-white mb-2 d-block text-uppercase">4 Khóa học</span>
+                                <span class="text-white mb-2 d-block text-uppercase">[[${trainingField.totalCourses}]] Khóa học</span>
                             </div>
                         </div><!-- /single-course-category -->
                     </div><!-- /col -->
 
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 aos-init aos-animate" data-aos="fade-up"
-                         data-aos-duration="1200">
-                        <div class="single-course-category position-relative over-hidden mb-30">
-                            <div class="single-cc-img position-relative">
-                                <img class="w-100" src="/images/category/category2.jpg"
-                                     alt="course-image02">
-                            </div>
-                            <div class="course-category-content text-center position-absolute transition5 z-index11">
-                                <h3>
-                                    <a class="text-white text-uppercase" href="course.html">Bảo mật</a>
-                                </h3>
-                            </div><!-- /course-category-content -->
-                            <div class="course-category-over-content position-absolute text-center pb-30 pt-10 pl-40 pr-40 z-index11">
-                                <span class="text-white mb-2 d-block text-uppercase">2 Khóa học</span>
-                            </div>
-                        </div><!-- /single-course-category -->
-                    </div><!-- /col -->
-
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 aos-init aos-animate" data-aos="fade-up"
-                         data-aos-duration="1500">
-                        <div class="single-course-category position-relative over-hidden mb-30">
-                            <div class="single-cc-img position-relative">
-                                <img class="w-100" src="/images/category/category3.jpg"
-                                     alt="course-image03">
-                            </div>
-                            <div class="course-category-content text-center position-absolute transition5 z-index11">
-                                <h3>
-                                    <a class="text-white text-uppercase" href="course.html">Đại cương</a>
-                                </h3>
-                            </div><!-- /course-category-content -->
-                            <div class="course-category-over-content position-absolute text-center pb-30 pt-10 pl-40 pr-40 z-index11">
-                                <span class="text-white mb-2 d-block text-uppercase">4 Khóa học</span>
-                            </div>
-                        </div><!-- /single-course-category -->
-                    </div><!-- /col -->
                 </div><!-- /row -->
             </div><!-- /container -->
         </div><!-- /course-category-wrapper -->
@@ -993,4 +724,5 @@
 
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>
+<script src="/js/course/index.js"></script>
 </html>

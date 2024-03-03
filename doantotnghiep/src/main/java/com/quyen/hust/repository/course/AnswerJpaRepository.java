@@ -10,5 +10,7 @@ public interface AnswerJpaRepository extends JpaRepository<Answer, Long> {
 
     List<Answer> findByQuizId(Long quizId);
 
+    Answer findByContent(String content);
+
     void deleteByQuizId(Long quizId);
 }

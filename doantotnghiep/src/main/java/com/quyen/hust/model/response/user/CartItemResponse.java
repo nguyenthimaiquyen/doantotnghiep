@@ -1,12 +1,12 @@
 package com.quyen.hust.model.response.user;
 
+import com.quyen.hust.model.response.course.CourseDataResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,7 +16,9 @@ public class CartItemResponse {
 
     private Long id;
 
-    private LocalDateTime createdAt;
+    private Long cartId;
 
-    private LocalDateTime modifiedAt;
+    private CourseDataResponse course;
+
+
 }

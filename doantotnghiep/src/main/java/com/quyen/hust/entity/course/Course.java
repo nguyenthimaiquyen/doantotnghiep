@@ -57,11 +57,11 @@ public class Course extends BaseEntity {
     @Column(name = "total_lessons")
     private Integer totalLessons;
 
-    @Column(name = "total_video_duration")
-    private Long totalVideoDuration;
+    @Column(name = "total_time")
+    private String totalTime;
 
-    @Column(name = "total_test")
-    private Long totalTest;
+    @Column(name = "total_quizzes")
+    private Integer totalQuizzes;
 
     @Column(name = "difficulty_level")
     @Enumerated(EnumType.STRING)

@@ -1,6 +1,8 @@
 let deleteCourseId = -1;
 let courseId = -1;
 let courseStatus = "";
+let chosenFile = [];
+const defaultImg = "/images/course/default.png";
 
 //thực hiện chức năng searchCourses bằng jquery
 async function searchCourses(pageSize, pageIndex, courseName) {
@@ -35,11 +37,11 @@ async function searchCourses(pageSize, pageIndex, courseName) {
                     <div class="row my-2">
                         <div class="col-xl-4  col-lg-4  col-md-4  col-sm-10 col-12">
                             <div class="course-search position-relative">
-                                <form id="search-course-form" onsubmit="return handleSearchCourseFormSubmit()">
+                                <form id="search-course-form" onsubmit="handleSearchCourseFormSubmit(event)">
                                     <input type="text" id="search-course" class="form-control pr-50" name="courseName"
                                             placeholder="Nhập tên khóa học">
                                     <span class="position-absolute d-inline-block secondary-color">
-                                        <i class="fa fa-search"></i></span>
+                                         <i class="fa fa-search"></i></span>
                                 </form>
                             </div>
                         </div>
@@ -93,10 +95,6 @@ async function searchCourses(pageSize, pageIndex, courseName) {
                             </div>
                         </div>
                     </div>`;
-
-    if (courseName) {
-        $('#search-course').val(courseName);
-    }
 
     courseTable = courseTable.replace("[totalElement]", courseData.totalElement);
     $('#course-management').empty();
@@ -294,6 +292,10 @@ async function searchCourses(pageSize, pageIndex, courseName) {
             searchCourses($("#course-page-size").val(), i, "");
         });
     }
+
+    if (courseName) {
+        $('#search-course').val(courseName);
+    }
 }
 
 $(document).ready(() => {
@@ -301,7 +303,7 @@ $(document).ready(() => {
     //thêm nội dung vào course modal nếu role là admin
     let adminData = `
                                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                    <div class="country-select mt-3">
+                                    <div class="country-select">
                                         <label for="teacher">Giảng viên</label>
                                         <select class="w-100" id="teacher" name="teacher">
 
@@ -309,7 +311,7 @@ $(document).ready(() => {
                                     </div>
                                 </div>
                                 <div  class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12" >
-                                    <div class="country-select mt-3">
+                                    <div class="country-select">
                                         <label for="discountCode">Mã giảm giá</label>
                                         <select class="w-100" id="discountCode" name="discountCode">
 
@@ -528,7 +530,7 @@ $(document).ready(() => {
         $('#course-modal #save-course-btn').prop("disabled", !allFieldsFilled);
     });
 
-    //hàm check các các trường bắt buộc đã nhập thông tin chưa
+    //hàm check các trường bắt buộc đã nhập thông tin chưa
     function checkAllFieldsFilled() {
         let allFields = $('#course-form #title, #course-form #courseFee');
         let allFieldsFilled = true;
@@ -540,6 +542,21 @@ $(document).ready(() => {
         });
         return allFieldsFilled;
     }
+
+    $('#course-img-show').click(() => {
+        $('#course-image').click();
+    });
+
+    $('#course-image').change(function (event) {
+        const tempFiles = event.target.files;
+        if (!tempFiles || tempFiles.length === 0) {
+            return;
+        }
+        chosenFile = tempFiles[0];
+        const imageBlob = new Blob([chosenFile], {type: chosenFile.type});
+        const imageUrl = URL.createObjectURL(imageBlob);
+        $('#course-img-show').attr("src", imageUrl);
+    });
 
     //create or update a course
     $('#save-course-btn').click(function (event) {
@@ -568,12 +585,21 @@ $(document).ready(() => {
         if (method == "PUT") {
             courseRequestBody["id"] = courseId;
         }
+        //tạo 1 blob từ dữ liệu JSONs
+        const jsonBlob = new Blob([JSON.stringify(courseRequestBody)], {
+            type: "application/json; charset=utf-8"
+        });
+        const formData = new FormData();
+        formData.append("image", chosenFile, chosenFile.name);
+        formData.append("courseRequest", jsonBlob);
         //call api lên backend
         $.ajax({
             url: "/api/v1/courses",
             type: method,
-            data: JSON.stringify(courseRequestBody),
-            contentType: "application/json; charset=utf-8",
+            data: formData,
+            // contentType: "application/json; charset=utf-8",
+            contentType: false, //NEEDED, DON'T OMIT THIS
+            processData: false, //NEEDED, DON'T OMIT THIS
             success: function (data) {
                 $.toast({
                     text: (method === "POST" ? "Tạo mới " : "Cập nhật ") + "thành công khóa học!",
@@ -634,6 +660,7 @@ $(document).ready(() => {
         $('#course-modal #save-course-btn').attr("course-id", "");
         $('#course-form').trigger("reset");
         $('#course-form input').removeClass("error");
+        $('#course-form select').removeClass("error");
         validator.resetForm();
     });
 
@@ -678,6 +705,8 @@ $(document).ready(() => {
 
 //mở modal tạo mới khóa học
 function createCourseBtn() {
+
+    $('#course-img-show').attr('src', defaultImg);
     $('#course-modal #save-course-btn').attr("action-type", "CREATE");
     $('#course-modal #save-course-btn').prop("disabled", true);
     $('#course-modal').modal('show');
@@ -710,6 +739,7 @@ function handleCourseStatus(id, courseStatus) {
 
 //lấy dữ liệu từ backend và đổ lên form để update khóa học
 async function updateCourse(id) {
+    $('#course-modal #save-course-btn').prop("disabled", false);
     //call api lên backend để lấy dữ liệu
     const updateCourseId = id;
     let course = null;
@@ -746,11 +776,12 @@ async function updateCourse(id) {
     $('#course-form #courseFee').val(course.courseFee);
     $('#course-form #courseFeeUnit').val(course.courseFeeUnit);
     $('#course-form #difficultyLevel').val(course.difficultyLevel);
-    $.each(course.trainingFields, function (index, trainingField) {
-        $('#course-form #trainingFields').push(trainingField);
+    $.each(course.trainingFieldsId, function (index, trainingFieldId) {
+        $('#course-form #trainingFields option[value="' + trainingFieldId + '"]').prop('selected', true);
     });
-    $('#course-form #teacher').val(course.teacherName);
-    $('#course-form #discountCode').val(course.discountCodeName ? course.discountCodeName : '');
+    $('#course-form #teacher').val(course?.teacherId);
+    $('#course-form #discountCode').val(course.discountCodeId ? course.discountCodeId : '');
+    $('#course-img-show').attr('src', '/api/v1/files/' + course.imageUrl);
 
     $('#course-modal #save-course-btn').attr('action-type', "UPDATE");
     $('#course-modal #save-course-btn').attr("course-id", updateCourseId);
@@ -817,7 +848,8 @@ function addSection(courseId) {
 }
 
 //xử lý gọi hàm searchCourses khi người dùng nhấn enter ở form search
-function handleSearchCourseFormSubmit() {
+function handleSearchCourseFormSubmit(event) {
+    event.preventDefault();
     let keyword = $('#search-course').val();
     searchCourses(6, 0, keyword);
     // return false;

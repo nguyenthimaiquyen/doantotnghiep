@@ -1,6 +1,6 @@
 <!-- Modal -->
-<div class="modal fade" id="trainingField-modal" tabindex="-1" role="dialog"
-     aria-hidden="true" th:fragment="trainingField-modal">
+<div class="modal fade" id="training-field-modal" tabindex="-1" role="dialog"
+     aria-hidden="true" th:fragment="training-field-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,20 +10,29 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="trainingField-form">
+                <form id="training-field-form">
                     <div class="form-group">
                         <label for="fieldName">Tên lĩnh vực<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="fieldName" placeholder="Nhập tên lĩnh vực" name="fieldName">
                     </div>
                     <div class="form-group">
                         <label for="description">Mô tả</label>
-                        <textarea type="text" class="form-control" id="description" placeholder="Nhập mô tả lĩnh vực"
-                               name="description"></textarea>
+                        <textarea type="text" class="form-control" id="description" placeholder="Nhập mô tả lĩnh vực" name="description"></textarea>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12">
+                            <div class="form-group">
+                                <label for="training-field-image">Ảnh lĩnh vực</label>
+                                <input type="file" id="training-field-image" class="form-control" hidden="hidden" accept="image/*">
+                                <br>
+                                <img src="" id="training-field-img-show" width="100px"/>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="save-trainingField-btn">Lưu</button>
+                <button type="button" class="btn btn-primary" id="save-training-field-btn">Lưu</button>
                 <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Đóng</button>
             </div>
         </div>

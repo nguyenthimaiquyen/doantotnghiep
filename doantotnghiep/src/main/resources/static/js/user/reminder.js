@@ -1,11 +1,12 @@
 $(document).ready(() => {
-
+    const userInfo = JSON.parse(localStorage.getItem('user-info'));
+    const userId = userInfo ? userInfo.id : null;
 
     let deleteReminderId = -1;
 
     function getCourses() {
         $.ajax({
-            url: "/api/v1/reminders/courses",
+            url: "/api/v1/reminders/" + userId + "/courses",
             type: 'GET',
             contentUnit: "application/json; charset=utf-8",
             success: function (data) {
@@ -134,7 +135,7 @@ $(document).ready(() => {
             },
             "startDate": {
                 required: "Ngày bắt đầu bắt buộc",
-                isNotPastDate: "Ngày bắt đầu không là ngày quá khứ"
+                futureDate: "Ngày bắt đầu là ngày tương lai"
             },
             "endDate": {
                 required: "Ngày kết thúc bắt buộc",
@@ -163,12 +164,9 @@ $(document).ready(() => {
             error: function (err) {
                 console.log(err)
                 $.toast({
-                    heading: 'Lỗi',
                     text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                     icon: 'error',
-                    showHideTransition: 'fade',
                     position: 'top-right',
-                    loader: false,
                     bgColor: '#FF0000'
                 })
             }
@@ -176,12 +174,9 @@ $(document).ready(() => {
 
         if (!reminder) {
             $.toast({
-                heading: 'Lỗi',
                 text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
                 icon: 'error',
-                showHideTransition: 'fade',
                 position: 'top-right',
-                loader: false,
                 bgColor: '#FF0000'
             })
             return;
@@ -219,6 +214,7 @@ $(document).ready(() => {
         for (let i = 0; i < formReminderData.length; i++) {
             reminderRequestBody[formReminderData[i].name] = formReminderData[i].value;
         }
+        reminderRequestBody["userId"] = userId;
         const method = actionType === "CREATE" ? "POST" : "PUT";
         if (method === "PUT") {
             reminderRequestBody["id"] = reminderId;
@@ -228,7 +224,7 @@ $(document).ready(() => {
             url: "/api/v1/reminders",
             type: method,
             data: JSON.stringify(reminderRequestBody),
-            contentUnit: "application/json; charset=utf-8",
+            contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $.toast({
                     text: (method === "POST" ? "Tạo mới " : "Cập nhật ") + "thành công sự kiện nhắc nhở học tập!",

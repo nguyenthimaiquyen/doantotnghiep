@@ -2,25 +2,25 @@ package com.quyen.hust.controller.user;
 
 import com.quyen.hust.exception.StudyReminderNotFoundException;
 import com.quyen.hust.model.request.user.StudyReminderRequest;
-import com.quyen.hust.model.response.user.StudyReminderResponse;
+import com.quyen.hust.service.course.CourseService;
 import com.quyen.hust.service.user.StudyReminderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/api/v1/reminders")
 @AllArgsConstructor
 public class StudyReminderController {
     private final StudyReminderService studyReminderService;
+    private final CourseService courseService;
 
-    @GetMapping("/courses")
-    public ResponseEntity<?> getCourses() {
-        return ResponseEntity.ok(studyReminderService.getCourses());
+    @GetMapping("/{userId}/courses")
+    public ResponseEntity<?> getCourses(@PathVariable Long userId) {
+        return ResponseEntity.ok(courseService.getEnrolledCourse(userId));
     }
 
     @GetMapping("/frequency")
@@ -34,13 +34,13 @@ public class StudyReminderController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createReminder(@RequestBody StudyReminderRequest request) {
+    public ResponseEntity<?> createReminder(@RequestBody @Valid StudyReminderRequest request) {
         studyReminderService.saveReminder(request);
         return ResponseEntity.ok(null);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateReminder(@RequestBody StudyReminderRequest request) {
+    public ResponseEntity<?> updateReminder(@RequestBody @Valid StudyReminderRequest request) {
         studyReminderService.saveReminder(request);
         return ResponseEntity.ok(null);
     }

@@ -1,10 +1,11 @@
 $(document).ready(() => {
-
+    let chosenFile = [];
+    const defaultImg = "/images/course/default.png";
 
     let deleteTrainingFieldId = -1;
 
     //validate
-    const validator = $('#trainingField-form').validate({
+    const validator = $('#training-field-form').validate({
         onfocusout: false,
         onkeyup: false,
         onclick: false,
@@ -29,13 +30,14 @@ $(document).ready(() => {
     });
 
     //open modal to create a new trainingField
-    $('.create-trainingField-btn').click(function () {
-        $('#trainingField-modal #save-trainingField-btn').attr("action-type", "CREATE");
-        $('#trainingField-modal').modal('show');
+    $('.create-training-field-btn').click(function () {
+        $('#training-field-img-show').attr('src', defaultImg);
+        $('#training-field-modal #save-training-field-btn').attr("action-type", "CREATE");
+        $('#training-field-modal').modal('show');
     });
-
+    
     //open modal to update a trainingField
-    $('.update-trainingField-btn').click(async function (event) {
+    $('.update-training-field-btn').click(async function (event) {
         //call api lên java để lấy dữ liệu
         const updateTrainingFieldId = parseInt($(event.currentTarget).attr("trainingField-id"));
         let trainingField = null;
@@ -70,25 +72,41 @@ $(document).ready(() => {
             return;
         }
         //đổ dữ liệu vào form
-        $('#trainingField-form #fieldName').val(trainingField.fieldName);
-        $('#trainingField-form #description').val(trainingField.description);
+        $('#training-field-form #fieldName').val(trainingField.fieldName);
+        $('#training-field-form #description').val(trainingField.description);
 
-        $('#trainingField-modal #save-trainingField-btn').attr('action-type', "UPDATE");
-        $('#trainingField-modal #save-trainingField-btn').attr("trainingField-id", updateTrainingFieldId);
-        $('#trainingField-modal').modal("show");
+        $('#training-field-modal #save-training-field-btn').attr('action-type', "UPDATE");
+        $('#training-field-modal #save-training-field-btn').attr("trainingField-id", updateTrainingFieldId);
+        $('#training-field-img-show').attr('src', '/api/v1/files/' + trainingField.imageUrl);
+        $('#training-field-modal').modal("show");
+    });
+
+    $('#training-field-img-show').click(() => {
+        $('#training-field-image').click();
+    });
+
+    $('#training-field-image').change(function (event) {
+        const tempFiles = event.target.files;
+        if (!tempFiles || tempFiles.length === 0) {
+            return;
+        }
+        chosenFile = tempFiles[0];
+        const imageBlob = new Blob([chosenFile], {type: chosenFile.type});
+        const imageUrl = URL.createObjectURL(imageBlob);
+        $('#training-field-img-show').attr("src", imageUrl);
     });
 
     //create or update a trainingField
-    $('#save-trainingField-btn').click(function (event) {
+    $('#save-training-field-btn').click(function (event) {
         //validate
-        const isValidForm = $('#trainingField-form').valid();
+        const isValidForm = $('#training-field-form').valid();
         if (!isValidForm) {
             return;
         }
         const actionType = $(event.currentTarget).attr("action-type");
         const trainingFieldId = $(event.currentTarget).attr("trainingField-id");
         //lấy dữ liệu từ form
-        const formTrainingFieldData = $('#trainingField-form').serializeArray();
+        const formTrainingFieldData = $('#training-field-form').serializeArray();
         if (!formTrainingFieldData || formTrainingFieldData.length === 0) {
             return;
         }
@@ -101,12 +119,21 @@ $(document).ready(() => {
         if (method === "PUT") {
             trainingFieldRequestBody["id"] = trainingFieldId;
         }
+        //tạo 1 blob từ dữ liệu JSONs
+        const jsonBlob = new Blob([JSON.stringify(trainingFieldRequestBody)], {
+            type: "application/json; charset=utf-8"
+        });
+        const formData = new FormData();
+        formData.append("image", chosenFile, chosenFile.name);
+        formData.append("trainingFieldRequest", jsonBlob);
         //call api lên backend
         $.ajax({
             url: "/api/v1/training-fields",
             type: method,
-            data: JSON.stringify(trainingFieldRequestBody),
-            contentType: "application/json; charset=utf-8",
+            data: formData,
+            // contentType: "application/json; charset=utf-8",
+            contentType: false, //NEEDED, DON'T OMIT THIS
+            processData: false, //NEEDED, DON'T OMIT THIS
             success: function (data) {
                 $.toast({
                     text: (method === "POST" ? "Tạo mới " : "Cập nhật ") + "thành công lĩnh vực đào tạo!",
@@ -127,8 +154,8 @@ $(document).ready(() => {
                 });
             }
         });
-        $("#trainingField-modal #save-trainingField-btn").attr("action-type", "");
-        $('#trainingField-modal #save-trainingField-btn').attr("trainingField-id", "");
+        $("#training-field-modal #save-training-field-btn").attr("action-type", "");
+        $('#training-field-modal #save-training-field-btn').attr("trainingField-id", "");
     });
 
     //show modal to delete a trainingField
@@ -164,11 +191,11 @@ $(document).ready(() => {
     });
 
     //reset form
-    $('#trainingField-modal').on('hidden.bs.modal', function () {
-        $("#trainingField-modal #save-trainingField-btn").attr("action-type", "");
-        $('#trainingField-modal #save-trainingField-btn').attr("trainingField-id", "");
-        $('#trainingField-form').trigger("reset");
-        $('#trainingField-form input').removeClass("error");
+    $('#training-field-modal').on('hidden.bs.modal', function () {
+        $("#training-field-modal #save-training-field-btn").attr("action-type", "");
+        $('#training-field-modal #save-training-field-btn').attr("trainingField-id", "");
+        $('#training-field-form').trigger("reset");
+        $('#training-field-form input').removeClass("error");
         validator.resetForm();
     });
 

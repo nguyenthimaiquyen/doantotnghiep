@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.quyen.hust.exception.LessonNotFoundException;
 import com.quyen.hust.exception.UnsupportedFormatException;
 import com.quyen.hust.model.request.course.LessonRequest;
+import com.quyen.hust.model.request.course.VideoDurationRequest;
 import com.quyen.hust.service.course.LessonService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,14 @@ public class LessonController {
         return ResponseEntity.ok(null);
     }
 
+    @PutMapping("/video-duration")
+    public ResponseEntity<?> updateVideoDuration(@RequestBody VideoDurationRequest videoDurationRequest) throws LessonNotFoundException {
+        lessonService.saveVideoDuration(videoDurationRequest);
+        return ResponseEntity.ok(null);
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteLesson(@PathVariable Long id) {
+    public ResponseEntity<?> deleteLesson(@PathVariable Long id) throws LessonNotFoundException {
         lessonService.deleteLesson(id);
         return ResponseEntity.ok(null);
     }

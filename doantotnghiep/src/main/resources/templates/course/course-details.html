@@ -21,7 +21,7 @@
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="page-content text-center mt-110">
                             <h1 class="text-white mb-15 text-capitalize" data-aos="fade-up" data-aos-duration="2000"
-                                data-aos-delay="150">our <span class="f-700">Khóa học</span></h1>
+                                data-aos-delay="150">Khóa học của chúng tôi</h1>
                         </div>
                     </div><!-- /col -->
                 </div><!-- /row -->
@@ -32,7 +32,7 @@
 
 
     <!-- ====== course-details-page-area-start================================ -->
-    <div class="course-details-page-area mt-165 pb-135">
+    <div class="course-details-page-area mt-105 pb-105">
         <div class="container">
             <div class="row">
                 <div class="col-xl-8  col-lg-8  col-md-12  col-sm-12 col-12">
@@ -40,51 +40,80 @@
 
                         <div class="course-details-content">
                             <div class="pc-category z-index1 mb-10">
-                                <span class="text-white f-500 theme-bg text-uppercase d-inline-block">Software</span>
+                                <span class="text-white f-500 theme-bg text-uppercase d-inline-block"
+                                      th:text="${course.trainingFields.get(0)}"></span>
                             </div><!-- /pc-category  -->
-                            <h2>
-                                <a href="course-details.html">Hands on design for the web with Abobe Illustrator and
-                                    Adobe Photoshop </a>
-                            </h2>
+                            <h2 th:text="${course.title}"></h2>
 
                             <div class="course-details-info bg-white mt-22 mb-25 pl-15 pr-15 pt-15 pb-15 d-flex align-items-md-center align-items-end justify-content-between">
                                 <div class="pc-info d-md-flex align-items-center">
                                     <div class="pc-info-left d-flex align-items-center mr-15">
-                                        <div class="pc-author-img mr-10">
-                                            <img class="rounded-circle" src="/images/course-page/course-list-author.jpg"
-                                                 alt="">
+                                        <div class="pc-author-img mr-10 testi-avatar rounded-circle">
+                                            <img class="rounded-circle" src="/images/avatar/avatar12.jpg"
+                                                 alt="author">
                                         </div><!-- /author-img -->
                                         <p class="admin mb-0">
                                             By<span
-                                                class="theme-color f-500 d-inline-block pl-2">Cristofer Neilson</span>
+                                                class="theme-color f-500 d-inline-block pl-2"
+                                                th:text="${course.teacherName}"></span>
                                         </p>
                                     </div>
 
                                     <div class="popular-course-review d-flex align-items-center">
                                         <ul class="review-ratting mr-10">
-                                            <li>
-                                                <span><i class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span><span><i
+                                            <li th:if="${course.rating == 5}">
+                                                <span><i class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
                                                     class="fa fa-star"></i></span><span><i
                                                     class="fa fa-star"></i></span><span><i
                                                     class="fa fa-star"></i></span>
                                             </li>
+                                            <li th:if="${course.rating == 4.5}">
+                                                <span><i class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="fas fa-star-half-alt"></i></span>
+                                            </li>
+                                            <li th:if="${course.rating == 4}">
+                                                <span><i class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="far fa-star"></i></span>
+                                            </li>
+                                            <li th:if="${course.rating == 3.5}">
+                                                <span><i class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="fas fa-star-half-alt"></i></span><span><i
+                                                    class="far fa-star"></i></span>
+                                            </li>
+                                            <li th:if="${course.rating == 3}">
+                                                <span><i class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="fa fa-star"></i></span><span><i
+                                                    class="far fa-star"></i></span><span><i
+                                                    class="far fa-star"></i></span>
+                                            </li>
                                         </ul><!-- /review-ratting -->
-                                        <div class="p-c-review">
-                                            <p class="mb-0">243 Review</p>
-                                        </div><!-- /p-c-review -->
                                         <p class="pc-student mb-0 ml-15">
-                                            <span><i class="fal fa-user"></i></span>
-                                            3584
+                                            <span><i class="fal fa-user"></i> [[${course.learnerCount}]]</span>
                                         </p>
                                     </div><!-- /popular-course-review -->
                                 </div>
 
                                 <div class="pc-info-right d-flex align-items-center justify-content-between justify-content-sm-end">
                                     <div class="pc-price mr-15">
-                                        <span class="primary-color f-500 d-inline-block">$199</span>
+                                        <span class="primary-color f-500 d-inline-block"
+                                              th:text="${#numbers.formatDecimal(course.courseFee, 0, 'COMMA', 0, 'POINT')}"></span>
+                                        <span class="primary-color f-500 d-inline-block"
+                                              th:text="${course.courseFeeUnit}"></span>
                                     </div>
                                     <div class="my-btn d-none d-sm-block">
-                                        <a href="../account/login.html" class="btn theme-bg">Mua ngay</a>
+                                        <a class="btn theme-bg cursor-pointer add-to-cart"
+                                           th:attr="course-id=${course.id}, course-fee=${course.courseFee}">Tham gia học
+                                            ngay</a>
                                     </div>
                                 </div>
                             </div>
@@ -92,23 +121,15 @@
                         </div><!-- /popular-course-content-wrapper -->
 
                         <div class="course-details-img mb-45 mr-0">
-                            <img class="w-100 img" src="/images/course-details/course-details-img1.jpg"
+                            <img class="w-100 img" th:src="@{'/api/v1/files/' + ${course.imageUrl}}"
                                  alt="course-image01">
                         </div><!-- /p-course img -->
 
                         <div class="row course-describe-wrapper">
                             <div class="col-xl-8  col-lg-7  col-md-8  col-sm- col- pr-xl-5 pr-lg-3 pr-md-4">
                                 <div class="course-description-left">
-                                    <h3>Description</h3>
-                                    <p>Lonse ctetur adipisicing elit sed do eiusmo onsectetur adipisicing elit sed do
-                                        eiusmo Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                        tempor incidi dunt ut labore et dolore magna aliqua.
-                                    </p>
-                                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullam co laboris nisi ut
-                                        aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occa
-                                        ecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                                        est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptate</p>
+                                    <h3>Mô tả</h3>
+                                    <p th:utext="${course.description}"></p>
                                 </div><!-- /course-details-left -->
                             </div><!-- /col -->
 
@@ -117,27 +138,26 @@
                                     <h4 class="text-white text-capitalize mb-15">Chi tiết khóa học</h4>
                                     <ul>
                                         <li class="text-white position-relative d-flex justify-content-between">
-                                            <span><span class="cd-icon"><i class="fal fa-copy"></i></span>Tổng số bài học</span>
-                                            <span>112</span>
+                                            <span><span class="cd-icon"><i class="fal fa-copy"></i></span>Tổng số video bài học</span>
+                                            <span>[[${course.totalLessons}]]</span>
+                                        </li>
+                                        <li class="text-white position-relative d-flex justify-content-between">
+                                            <span><span class="cd-icon"><i class="fal fa-copy"></i></span>Tổng số bài quiz</span>
+                                            <span>[[${course.totalQuizzes}]]</span>
                                         </li>
                                         <li class="text-white position-relative d-flex justify-content-between">
                                             <span><span class="cd-icon"><i
-                                                    class="fal fa-copy"></i></span>Thời lượng video</span>
-                                            <span>05h 50m</span>
+                                                    class="fal fa-copy"></i></span>Thời lượng</span>
+                                            <span>[[${course.totalTime}]]</span>
                                         </li>
                                         <li class="text-white position-relative d-flex justify-content-between">
                                             <span><span class="cd-icon"><i class="fal fa-copy"></i></span>Cấp độ</span>
-                                            <span>Sơ cấp</span>
-                                        </li>
-                                        <li class="text-white position-relative d-flex justify-content-between">
-                                            <span><span class="cd-icon"><i
-                                                    class="fal fa-copy"></i></span>Ngày phát hành</span>
-                                            <span>Nov 27, 2023</span>
+                                            <span>[[${course.difficultyLevel.name}]]</span>
                                         </li>
                                         <li class="text-white position-relative d-flex justify-content-between">
                                             <span><span class="cd-icon"><i
                                                     class="fal fa-copy"></i></span>Ngôn ngữ</span>
-                                            <span>English</span>
+                                            <span>Tiếng Việt</span>
                                         </li>
                                     </ul>
                                 </div><!-- /course-details-left -->
@@ -145,47 +165,18 @@
                         </div><!-- /course-describe-wrapper -->
 
                         <div class="row course-describe-wrapper2 mt-25">
-                            <div class="col-xl-12  col-lg-  col-md-  col-sm- col-">
+                            <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
                                 <div class="course-description-left">
                                     <h3 class="mb-20">Bạn sẽ học được gì?</h3>
-                                    <p>Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                        occa ecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-                                        id est laborum.</p>
+                                    <p>Sau khi hoàn tất khóa học, học viên sẽ có khả năng:</p>
                                 </div><!-- /course-details-left -->
                             </div><!-- /col -->
 
-                            <div class="col-xl-12  col-lg-  col-md-  col-sm- col-">
+                            <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
                                 <div class="course-description-list d-sm-flex mt-10">
                                     <ul class="pr-lg-5 pr-md-3">
                                         <li class="d-flex secondary-color">
-                                            <span class="cd-icon primary-color pr-10"><i class="fas fa-angle-right"></i></span>
-                                            <p>Dolore ehenderit in voluptate velit es ores sint occa ecat cupidatat</p>
-                                        </li>
-                                        <li class="d-flex">
-                                            <span class="cd-icon primary-color pr-10"><i class="fas fa-angle-right"></i></span>
-                                            <p>Jodi kokhon vul hoye jay tuite velit es ores oporadh nio na eigan
-                                                jodi</p>
-                                        </li>
-                                        <li class="d-flex">
-                                            <span class="cd-icon primary-color pr-10"><i class="fas fa-angle-right"></i></span>
-                                            <p>Sei raginite sur hoye baje toma velit es ores tomgar cca ecat cup
-                                                idatat </p>
-                                        </li>
-                                    </ul>
-                                    <ul>
-                                        <li class="d-flex secondary-color">
-                                            <span class="cd-icon primary-color pr-10"><i class="fas fa-angle-right"></i></span>
-                                            <p>Dolore ehenderit in voluptate velit es ores sint occa ecat cupidatat</p>
-                                        </li>
-                                        <li class="d-flex">
-                                            <span class="cd-icon primary-color pr-10"><i class="fas fa-angle-right"></i></span>
-                                            <p>Jodi kokhon vul hoye jay tuite velit es ores oporadh nio na eigan
-                                                jodi</p>
-                                        </li>
-                                        <li class="d-flex">
-                                            <span class="cd-icon primary-color pr-10"><i class="fas fa-angle-right"></i></span>
-                                            <p>Sei raginite sur hoye baje toma velit</p>
+                                            <p th:utext="${course.learningObjectives}"></p>
                                         </li>
                                     </ul>
                                 </div><!-- /course-details-left -->
@@ -195,268 +186,54 @@
                         <div class="faq-wrapper course-Curriculam-accordion mt-22">
                             <div class="cd-faq-title d-flex align-items-sm-center justify-content-between">
                                 <h3>Chương trình giảng dạy</h3>
-                                <span>23 Lessons <span class="pl-10">04.55.23</span></span>
+                                <span>[[${course.totalLessons + course.totalQuizzes}]] Bài học <span class="pl-10">[[${course.totalTime}]]</span></span>
                             </div><!-- /cd-faq-title -->
 
                             <div class="accordion mt-10" id="accordion-tab-1">
-                                <div class="card border-0 mb-2">
-                                    <div class="card-header border-bottom-0 p-0" id="accordion-tab-1-heading-1">
+                                <div class="card border-0 mb-2" th:each="section, sectionIndex : ${sections}">
+                                    <div class="card-header border-bottom-0 p-0"
+                                         th:id="'accordion-tab-1-heading-' + ${sectionIndex.index + 1}">
                                         <h6 class="mb-0">
-                                            <a href="#"
-                                               class="btn btn-link main-color f-500 d-block text-left rounded-0 position-relative d-flex align-items-center justify-content-between"
-                                               data-toggle="collapse" data-target="#accordion-tab-1-content-1"
-                                               aria-expanded="false" aria-controls="accordion-tab-1-content-1">Giới thiệu
-                                                <span>4 Bài học <span class="pl-10">55.23</span></span>
+                                            <a class="btn btn-link main-color f-500 d-block text-left rounded-0 position-relative d-flex
+                                            align-items-center justify-content-between cursor-pointer"
+                                               data-toggle="collapse"
+                                               th:data-target="'#accordion-tab-1-content-' + ${sectionIndex.index + 1}"
+                                               aria-expanded="false"
+                                               th:aria-controls="'accordion-tab-1-content-' + ${sectionIndex.index + 1}">
+                                                [[${section.title}]]
+                                                <span>[[${section.totalLessons + section.totalQuizzes}]] Bài học <span
+                                                        class="pl-10">[[${section.totalTime}]]</span></span>
                                             </a>
                                         </h6>
                                     </div>
-                                    <div class="collapse show" id="accordion-tab-1-content-1"
-                                         aria-labelledby="accordion-tab-1-heading-1" data-parent="#accordion-tab-1">
+                                    <div class="collapse show"
+                                         th:id="'accordion-tab-1-content-' + ${sectionIndex.index + 1}"
+                                         th:aria-labelledby="'accordion-tab-1-heading-' + ${sectionIndex.index + 1}"
+                                         data-parent="#accordion-tab-1">
                                         <div class="card-body">
                                             <ul>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Preview</span><span class="pl-15">55.23</span>
+                                                <li class="d-flex align-items-center justify-content-between"
+                                                    th:each="lesson : ${section.lessons}">
+                                                    <p class="mb-0 text-dark"
+                                                       th:attr="course-id=${course.id}, lesson-id=${lesson.id}"><span
+                                                            class="ab-icon primary-color pr-1"><i
+                                                            class="fas fa-play"></i></span>[[${lesson.title}]]</p>
+                                                    <p class="mb-0 text-right text-muted small">
+                                                        <a class="mr-3 cursor-pointer preview-link"
+                                                           th:if="${lesson.preview and lesson.embeddedUrl != null and lesson.embeddedUrl != ''}"
+                                                           th:attr="data-fancybox='', data-type='iframe', data-src=${lesson.embeddedUrl}">
+                                                            <span class="theme-color">Preview</span>
+                                                        </a><span class="pl-15">[[${lesson.videoDuration}]]</span>
                                                     </p>
                                                 </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="far fa-file-archive"></i></span> Duis aute irure
-                                                        dolor in reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Download</span><span class="pl-15">3 pages</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
-                                                    </p>
-                                                </li>
-                                            </ul>
-                                        </div><!-- /card-body -->
-                                    </div>
-                                </div>
-                                <div class="card border-0 mb-2">
-                                    <div class="card-header border-bottom-0 p-0" id="accordion-tab-1-heading-2">
-                                        <h6 class="mb-0">
-                                            <a href="#"
-                                               class="btn btn-link main-color f-500 d-block text-left rounded-0 position-relative d-flex align-items-center justify-content-between collapsed"
-                                               data-toggle="collapse" data-target="#accordion-tab-1-content-2"
-                                               aria-expanded="false" aria-controls="accordion-tab-1-content-2"> Getting
-                                                started with laravel <span>4 Lessons <span
-                                                        class="pl-10">55.23</span></span></a>
-                                        </h6>
-                                    </div>
-                                    <div class="collapse" id="accordion-tab-1-content-2"
-                                         aria-labelledby="accordion-tab-1-heading-2" data-parent="#accordion-tab-1">
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Preview</span><span class="pl-15">55.23</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="far fa-file-archive"></i></span> Duis aute irure
-                                                        dolor in reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Download</span><span class="pl-15">3 pages</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
-                                                    </p>
-                                                </li>
-                                            </ul>
-                                        </div><!-- /card-body -->
-                                    </div>
-                                </div>
-                                <div class="card border-0 mb-2">
-                                    <div class="card-header border-bottom-0 p-0" id="accordion-tab-1-heading-3">
-                                        <h6 class="mb-0">
-                                            <a href="#"
-                                               class="btn btn-link main-color f-500 d-block text-left rounded-0 position-relative d-flex align-items-center justify-content-between collapsed"
-                                               data-toggle="collapse" data-target="#accordion-tab-1-content-3"
-                                               aria-expanded="false" aria-controls="accordion-tab-1-content-3">Laravel
-                                                installation <span>21 Lessons <span
-                                                        class="pl-10">55.23</span></span></a>
-                                        </h6>
-                                    </div>
-                                    <div class="collapse" id="accordion-tab-1-content-3"
-                                         aria-labelledby="accordion-tab-1-heading-3" data-parent="#accordion-tab-1">
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Preview</span><span class="pl-15">55.23</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="far fa-file-archive"></i></span> Duis aute irure
-                                                        dolor in reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Download</span><span class="pl-15">3 pages</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
-                                                    </p>
-                                                </li>
-                                            </ul>
-                                        </div><!-- /card-body -->
-                                    </div>
-                                </div>
-                                <div class="card border-0 mb-2">
-                                    <div class="card-header border-bottom-0 p-0" id="accordion-tab-1-heading-4">
-                                        <h6 class="mb-0">
-                                            <a href="#"
-                                               class="btn btn-link main-color f-500 d-block text-left rounded-0 position-relative d-flex align-items-center justify-content-between collapsed"
-                                               data-toggle="collapse" data-target="#accordion-tab-1-content-4"
-                                               aria-expanded="false" aria-controls="accordion-tab-1-content-4">Laravel
-                                                Basics<span>23 Lessons <span class="pl-10">55.23</span></span></a>
-                                        </h6>
-                                    </div>
-                                    <div class="collapse" id="accordion-tab-1-content-4"
-                                         aria-labelledby="accordion-tab-1-heading-4" data-parent="#accordion-tab-1">
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Preview</span><span class="pl-15">55.23</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="far fa-file-archive"></i></span> Duis aute irure
-                                                        dolor in reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Download</span><span class="pl-15">3 pages</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
-                                                    </p>
-                                                </li>
-                                            </ul>
-                                        </div><!-- /card-body -->
-                                    </div>
-                                </div>
-                                <div class="card border-0 mb-2">
-                                    <div class="card-header border-bottom-0 p-0" id="accordion-tab-1-heading-5">
-                                        <h6 class="mb-0">
-                                            <a href="#"
-                                               class="btn btn-link main-color f-500 d-block text-left rounded-0 position-relative d-flex align-items-center justify-content-between collapsed"
-                                               data-toggle="collapse" data-target="#accordion-tab-1-content-5"
-                                               aria-expanded="false" aria-controls="accordion-tab-1-content-5">Laravel
-                                                Advanced and application<span>42 Lessons <span
-                                                        class="pl-10">55.23</span></span></a>
-                                        </h6>
-                                    </div>
-                                    <div class="collapse" id="accordion-tab-1-content-5"
-                                         aria-labelledby="accordion-tab-1-heading-5" data-parent="#accordion-tab-1">
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Preview</span><span class="pl-15">55.23</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="far fa-file-archive"></i></span> Duis aute irure
-                                                        dolor in reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="theme-color">Download</span><span class="pl-15">3 pages</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
-                                                    </p>
-                                                </li>
-                                                <li class="d-flex align-items-center justify-content-between">
-                                                    <p class="mb-0"><span class="ab-icon primary-color pr-1"><i
-                                                            class="fas fa-play"></i></span> Duis aute irure dolor in
-                                                        reprehenderit in volu</p>
-                                                    <p class="mb-0 text-right">
-                                                        <span class="ab-icon secondary-color3"><i
-                                                                class="fas fa-lock"></i></span> <span class="pl-10">05.14</span>
+                                                <li class="d-flex align-items-center justify-content-between"
+                                                    th:each="quiz : ${section.quizzes}">
+                                                    <p class="mb-0 text-dark"
+                                                       th:attr="course-id=${course.id}, quiz-id=${quiz.id}"><span
+                                                            class="ab-icon primary-color pr-1"><i
+                                                            class="far fa-file-archive"></i></span>[[${quiz.title}]]</p>
+                                                    <p class="mb-0 text-right text-muted small">
+                                                        <span class="pl-15">[[${quiz.timeCount}]]</span>
                                                     </p>
                                                 </li>
                                             </ul>
@@ -467,22 +244,53 @@
                         </div><!-- course-Curriculam-accordion -->
 
                         <div class="course-details-ratting-area mt-65">
-                            <h3 class="mb-20">Rating</h3>
+                            <h3 class="mb-20">Xếp hạng</h3>
                             <div class="course-details-ratting-wrapper pt-25 pb-25 pl-40 pr-35">
                                 <div class="row align-items-center">
                                     <div class="col-xl-3  col-lg-3  col-md-3  col-sm-12 col-12 d-flex align-items-lg-start justify-content-center justify-content-md-start border-right">
                                         <div class="cd-ratting-left text-center mb-3 mb-md-0">
-                                            <h6 class="text-uppercase f-600 mb-6">Avarage RAting</h6>
-                                            <span class="cd-ratting-number f-500 line-height-1 d-block primary-color">4.0</span>
+                                            <h6 class="text-uppercase f-600 mb-6">Xếp hạng trung bình</h6>
+                                            <span class="cd-ratting-number f-500 line-height-1 d-block primary-color">[[${course.rating}]]</span>
                                             <ul class="d-flex justify-content-center">
-                                                <li><span class="r-star-color"><i class="fas fa-star"></i></span></li>
-                                                <li><span class="r-star-color"><i class="fas fa-star"></i></span></li>
-                                                <li><span class="r-star-color"><i class="fas fa-star"></i></span></li>
-                                                <li><span class="r-star-color"><i class="fas fa-star"></i></span></li>
-                                                <li><span class="r-star-light-color"><i class="fas fa-star"></i></span>
+                                                <li th:if="${course.rating == 5}"><span class="r-star-color"><i
+                                                        class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                </li>
+                                                <li th:if="${course.rating == 4.5}"><span class="r-star-color"><i
+                                                        class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i
+                                                            class="fas fa-star-half-alt"></i></span>
+                                                </li>
+                                                <li th:if="${course.rating == 4}"><span class="r-star-color"><i
+                                                        class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-white-color"><i class="fas fa-star"></i></span>
+                                                </li>
+                                                <li th:if="${course.rating == 3.5}"><span class="r-star-color"><i
+                                                        class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i
+                                                            class="fas fa-star-half-alt"></i></span>
+                                                    <span class="r-star-white-color"><i class="fas fa-star"></i></span>
+                                                </li>
+                                                <li th:if="${course.rating == 3}"><span class="r-star-color"><i
+                                                        class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-white-color"><i class="fas fa-star"></i></span>
+                                                    <span class="r-star-white-color"><i class="fas fa-star"></i></span>
                                                 </li>
                                             </ul>
-                                            <p class="mb-0">223 Vote</p>
+                                            <p class="mb-0">223 bình chọn</p>
                                         </div><!-- /cd-ratting-left -->
                                     </div><!-- /col -->
                                     <div class="col-xl-9  col-lg-9  col-md-9  col-sm-12 col-12">
@@ -600,13 +408,56 @@
                         </div><!-- /course-details-ratting-area -->
 
                         <div class="review-comments-area mt-65">
-                            <h3 class="mb-20">Review</h3>
+                            <h3 class="mb-20">Bình luận</h3>
                             <div class="review-comments-are mt-20">
                                 <div class="row">
                                     <div class="col-xl-2  col-lg-2  col-md-2  col-sm-2 col-4 mt-1">
                                         <div class="client-avatar mb-30">
-                                            <img class="avatar-img rounded-circle"
-                                                 src="/images/course-details/course-page-ratting-author-img1.jpg"
+                                            <img class="rounded-circle" src="/images/avatar/avatar1.jpg"
+                                                 alt="image">
+                                        </div><!-- /testi-avatar -->
+                                    </div><!-- /col -->
+                                    <div class="col-xl-10  col-lg-10  col-md-10  col-sm-10 col-12 pl-lg-2">
+                                        <div class="review-text mb-45">
+                                            <div class="review-head d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h5 class="mb-1">Tom Anderson</h5>
+                                                    <ul class="d-flex mr-2">
+                                                        <li>
+                                                            <span class="secondary-color3">- 2 days ago</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="d-flex align-items-center">
+                                                    <ul class="d-flex justify-content-center">
+                                                        <li><span class="r-star-color"><i
+                                                                class="fas fa-star"></i></span></li>
+                                                        <li><span class="r-star-color"><i
+                                                                class="fas fa-star"></i></span></li>
+                                                        <li><span class="r-star-color"><i
+                                                                class="fas fa-star"></i></span></li>
+                                                        <li><span class="r-star-color"><i
+                                                                class="fas fa-star"></i></span></li>
+                                                        <li><span class="r-star-light-color"><i class="fas fa-star"></i></span>
+                                                        </li>
+                                                    </ul>
+                                                    <span class="secondary-color f-500 pl-10 d-block primary-color">4.0</span>
+                                                </div>
+                                            </div><!-- /review-head -->
+                                            <p class="dc-text1 gray-color2 mb-2 mt-15">
+                                                Lorem ipsum dolor sit amet, consect in culpa qui officia etur
+                                                adipisicing elit, lor sit amet, consectetur adipisicing elit, sed do
+                                                eiusmod tempor incididunt uoet lab ore et dolore magna aliqua. Lorem
+                                                ipsum dolor sit amet, consectetur adipisi cin g elit, sed do eiusmod
+                                                tempor incididunt.
+                                            </p>
+                                        </div>
+                                    </div><!-- /col -->
+                                </div><!-- /row -->
+                                <div class="row">
+                                    <div class="col-xl-2  col-lg-2  col-md-2  col-sm-2 col-4 mt-1">
+                                        <div class="client-avatar mb-30">
+                                            <img class="rounded-circle" src="/images/avatar/avatar2.jpg"
                                                  alt="image">
                                         </div>
                                     </div><!-- /col -->
@@ -650,53 +501,7 @@
                                 <div class="row">
                                     <div class="col-xl-2  col-lg-2  col-md-2  col-sm-2 col-4 mt-1">
                                         <div class="client-avatar mb-30">
-                                            <img class="avatar-img rounded-circle"
-                                                 src="/images/course-details/course-page-ratting-author-img2.jpg"
-                                                 alt="image">
-                                        </div>
-                                    </div><!-- /col -->
-                                    <div class="col-xl-10  col-lg-10  col-md-10  col-sm-10 col-12 pl-lg-2">
-                                        <div class="review-text mb-45">
-                                            <div class="review-head d-flex justify-content-between align-items-center">
-                                                <div>
-                                                    <h5 class="mb-1">Tom Anderson</h5>
-                                                    <ul class="d-flex mr-2">
-                                                        <li>
-                                                            <span class="secondary-color3">- 2 days ago</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <ul class="d-flex justify-content-center">
-                                                        <li><span class="r-star-color"><i
-                                                                class="fas fa-star"></i></span></li>
-                                                        <li><span class="r-star-color"><i
-                                                                class="fas fa-star"></i></span></li>
-                                                        <li><span class="r-star-color"><i
-                                                                class="fas fa-star"></i></span></li>
-                                                        <li><span class="r-star-color"><i
-                                                                class="fas fa-star"></i></span></li>
-                                                        <li><span class="r-star-light-color"><i class="fas fa-star"></i></span>
-                                                        </li>
-                                                    </ul>
-                                                    <span class="secondary-color f-500 pl-10 d-block primary-color">4.0</span>
-                                                </div>
-                                            </div><!-- /review-head -->
-                                            <p class="dc-text1 gray-color2 mb-2 mt-15">
-                                                Lorem ipsum dolor sit amet, consect in culpa qui officia etur
-                                                adipisicing elit, lor sit amet, consectetur adipisicing elit, sed do
-                                                eiusmod tempor incididunt uoet lab ore et dolore magna aliqua. Lorem
-                                                ipsum dolor sit amet, consectetur adipisi cin g elit, sed do eiusmod
-                                                tempor incididunt.
-                                            </p>
-                                        </div>
-                                    </div><!-- /col -->
-                                </div><!-- /row -->
-                                <div class="row">
-                                    <div class="col-xl-2  col-lg-2  col-md-2  col-sm-2 col-4 mt-1">
-                                        <div class="client-avatar mb-30">
-                                            <img class="avatar-img rounded-circle"
-                                                 src="/images/course-details/course-page-ratting-author-img3.jpg"
+                                            <img class="rounded-circle" src="/images/avatar/avatar4.jpg"
                                                  alt="image">
                                         </div>
                                     </div><!-- /col -->
@@ -741,7 +546,7 @@
                                 <div class="cd-btn d-block text-center">
                                     <a href="course-details.html"
                                        class="main-color d-inline-block f-500 text-capitalize"><span class="pr-2"><i
-                                            class="fa fa-plus"></i></span>load more</a>
+                                            class="fa fa-plus"></i></span>xem thêm</a>
                                 </div>
                             </div>
                         </div><!-- /review-comments-area -->
@@ -753,25 +558,24 @@
                     <div class="course-details-sidebar-wrapper mb-45 pl-xl-4">
                         <div class="row justify-content-center">
                             <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
-                                <div class="course-wish">
-                                    <a href="../cart/cart.html"
-                                       class="d-block main-color text-center bg-white w-100"><span
-                                            class="primary-color pr-2"><i class="fas fa-heart"></i></span>Add to
-                                        wishlist</a>
+                                <div class="course-wish" th:if="${course.courseFee != 0}">
+                                    <a class="d-block main-color text-center bg-white w-100 cursor-pointer add-to-wishlist"
+                                       th:attr="course-id=${course.id}"><span class="primary-color pr-2"><i
+                                            class="fas fa-heart"></i></span>Thêm vào DS mong muốn</a>
                                 </div>
                             </div><!-- /col -->
 
                             <div class="col-xl-12 col-lg-12  col-md-12  col-sm-12 col-12">
                                 <div class="sidebar-widget cd-sidebar bg-white about-instructor mt-45">
                                     <h4 class="sidebar-instructor-title sidebar-title mb-35 text-white text-center">
-                                        About Instructor</h4>
+                                        Về giảng viên</h4>
                                     <div class="about-instructor-wrapper pl-30 pr-30 pb-10">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div class="ai-img">
-                                                <img src="/images/course-details/cp-about-instructor.jpg" alt="">
+                                            <div class="ai-img w-50">
+                                                <img src="/images/avatar/avatar12.jpg" alt="instructor">
                                             </div>
                                             <ul class="text-right mt--10">
-                                                <li class="mb-1">course :
+                                                <li class="mb-1">Khóa học :
                                                     <span class="f-500">32</span>
                                                 </li>
                                                 <li class="mb-1">
@@ -791,33 +595,29 @@
                                                     </div>
                                                     <span class="f-500 pl-1">4.0</span>
                                                 </li>
-                                                <li><span><i class="fal fa-user-friends"></i></span>
-                                                    <span class="f-500 pl-1">232</span>
-                                                </li>
                                             </ul>
                                         </div>
 
                                         <div class="about-instructor-content mt-20">
-                                            <h5 class="mb-0">Jessica Simpson</h5>
+                                            <h5 class="mb-0">[[${course.teacherName}]]</h5>
                                             <span class="secondary-color">Web Developer</span>
                                             <ul class="social-link d-block mb md-3 mb-2">
                                                 <li class="d-inline-block">
-                                                    <a class="facebook-color pr-15 d-inline-block transition-3"
-                                                       href="#"><i class="fab fa-facebook-f"></i></a>
+                                                    <a class="facebook-color pr-15 d-inline-block transition-3 cursor-pointer"><i
+                                                            class="fab fa-facebook-f"></i></a>
                                                 </li>
                                                 <li class="d-inline-block">
-                                                    <a class="twitter-color pr-15 d-inline-block transition-3" href="#"><i
+                                                    <a class="twitter-color pr-15 d-inline-block transition-3 cursor-pointer"><i
                                                             class="fab fa-twitter"></i></a>
                                                 </li>
                                                 <li class="d-inline-block">
-                                                    <a class="google-plus-color pr-15 d-inline-block transition-3"
-                                                       href="#"><i class="fab fa-google-plus-g"></i></a>
+                                                    <a class="google-plus-color pr-15 d-inline-block transition-3 cursor-pointer"><i
+                                                            class="fab fa-google-plus-g"></i></a>
                                                 </li>
                                             </ul>
-                                            <p class="pb-md-1">Ut enim ad minim veniam, quis nostrud exercitation ullam
-                                                coleso laboris nisi ut aliquip ex ea comm odo consequat.</p>
-                                            <p>Duis aute irure dolor in reprehe nes derit in voluptate velit esse cillum
-                                                dolore eu fugiat nulla pariatur.</p>
+                                            <p class="pb-md-1">- 7 năm kinh nghiệm lập trình web</p>
+                                            <p>- Giảng viên Web Frontend: HTML CSS JS, WordPress, ReactJS, Vue.js,
+                                                Angular, an ninh mạng, ... </p>
                                         </div>
                                     </div><!-- /about-instructor-wrapper -->
                                 </div><!-- /course -->
@@ -826,13 +626,13 @@
                             <div class="col-xl-12 col-lg-12  col-md-6  col-sm-12 col-12">
                                 <div class="sidebar-widget cd-sidebar bg-white about-instructor mt-45">
                                     <h4 class="sidebar-instructor-title sidebar-title mb-35 text-white text-center">
-                                        Course By Instructor</h4>
+                                        Khóa học bởi giảng viên</h4>
                                     <div class="about-instructor-wrapper pl-30 pr-30 pb-30">
                                         <div class="recent-course-menu d-flex justify-content-between pb-22">
-                                            <div class="rbm-img pr-15">
+                                            <div class="rbm-img pr-2 pr-md-2" style="width: fit-content;">
                                                 <a href="../news-details.html" class="d-inline-block">
-                                                    <img class="w-100 h-100"
-                                                         src="/images/course-details/cd-course-img1.jpg" alt="image01">
+                                                    <img class="img-fluid"
+                                                         src="/images/course/course4.jpg" alt="image06">
                                                 </a>
                                             </div>
                                             <div class="rbm-text">
@@ -852,10 +652,10 @@
                                         </div><!-- /recent-blog-menu -->
 
                                         <div class="recent-blog-menu d-flex justify-content-between pb-22">
-                                            <div class="rbm-img pr-15">
+                                            <div class="rbm-img pr-2 pr-md-2" style="width: fit-content;">
                                                 <a href="../news-details.html" class="d-inline-block">
-                                                    <img class="w-100 h-100"
-                                                         src="/images/course-details/cd-course-img2.jpg" alt="image02">
+                                                    <img class="img-fluid"
+                                                         src="/images/course/course5.png" alt="image06">
                                                 </a>
                                             </div>
                                             <div class="rbm-text">
@@ -875,10 +675,10 @@
                                         </div><!-- /recent-blog-menu -->
 
                                         <div class="recent-blog-menu d-flex justify-content-between">
-                                            <div class="rbm-img pr-15">
+                                            <div class="rbm-img pr-2 pr-md-2" style="width: fit-content;">
                                                 <a href="../news-details.html" class="d-inline-block">
-                                                    <img class="w-100 h-100"
-                                                         src="/images/course-details/cd-course-img3.jpg" alt="image03">
+                                                    <img class="img-fluid"
+                                                         src="/images/course/course6.jpg" alt="image06">
                                                 </a>
                                             </div>
                                             <div class="rbm-text">
@@ -903,36 +703,37 @@
                             <div class="col-xl-12 col-lg-12  col-md-6  col-sm-12 col-12">
                                 <div class="sidebar-widget cd-sidebar bg-white about-instructor mt-45">
                                     <h4 class="sidebar-instructor-title sidebar-title mb-35 text-white text-center">
-                                        Featured Course</h4>
+                                        Khóa học tiêu biểu</h4>
                                     <div class="about-instructor-wrapper pl-30 pr-30 pb-30">
-                                        <div class="recent-course-menu d-flex justify-content-between pb-22">
-                                            <div class="rbm-img pr-15">
+                                        <div class="recent-course-menu d-flex justify-content-between pb-3 pb-md-4">
+                                            <div class="rbm-img pr-2 pr-md-2" style="width: fit-content;">
                                                 <a href="../news-details.html" class="d-inline-block">
-                                                    <img class="w-100 h-100"
-                                                         src="/images/course-details/cd-course-img4.jpg" alt="image04">
+                                                    <img class="img-fluid" src="/images/course/course1.jpg"
+                                                         alt="image04">
                                                 </a>
                                             </div>
                                             <div class="rbm-text">
                                                 <a href="../news-details.html" class="d-block">
-                                                    <h6 class="mt--5">Lorem ipsum dolor sieot am etceio nse cte</h6>
+                                                    <h6 class="mt-0">Lorem ipsum dolor sit amet consectetur adipiscing
+                                                        elit</h6>
                                                 </a>
                                                 <div class="menu-info d-flex align-items-center justify-content-between">
                                                     <div class="menu-pc-price">
-                                                        <span class="primary-color f-500 d-inline-block">Free</span>
+                                                        <span class="text-primary font-weight-bold">Free</span>
                                                     </div>
                                                     <p class="menu-pc-student mb-0">
-                                                        <span><i class="fal fa-user"></i> </span>
+                                                        <span><i class="fal fa-user"></i></span>
                                                         384
                                                     </p>
-                                                </div><!-- /student  -->
+                                                </div><!-- /student -->
                                             </div>
                                         </div><!-- /recent-blog-menu -->
 
                                         <div class="recent-blog-menu d-flex justify-content-between pb-22">
-                                            <div class="rbm-img pr-15">
+                                            <div class="rbm-img pr-2 pr-md-2" style="width: fit-content;">
                                                 <a href="../news-details.html" class="d-inline-block">
-                                                    <img class="w-100 h-100"
-                                                         src="/images/course-details/cd-course-img5.jpg" alt="image05">
+                                                    <img class="img-fluid"
+                                                         src="/images/course/course2.jpg" alt="image05">
                                                 </a>
                                             </div>
                                             <div class="rbm-text">
@@ -952,10 +753,10 @@
                                         </div><!-- /recent-blog-menu -->
 
                                         <div class="recent-blog-menu d-flex justify-content-between">
-                                            <div class="rbm-img pr-15">
+                                            <div class="rbm-img pr-2 pr-md-2" style="width: fit-content;">
                                                 <a href="../news-details.html" class="d-inline-block">
-                                                    <img class="w-100 h-100"
-                                                         src="/images/course-details/cd-course-img6.jpg" alt="image06">
+                                                    <img class="img-fluid"
+                                                         src="/images/course/course3.jpg" alt="image06">
                                                 </a>
                                             </div>
                                             <div class="rbm-text">
@@ -984,7 +785,7 @@
             <div class="row course-details-page-content-bottom">
                 <div class="col-xl-8  col-lg-9  col-md-12  col-sm-12 col-12">
                     <div class="share-social-link">
-                        <h3 class="mb-25">Share This Course</h3>
+                        <h3 class="mb-25">Chia sẻ khóa học này</h3>
                         <ul class="social social-bg text-center d-flex">
                             <li class="mr-2">
                                 <a class="facebook-bg text-center rounded-circle pr-0  text-white d-inline-block transition-3"
@@ -1016,183 +817,6 @@
                             </li>
                         </ul>
                     </div><!-- /share-social-link -->
-
-                    <div class="related-course-details mt-80">
-                        <h3 class="mb-20">You Also Might Like</h3>
-                        <div class="single-course-related-wrapper mb-15 zoom-img-hover align-items-center bg-white pb-15 primary-border-bottom">
-                            <div class="row align-items-center">
-                                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12">
-                                    <div class="related-course-img over-hidden position-relative">
-                                        <img class="w-100 img" src="/images/course-details/related-curse-img1.jpg"
-                                             alt="course-image01">
-                                    </div><!-- /p-course img -->
-                                </div><!-- /col -->
-
-                                <div class="col-xl-9 col-lg-8  col-md-8 col-sm-12 col-12 pl-xl-2 pl-lg-0">
-                                    <div class="related-course-content bg-white">
-                                        <div class="single-related-course-content">
-                                            <h4 class="mb-12">
-                                                <a href="course-details.html">Lorem ipsum dolor sieot am etceio nse
-                                                    cte</a>
-                                            </h4>
-
-                                            <p class="mb-0">Sed do eiusmod tempor incididunt uoet lab ore et dolore
-                                                magna aliqua. amet, consectetur adipisi cin g elit, sed do eius tomader
-                                                mod ...</p>
-                                        </div><!-- /course-content -->
-
-                                        <div class="related-details-info bg-white pt-15 d-flex align-items-sm-center align-items-end justify-content-between">
-                                            <div class="pc-info d-sm-flex align-items-center">
-                                                <div class="pc-info-left d-flex align-items-center mr-15">
-                                                    <p class="admin mb-0">
-                                                        By<span class="theme-color f-500 d-inline-block pl-2">Cristofer Neilson</span>
-                                                    </p>
-                                                </div>
-
-                                                <div class="popular-course-review d-flex align-items-center">
-                                                    <ul class="review-ratting mr-10">
-                                                        <li>
-                                                            <span><i class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span>
-                                                        </li>
-                                                    </ul><!-- /review-ratting -->
-                                                    <div class="p-c-review">
-                                                        <p class="mb-0">243 Review</p>
-                                                    </div><!-- /p-c-review -->
-                                                    <p class="pc-student mb-0 ml-15">
-                                                        <span><i class="fal fa-user"></i></span>
-                                                        3584
-                                                    </p>
-                                                </div><!-- /popular-course-review -->
-                                            </div>
-                                            <div class="pc-price ml-2">
-                                                <span class="primary-color f-500 d-inline-block">$199</span>
-                                            </div>
-                                        </div><!-- /popular-course-info  -->
-                                    </div><!-- /popular-course-content-wrapper -->
-                                </div><!-- /col -->
-                            </div><!-- /row -->
-                        </div><!-- /single-course-related -->
-
-                        <div class="single-course-related-wrapper mb-15 zoom-img-hover align-items-center bg-white pb-15 primary-border-bottom">
-                            <div class="row align-items-center">
-                                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12">
-                                    <div class="related-course-img over-hidden position-relative">
-                                        <img class="w-100 img" src="/images/course-details/related-curse-img1.jpg"
-                                             alt="course-image01">
-                                    </div><!-- /p-course img -->
-                                </div><!-- /col -->
-
-                                <div class="col-xl-9 col-lg-8  col-md-8 col-sm-12 col-12 pl-xl-2 pl-lg-0">
-                                    <div class="related-course-content bg-white">
-                                        <div class="single-related-course-content">
-                                            <h4 class="mb-12">
-                                                <a href="course-details.html">Lorem ipsum dolor sieot am etceio nse
-                                                    cte</a>
-                                            </h4>
-
-                                            <p class="mb-0">Sed do eiusmod tempor incididunt uoet lab ore et dolore
-                                                magna aliqua. amet, consectetur adipisi cin g elit, sed do eius tomader
-                                                mod ...</p>
-                                        </div><!-- /course-content -->
-
-                                        <div class="related-details-info bg-white pt-15 d-flex align-items-sm-center align-items-end justify-content-between">
-                                            <div class="pc-info d-sm-flex align-items-center">
-                                                <div class="pc-info-left d-flex align-items-center mr-15">
-                                                    <p class="admin mb-0">
-                                                        By<span class="theme-color f-500 d-inline-block pl-2">Cristofer Neilson</span>
-                                                    </p>
-                                                </div>
-
-                                                <div class="popular-course-review d-flex align-items-center">
-                                                    <ul class="review-ratting mr-10">
-                                                        <li>
-                                                            <span><i class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span>
-                                                        </li>
-                                                    </ul><!-- /review-ratting -->
-                                                    <div class="p-c-review">
-                                                        <p class="mb-0">243 Review</p>
-                                                    </div><!-- /p-c-review -->
-                                                    <p class="pc-student mb-0 ml-15">
-                                                        <span><i class="fal fa-user"></i></span>
-                                                        3584
-                                                    </p>
-                                                </div><!-- /popular-course-review -->
-                                            </div>
-                                            <div class="pc-price ml-2">
-                                                <span class="primary-color f-500 d-inline-block">$199</span>
-                                            </div>
-                                        </div><!-- /popular-course-info  -->
-                                    </div><!-- /popular-course-content-wrapper -->
-                                </div><!-- /col -->
-                            </div><!-- /row -->
-                        </div><!-- /single-course-related -->
-
-                        <div class="single-course-related-wrapper mb-15 zoom-img-hover align-items-center bg-white pb-15">
-                            <div class="row align-items-center">
-                                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12">
-                                    <div class="related-course-img over-hidden position-relative">
-                                        <img class="w-100 img" src="/images/course-details/related-curse-img3.jpg"
-                                             alt="course-image01">
-                                    </div><!-- /p-course img -->
-                                </div><!-- /col -->
-
-                                <div class="col-xl-9 col-lg-8  col-md-8 col-sm-12 col-12 pl-xl-2 pl-lg-0">
-                                    <div class="related-course-content bg-white">
-                                        <div class="single-related-course-content">
-                                            <h4 class="mb-12">
-                                                <a href="course-details.html">Lorem ipsum dolor sieot am etceio nse
-                                                    cte</a>
-                                            </h4>
-
-                                            <p class="mb-0">Sed do eiusmod tempor incididunt uoet lab ore et dolore
-                                                magna aliqua. amet, consectetur adipisi cin g elit, sed do eius tomader
-                                                mod ...</p>
-                                        </div><!-- /course-content -->
-
-                                        <div class="related-details-info bg-white pt-15 d-flex align-items-sm-center align-items-end justify-content-between">
-                                            <div class="pc-info d-sm-flex align-items-center">
-                                                <div class="pc-info-left d-flex align-items-center mr-15">
-                                                    <p class="admin mb-0">
-                                                        By<span class="theme-color f-500 d-inline-block pl-2">Cristofer Neilson</span>
-                                                    </p>
-                                                </div>
-
-                                                <div class="popular-course-review d-flex align-items-center">
-                                                    <ul class="review-ratting mr-10">
-                                                        <li>
-                                                            <span><i class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span><span><i
-                                                                class="fa fa-star"></i></span>
-                                                        </li>
-                                                    </ul><!-- /review-ratting -->
-                                                    <div class="p-c-review">
-                                                        <p class="mb-0">243 Review</p>
-                                                    </div><!-- /p-c-review -->
-                                                    <p class="pc-student mb-0 ml-15">
-                                                        <span><i class="fal fa-user"></i></span>
-                                                        3584
-                                                    </p>
-                                                </div><!-- /popular-course-review -->
-                                            </div>
-                                            <div class="pc-price ml-2">
-                                                <span class="primary-color f-500 d-inline-block">$199</span>
-                                            </div>
-                                        </div><!-- /popular-course-info  -->
-                                    </div><!-- /popular-course-content-wrapper -->
-                                </div><!-- /col -->
-                            </div><!-- /row -->
-                        </div><!-- /single-course-related -->
-                    </div>
                 </div><!-- /col -->
             </div><!-- /row -->
         </div><!-- /container -->
@@ -1213,4 +837,5 @@
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 
 </body>
+<script src="/js/course/user-course.js"></script>
 </html>

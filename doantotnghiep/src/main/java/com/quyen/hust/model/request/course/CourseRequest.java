@@ -22,7 +22,7 @@ public class CourseRequest {
     @Min(value = 1, message = "Teacher ID must be positive number")
     private Long teacher;
 
-    @Min(value = 1, message = "Discount ID must be positive number")
+    @Positive(message = "Discount ID must be positive number")
     private Long discountCode;
 
     @NotBlank(message = "Title is required")
@@ -45,5 +45,12 @@ public class CourseRequest {
     @NotNull(message = "Training fields is required")
     private List<Long> trainingFields;
 
+    public void setDiscountCode(String discountCode) {
+        if (discountCode == null || discountCode.trim().isEmpty() || discountCode.trim().equals("\"\"")) {
+            this.discountCode = null;
+        } else {
+            this.discountCode = Long.parseLong(discountCode);
+        }
+    }
 
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -19,8 +20,14 @@ public class SectionResponse {
 
     private String title;
 
-    private Set<LessonResponse> lessons;
+    private List<LessonResponse> lessons;
 
-    private Set<QuizResponse> quizzes;
+    private List<QuizResponse> quizzes;
+
+    private Integer totalLessons;
+
+    private Integer totalQuizzes;
+
+    private String totalTime;
 
 }

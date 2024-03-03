@@ -31,17 +31,29 @@ public class CourseDataResponse {
 
     private CourseStatus courseStatus;
 
+    private Double rating;
+
+    private Long learnerCount;
+
+    private String imageUrl;
+
+    private List<Long> trainingFieldsId;
+
     private List<String> trainingFields;
 
+    private Long discountCodeId;
+
     private String discountCodeName;
+
+    private Long teacherId;
 
     private String teacherName;
 
     private Integer totalLessons;
 
-    private Long totalVideoDuration;
+    private String totalTime;
 
-    private Long totalTest;
+    private Integer totalQuizzes;
 
     private DifficultyLevel difficultyLevel;
 

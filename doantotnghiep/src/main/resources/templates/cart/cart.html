@@ -36,9 +36,9 @@
     <!-- ====== cart-area-start=============================================== -->
     <div class="cart-area mt-100 mb-100">
         <div class="container">
-            <h3 class="mb-40 cart-title">1 khóa học trong giỏ hàng</h3>
+            <h3 class="mb-40 cart-title">[[${totalCourses}]] khóa học trong giỏ hàng</h3>
             <div class="cart-table table-responsive">
-                <table class="table border-0">
+                <table class="table border-0" th:if="${totalCourses != 0}">
                     <thead>
                     <tr>
                         <th scope="col" class="pl-0" style="width: 60%">Khóa học</th>
@@ -48,79 +48,83 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr th:each="cartItem : ${cartItems}">
                         <td class="w-50 pl-0">
                             <div class="cart-item-wrapper d-flex align-items-center">
-                                <a href="#" class="cart-img d-block mr-30">
-                                    <img src="/images/cart/cart-img1.jpg" alt="images01">
-                                </a>
-                                <h5>
-                                    <a href="#" class="p-name main-color">Lập trình Java Spring Boot</a>
-                                </h5>
+                                <div class="col-md-4 pr-0 mr-0">
+                                    <img class="w-75 img" th:src="@{'/api/v1/files/' + ${cartItem.course.imageUrl}}"
+                                         alt="course-image01">
+                                </div>
+                                <div class="col-md-8 ml-0 pl-0">
+                                    <h5 class="ml-0">
+                                        <a class="p-name main-color cursor-pointer show-course-btn" th:attr="course-id=${cartItem.course.id}">[[${cartItem.course.title}]]</a>
+                                    </h5>
+                                    <p class="admin mb-0">
+                                        Bởi<span
+                                            class="theme-color f-500 d-inline-block pl-2" th:text="${cartItem.course.teacherName}"></span>
+                                    </p>
+                                    <div class="pc-info d-md-flex align-items-center">
+                                        <div class="popular-course-review d-flex align-items-center">
+                                            <ul class="review-ratting mr-10">
+                                                <li th:if="${cartItem.course.rating == 5}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span>
+                                                </li>
+                                                <li th:if="${cartItem.course.rating == 4.5}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fas fa-star-half-alt"></i></span>
+                                                </li>
+                                                <li th:if="${cartItem.course.rating == 4}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="far fa-star"></i></span>
+                                                </li>
+                                                <li th:if="${cartItem.course.rating == 3.5}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fas fa-star-half-alt"></i></span><span><i
+                                                        class="far fa-star"></i></span>
+                                                </li>
+                                                <li th:if="${cartItem.course.rating == 3}">
+                                                    <span><i class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="fa fa-star"></i></span><span><i
+                                                        class="far fa-star"></i></span><span><i
+                                                        class="far fa-star"></i></span>
+                                                </li>
+                                            </ul><!-- /review-ratting -->
+                                            <p class="pc-student mb-0 ml-15">
+                                                <span><i class="fal fa-user"></i> [[${cartItem.course.learnerCount}]]</span>
+                                            </p>
+                                        </div><!-- /popular-course-review -->
+                                    </div>
+                                </div>
                             </div>
                         </td>
                         <td>
-                            <div class="cart-price primary-color">$35.00</div>
+                            <span class="primary-color f-500 d-inline-block"
+                                  th:text="${#numbers.formatDecimal(cartItem.course.courseFee, 0, 'COMMA', 0, 'POINT')}"></span>
+                            <span class="primary-color f-500 d-inline-block"
+                                  th:text="${cartItem.course.courseFeeUnit}"></span>
                         </td>
                         <td>
                             <div class="my-btn d-none d-sm-block text-center">
-                                <a href="#" class="btn theme-bg">Chuyển vào danh sách mong muốn</a>
+                                <a class="btn theme-bg cursor-pointer move-to-wishlist"
+                                   th:attr="course-id=${cartItem.course.id}">Chuyển vào danh sách mong muốn</a>
                             </div>
                         </td>
                         <td class="text-right">
-                            <a href="#"
-                               class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center"><span><i
-                                    class="fal fa-times"></i></span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="w-50 pl-0">
-                            <div class="cart-item-wrapper d-flex align-items-center">
-                                <a href="#" class="cart-img d-block mr-30">
-                                    <img src="/images/cart/cart-img2.jpg" alt="images02">
-                                </a>
-                                <h5>
-                                    <a href="#" class="p-name main-color">Lập trình C++</a>
-                                </h5>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="cart-price primary-color">$25.00</div>
-                        </td>
-                        <td>
-                            <div class="my-btn d-none d-sm-block text-center">
-                                <a href="#" class="btn theme-bg">Chuyển vào danh sách mong muốn</a>
-                            </div>
-                        </td>
-                        <td class="text-right">
-                            <a href="#"
-                               class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center"><span><i
-                                    class="fal fa-times"></i></span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="w-50 pl-0">
-                            <div class="cart-item-wrapper d-flex align-items-center">
-                                <a href="#" class="cart-img d-block mr-30">
-                                    <img src="/images/cart/cart-img3.jpg" alt="images03">
-                                </a>
-                                <h5>
-                                    <a href="#" class="p-name main-color">Lập trình mạng Java</a>
-                                </h5>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="cart-price primary-color">$30.00</div>
-                        </td>
-                        <td>
-                            <div class="my-btn d-none d-sm-block text-center">
-                                <a href="#" class="btn theme-bg">Chuyển vào danh sách mong muốn</a>
-                            </div>
-                        </td>
-                        <td class="text-right">
-                            <a href="#"
-                               class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center"><span><i
-                                    class="fal fa-times"></i></span></a>
+                            <a class="p-remove secondary-color primary-border2 rounded-circle d-inline-block text-center cursor-pointer
+                                remove-cart-item" th:attr="cartItem-id=${cartItem.id}"><span><i class="fal fa-times"></i></span></a>
                         </td>
                     </tr>
                     </tbody>
@@ -140,12 +144,10 @@
                     </div><!-- /col -->
                     <div class="col-xl-4  col-lg-6  col-md-6  col-sm-12 col-12">
                         <div class="update-area text-md-right">
-                            <a href="#"
-                               class="btn primary-border2 text-uppercase f-500 d-inline-block rounded-0 main-color mt-15 mr-3">
+                            <a class="btn primary-border2 text-uppercase f-500 d-inline-block rounded-0 main-color mt-15 mr-3 cursor-pointer update-cart">
                                 Cập nhật giỏ hàng</a>
-                            <a href="#"
-                               class="btn primary-border2 text-uppercase f-500 d-inline-block rounded-0 main-color mt-15">Xóa
-                                hết</a>
+                            <a class="btn primary-border2 text-uppercase f-500 d-inline-block rounded-0 main-color mt-15 cursor-pointer
+                            remove-all-cart-item" th:attr="cart-id=${cartId}"> Xóa hết</a>
                         </div>
                     </div><!-- /col -->
                 </div><!-- /row -->
@@ -159,7 +161,7 @@
                             <form action="#">
                                 <input type="text" placeholder="Nhập mã giảm giá" class="w-100 pl-15 mr-2">
                                 <div class="my-btn">
-                                    <a href="#" class="btn d-inline-block transparent-bg f-500 rounded-0 mt-3">Áp dụng
+                                    <a class="btn d-inline-block transparent-bg f-500 rounded-0 mt-3 cursor-pointer">Áp dụng
                                         mã</a>
                                 </div><!-- /my-btn -->
                             </form>
@@ -169,12 +171,14 @@
                         <div class="total-price-area total-price-bg text-center pt-25 pb-25 pr-30 pl-30 mt-50">
                             <ul class="pt-20 pb-20">
                                 <li class="g-total d-flex justify-content-between align-items-center text-uppercase f-500">
-                                    <span>Tổng</span><span class="primary-color">$236.00</span>
+                                    <span class="primary-color f-500 d-inline-block">Tổng cộng</span>
+                                    <span class="primary-color mr-2 pr-2"
+                                          th:text="${#numbers.formatDecimal(totalFee, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span>
                                 </li>
                             </ul>
-                            <div class="my-btn">
-                                <a th:href="@{/payments}" class="btn d-block theme-bg f-500 rounded-0 px-1">
-                                   Tiến hành thanh toán</a>
+                            <div class="my-btn mt-4">
+                                <a th:href="@{/payments}" class="btn d-block theme-bg f-500 rounded-0 px-1 ">
+                                    Tiến hành thanh toán</a>
                             </div><!-- /my-btn -->
                         </div>
                     </div><!-- /col -->
@@ -198,4 +202,6 @@
 
 <div th:replace="~{fragments/embedded-js :: embedded-js}"></div>
 </body>
+<script src="/js/course/user-course.js"></script>
+
 </html>

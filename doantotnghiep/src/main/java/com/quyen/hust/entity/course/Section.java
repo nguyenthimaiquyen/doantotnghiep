@@ -27,5 +27,13 @@ public class Section extends BaseEntity {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    @Column(name = "total_lesson")
+    private Integer totalLessons;
+
+    @Column(name = "total_quizzes")
+    private Integer totalQuizzes;
+
+    @Column(name = "total_time")
+    private String totalTime;
 
 }

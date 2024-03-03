@@ -29,6 +29,9 @@ public class Quiz extends BaseEntity {
     @Column(name = "activated", columnDefinition = "bit default 0")
     private Boolean activated;
 
+    @Column(name = "time_count")
+    private String timeCount;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.PERSIST})

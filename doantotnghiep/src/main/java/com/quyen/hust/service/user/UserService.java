@@ -5,7 +5,9 @@ import com.quyen.hust.entity.RefreshToken;
 import com.quyen.hust.entity.admin.OTP;
 import com.quyen.hust.entity.admin.Role;
 import com.quyen.hust.entity.teacher.Teacher;
+import com.quyen.hust.entity.user.Cart;
 import com.quyen.hust.entity.user.User;
+import com.quyen.hust.entity.user.Wishlist;
 import com.quyen.hust.exception.*;
 import com.quyen.hust.model.request.RefreshTokenRequest;
 import com.quyen.hust.model.request.admin.AccountStatusRequest;
@@ -22,8 +24,10 @@ import com.quyen.hust.repository.RefreshTokenRepository;
 import com.quyen.hust.repository.admin.OTPJpaRepository;
 import com.quyen.hust.repository.admin.RoleJpaRepository;
 import com.quyen.hust.repository.teacher.TeacherJpaRepository;
+import com.quyen.hust.repository.user.CartJpaRepository;
 import com.quyen.hust.repository.user.UserCustomRepository;
 import com.quyen.hust.repository.user.UserJpaRepository;
+import com.quyen.hust.repository.user.WishlistJpaRepository;
 import com.quyen.hust.security.CustomUserDetails;
 import com.quyen.hust.security.JwtUtils;
 import com.quyen.hust.security.SecurityUtils;
@@ -54,6 +58,8 @@ public class UserService {
     private final JwtUtils jwtUtils;
     private final OTPJpaRepository otpJpaRepository;
     private final TeacherJpaRepository teacherJpaRepository;
+    private final CartJpaRepository cartJpaRepository;
+    private final WishlistJpaRepository wishlistJpaRepository;
 
 
     @Value("${application.security.refreshToken.tokenValidityMilliseconds}")
@@ -61,7 +67,8 @@ public class UserService {
 
     public UserService(PasswordEncoder passwordEncoder, UserJpaRepository userJpaRepository, RoleJpaRepository roleJpaRepository,
                        ObjectMapper objectMapper, RefreshTokenRepository refreshTokenRepository, TeacherJpaRepository teacherJpaRepository,
-                       UserCustomRepository userCustomRepository, JwtUtils jwtUtils, OTPJpaRepository otpJpaRepository) {
+                       UserCustomRepository userCustomRepository, JwtUtils jwtUtils, OTPJpaRepository otpJpaRepository,
+                       CartJpaRepository cartJpaRepository, WishlistJpaRepository wishlistJpaRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userJpaRepository = userJpaRepository;
         this.roleJpaRepository = roleJpaRepository;
@@ -71,6 +78,8 @@ public class UserService {
         this.jwtUtils = jwtUtils;
         this.otpJpaRepository = otpJpaRepository;
         this.teacherJpaRepository = teacherJpaRepository;
+        this.wishlistJpaRepository = wishlistJpaRepository;
+        this.cartJpaRepository = cartJpaRepository;
     }
 
     public User registerUser(RegistrationRequest registrationRequest) {
@@ -84,6 +93,12 @@ public class UserService {
                 .roles(roles)
                 .userStatus(UserStatus.CREATED)
                 .build();
+        Cart cart = Cart.builder()
+                .user(user)
+                .build();
+        Wishlist wishlist = Wishlist.builder()
+                .user(user)
+                .build();
         if (registrationRequest.getRole().equals(Roles.TEACHER)) {
             Teacher teacher = Teacher.builder()
                     .user(user)
@@ -91,6 +106,8 @@ public class UserService {
             teacherJpaRepository.save(teacher);
         }
         userJpaRepository.save(user);
+        cartJpaRepository.save(cart);
+        wishlistJpaRepository.save(wishlist);
         return user;
     }
 
@@ -230,5 +247,11 @@ public class UserService {
     }
 
 
-
+    public Long getUserId(String email) throws UserNotFoundException {
+        User user = userJpaRepository.findByEmail(email);
+        if (ObjectUtils.isEmpty(user)) {
+            throw new UserNotFoundException("User with email " + email + " could not be found!");
+        }
+        return user.getId();
+    }
 }

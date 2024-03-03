@@ -39,7 +39,7 @@ public class SectionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSection(@PathVariable Long id) {
+    public ResponseEntity<?> deleteSection(@PathVariable Long id) throws SectionNotFoundException {
         sectionService.deleteSection(id);
         return ResponseEntity.ok(null);
     }
