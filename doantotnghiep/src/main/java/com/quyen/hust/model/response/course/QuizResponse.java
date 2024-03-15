@@ -28,4 +28,12 @@ public class QuizResponse {
 
     private String timeCount;
 
+    private Long previousQuizId;
+
+    private Long nextQuizId;
+
+    private Long previousLessonId;
+
+    private Long nextLessonId;
+
 }

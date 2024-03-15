@@ -10,5 +10,4 @@ public interface SectionJpaRepository extends JpaRepository<Section, Long> {
     List<Section> findByCourseId(Long id);
 
 
-
 }

@@ -3,26 +3,29 @@ const userId = userInfo ? userInfo.id : null;
 
 $(document).ready(function () {
 
+    let completedLessons = [];
+    let completedLessonQuizzes = [];
+
     $('.collapse').each(function () {
         $(this).collapse('show');
     });
 
-    var youtubeUrl = "https://www.googleapis.com/youtube/v3/videos?id=BFuaErJVhgk"
+    let youtubeUrl = "https://www.googleapis.com/youtube/v3/videos?id=BFuaErJVhgk"
         + "&key=AIzaSyCWuCSRnm_IdsZgEPxi_Yg871zcfTCw5S8&part=snippet,contentDetails";
     $.ajax({
         async: false,
         type: 'GET',
         url: youtubeUrl,
         success: function (data) {
-            var youtube_time = data.items[0].contentDetails.duration;
-            var duration = formatISODate(youtube_time);
+            let youtube_time = data.items[0].contentDetails.duration;
+            let duration = formatISODate(youtube_time);
             if (ifr.next().is('.time')) {
                 ifr.next().html(duration);
             }
         }
     });
 
-    //lấy thời lượng video
+    // //lấy thời lượng video
     // $('video').on('loadedmetadata', function () {
     //     const duration = this.duration;
     //     //chuyển đổi thời lượng video sang định dạng phút giây
@@ -48,14 +51,6 @@ $(document).ready(function () {
     //     });
     // });
 
-    // $('iframe').on('loadedmetadata', function () {
-    //     const duration = this.duration;
-    //     //chuyển đổi thời lượng video sang định dạng phút giây
-    //     const minutes = Math.floor(duration / 60);
-    //     const seconds = Math.floor(duration % 60);
-    //     const formattedDuration = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-    //     $('.video-duration').text(formattedDuration);
-    // });
 
     //search course
     $('input[type="checkbox"], input[type="radio"], input[type="text"]').change(function () {
@@ -422,36 +417,76 @@ $(document).ready(function () {
         }
     });
 
-    // $('.previous-lesson, .next-lesson').click(async function (event) {
-    //     const courseId = $(event.currentTarget).attr("course-id");
-    //     const lessonId = $(event.currentTarget).attr("lesson-id");
-    //     const action = $(event.currentTarget).attr("action");
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "/api/v1/courses/" + courseId + "/lessons/" + lessonId,
-    //         contentType: "application/json; charset=utf-8",
-    //         data: {action: action},
-    //         success: function (LessonInfo) {
-    //             if (LessonInfo.lessonId) {
-    //                 window.location.replace("http://localhost:8080/users/" + userId + "/courses/" + courseId + "/lessons/" + LessonInfo.lessonId);
-    //             } else if (LessonInfo.quizId) {
-    //                 window.location.replace("http://localhost:8080/courses/" + courseId + "/quizzes/" + LessonInfo.quizId);
-    //             }
-    //         },
-    //         error: function () {
-    //             $.toast({
-    //                 text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
-    //                 icon: 'error',
-    //                 position: 'top-right',
-    //                 bgColor: '#FF0000'
-    //             })
-    //         }
-    //     });
-    //
-    // });
+    //xử lý tự động call API khi người dùng xem hết 80% video
+    let previousTime = {
+        'video-element': 0,
+        'youtube-video': 0
+    };
 
+    $('#video-element').on("timeupdate", function () {
+        handleVideoTimeUpdate(this);
+    });
+
+    function handleVideoTimeUpdate(video) {
+        let videoId = $(video).attr('id');
+        let currentTime = video.currentTime;
+        let duration = video.duration;
+        let remainingTime = duration - previousTime[videoId];
+        let percentRemaining = (remainingTime / duration) * 100;
+        // Nếu người dùng tua trên 10% thời lượng video còn lại và thời lượng video còn lại > 30% tổng thời lượng video
+        // thì hiển thị thông báo và thiết lập lại thời điểm video đang phát
+        if (percentRemaining > 30 && (currentTime - previousTime[videoId]) / duration > 0.1) {
+            $.toast({
+                heading: 'Cảnh báo',
+                text: "Bạn đang học nhanh hơn bình thường, vui lòng không tua quá nhiều khi học!",
+                icon: 'error',
+                position: 'mid-center',
+                bgColor: '#455bff'
+            });
+            video.currentTime = previousTime[videoId];
+            return;
+        }
+        previousTime[videoId] = currentTime;
+        let percentPlayed = (currentTime / duration) * 100;
+        if (percentPlayed >= 80) {
+            callAPIThroughLesson();
+        }
+    }
+
+    function callAPIThroughLesson() {
+        let pathname = window.location.pathname;
+        let parts = pathname.split('/');
+        let numbers = parts.filter(part => !isNaN(parseInt(part)));
+        let requestBody = {};
+        requestBody["userId"] = numbers[0];
+        requestBody["courseId"] = numbers[1];
+        requestBody["lessonID"] = numbers[2];
+        if (completedLessons.includes(numbers[2])) {
+            return;
+        }
+        $.ajax({
+            url: "/api/v1/enrollments",
+            type: "PUT",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(requestBody), //dữ liệu được gửi vào trong body của HTTP
+            success: function (data) {
+
+            },
+            error: function (err) {
+                $.toast({
+                    text: "Đã có lỗi xảy ra, vui lòng thử lại sau!",
+                    icon: 'error',
+                    position: 'top-right',
+                    bgColor: '#FF0000'
+                });
+            }
+        });
+        completedLessons.push(numbers[2]);
+    }
 
 });
+
+
 
 function highlightAnswer(answerElement) {
     let $selectedAnswerRow = $(answerElement).closest('.answer-row');

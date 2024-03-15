@@ -1,6 +1,7 @@
 package com.quyen.hust.controller.user;
 
 import com.quyen.hust.exception.CourseNotFoundException;
+import com.quyen.hust.exception.EnrollmentNotFoundException;
 import com.quyen.hust.exception.UserNotFoundException;
 import com.quyen.hust.model.request.user.EnrollmentRequest;
 import com.quyen.hust.model.response.user.EnrollmentResponse;
@@ -30,5 +31,10 @@ public class EnrollmentController {
         return ResponseEntity.ok(enrollmentService.getEnrollmentByUserIdAndCourseId(userId, courseId));
     }
 
+    @PutMapping
+    public ResponseEntity<?> updateEnrollment(@RequestBody @Valid EnrollmentRequest request) throws EnrollmentNotFoundException {
+        enrollmentService.updateEnrollment(request);
+        return ResponseEntity.ok(null);
+    }
 
 }

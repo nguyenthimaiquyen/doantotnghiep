@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -28,6 +29,9 @@ public class Enrollment extends BaseEntity {
 
     @Column(name = "completed_rate")
     private Float completedRate;
+
+    @Column(name = "completed_lessons")
+    private Float completedLessons;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH, CascadeType.MERGE,

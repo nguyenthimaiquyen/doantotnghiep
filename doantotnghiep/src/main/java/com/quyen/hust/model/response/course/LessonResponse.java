@@ -40,5 +40,9 @@ public class LessonResponse {
 
     private Long nextLessonId;
 
+    private Long previousQuizId;
+
+    private Long nextQuizId;
+
 
 }

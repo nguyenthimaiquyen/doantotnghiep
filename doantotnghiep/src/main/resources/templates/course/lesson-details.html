@@ -22,8 +22,10 @@
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-5 col-5 pl-lg-0">
                         <div class="header-right d-flex align-items-center justify-content-end">
                             <span class="mr-2 text-white">[[${enrollment.completedLesson}]]/[[${enrollment.totalLessonAndQuiz}]] bài học: </span>
-                            <span class="text-white"> [[${enrollment.completedRate}]]%</span>
-                        </div><!-- /header-right -->
+                            <span class="text-white" th:text="${#strings.substringBefore(enrollment.completedRate * 100, '.')}"></span>
+                            <span class="text-white">%</span>
+                        </div><!-- /row -->
+                    </div><!-- /header-right -->
                     </div><!-- /col -->
                 </div><!-- /row -->
             </div><!-- /container -->
@@ -41,21 +43,21 @@
             <!-- Cột bên trái -->
             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 m-0 p-0 overflow-auto">
                 <div class="d-flex justify-content-center align-items-center mt-20">
-                    <div th:if="${lesson.embeddedUrl != null and lesson.embeddedUrl != ''}">
+                    <div th:if="${lesson != null and lesson.embeddedUrl != null and lesson.embeddedUrl != ''}"
+                         id="youtube-video-container">
                         <iframe width="920" height="515" th:src="${lesson.embeddedUrl}"
-                                id="youtube-video"
-                                title="YouTube video player" allowfullscreen
+                                id="youtube-video" title="YouTube video player" allowfullscreen
                                 frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
                         </iframe>
                     </div>
-                    <div th:if="${(lesson.embeddedUrl == '' or lesson.embeddedUrl == null) and lesson.videoUrl != null}">
-                        <video width="920" height="515" controls frameborder="0" allowfullscreen
+                    <div th:if="${lesson != null and (lesson.embeddedUrl == '' or lesson.embeddedUrl == null) and lesson.videoUrl != null}">
+                        <video width="920" height="515" controls frameborder="0" allowfullscreen id="video-element"
                                th:src="@{'/api/v1/files/' + ${lesson.videoUrl}}"
                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
                         </video>
                     </div>
                 </div>
-                <div class="d-flex justify-content-start align-items-start mt-30">
+                <div class="d-flex justify-content-start align-items-start mt-30" th:if="${lesson}" >
                     <div class="text-left">
                         <h6 class="ml-5">[[${lesson.title}]]</h6>
                     </div>
@@ -122,19 +124,24 @@
                         <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-6" >
                             <div class="copyright-text text-center text-lg-right">
                                 <p class="mb-0 text-dark">
-                                    <a class="c-theme text-dark f-500 cursor-pointer previous-lesson"
-                                       th:unless="${lessonIndex == 0 and sectionIndex == 0}"
-                                       th:attr="course-id=${course.id}, lesson-id=${lesson.id}"><i class="fas fa-less-than"></i>
-                                        Bài trước</a>
+                                    <a class="c-theme text-dark f-500 cursor-pointer" th:if="${lesson.previousQuizId}"
+                                       th:href="@{'/users/' + ${userId} + '/courses/' + ${course.id} + '/quizzes/' + ${lesson.previousQuizId}}">
+                                        <i class="fas fa-less-than"></i>Bài trước</a>
+                                    <a class="c-theme text-dark f-500 cursor-pointer" th:if="${lesson.previousLessonId}"
+                                       th:href="@{'/users/' + ${userId} + '/courses/' + ${course.id} + '/lessons/' + ${lesson.previousLessonId}}">
+                                        <i class="fas fa-less-than"></i>Bài trước</a>
                                 </p>
                             </div>
                         </div><!-- /col -->
                         <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-6">
                             <div class="copyright-text text-center text-lg-left">
                                 <p class="mb-0">
-                                    <button class="btn btn-warning c-theme text-dark f-500 cursor-pointer border next-lesson"
-                                            th:attr="course-id=${course.id}, lesson-id=${lesson.id}">
-                                        Bài tiếp theo <i class="fas fa-greater-than"></i></button>
+                                    <a class="btn btn-warning c-theme text-dark f-500 cursor-pointer border" th:if="${lesson.nextQuizId}"
+                                       th:href="@{'/users/' + ${userId} + '/courses/' + ${course.id} + '/quizzes/' + ${lesson.nextQuizId}}">
+                                        Bài tiếp theo <i class="fas fa-greater-than"></i></a>
+                                    <a class="btn btn-warning c-theme text-dark f-500 cursor-pointer border" th:if="${lesson.nextLessonId}"
+                                       th:href="@{'/users/' + ${userId} + '/courses/' + ${course.id} + '/lessons/' + ${lesson.nextLessonId}}">
+                                        Bài tiếp theo <i class="fas fa-greater-than"></i></a>
                                 </p>
                             </div>
                         </div><!-- /col -->

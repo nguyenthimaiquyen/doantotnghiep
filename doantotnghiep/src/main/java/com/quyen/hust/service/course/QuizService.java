@@ -1,8 +1,7 @@
 package com.quyen.hust.service.course;
 
-import com.quyen.hust.entity.course.Answer;
+import com.quyen.hust.entity.course.*;
 import com.quyen.hust.entity.course.Quiz;
-import com.quyen.hust.entity.course.Section;
 import com.quyen.hust.exception.AnswerNotFoundException;
 import com.quyen.hust.exception.QuizNotFoundException;
 import com.quyen.hust.exception.SectionNotFoundException;
@@ -10,6 +9,7 @@ import com.quyen.hust.model.request.course.QuizRequest;
 import com.quyen.hust.model.response.course.AnswerResponse;
 import com.quyen.hust.model.response.course.QuizResponse;
 import com.quyen.hust.repository.course.AnswerJpaRepository;
+import com.quyen.hust.repository.course.LessonJpaRepository;
 import com.quyen.hust.repository.course.QuizJpaRepository;
 import com.quyen.hust.repository.course.SectionJpaRepository;
 import lombok.AllArgsConstructor;
@@ -28,10 +28,49 @@ import java.util.stream.Collectors;
 public class QuizService {
     private final SectionJpaRepository sectionJpaRepository;
     private final QuizJpaRepository quizJpaRepository;
+    private final LessonJpaRepository lessonJpaRepository;
     private final AnswerJpaRepository answerJpaRepository;
 
     public QuizResponse getQuizDetails(Long quizId) throws QuizNotFoundException {
-        Section section = quizJpaRepository.findById(quizId).get().getSection();
+        Quiz currentQuiz = quizJpaRepository.findById(quizId).orElseThrow(
+                () -> new QuizNotFoundException("Quiz with id " + quizId + " could not be found!"));
+        Section currentSection = currentQuiz.getSection();
+        List<Quiz> quizzes = quizJpaRepository.findBySectionId(currentSection.getId());
+        Long nextQuizId = null;
+        Long previousQuizId = null;
+        Long nextLessonId = null;
+        Long previousLessonId = null;
+        int currentQuizIndex = quizzes.indexOf(currentQuiz);
+        //tìm id của previous quiz, previous lessons
+        if (currentQuizIndex == 0) {
+            List<Lesson> currentSectionLessons = lessonJpaRepository.findBySectionId(currentSection.getId());
+            if (!currentSectionLessons.isEmpty()) {
+                previousLessonId = currentSectionLessons.get(currentSectionLessons.size() - 1).getId();
+            }
+        } else {
+            Quiz previousQuiz = quizzes.get(currentQuizIndex - 1);
+            previousQuizId = previousQuiz.getId();
+        }
+        //tìm id của next quizze, next lessons
+        if (currentQuizIndex == (quizzes.size() - 1)) {
+            List<Section> sections = sectionJpaRepository.findByCourseId(currentSection.getCourse().getId());
+            int currentSectionIndex = sections.indexOf(currentSection);
+            if (currentSectionIndex < sections.size() - 1) {
+                Section nextSection = sections.get(currentSectionIndex + 1);
+                List<Quiz> nextSectionQuizzes = quizJpaRepository.findBySectionId(nextSection.getId());
+                if (!nextSectionQuizzes.isEmpty()) {
+                    nextQuizId = nextSectionQuizzes.get(0).getId();
+                }
+                List<Lesson> nextSectionLessons = lessonJpaRepository.findBySectionId(nextSection.getId());
+                if (!nextSectionLessons.isEmpty()) {
+                    nextLessonId = nextSectionLessons.get(0).getId();
+                }
+            }
+        } else {
+            Quiz nextQuiz = quizzes.get(currentQuizIndex + 1);
+            nextQuizId = nextQuiz.getId();
+        }
+
         List<Answer> answers = answerJpaRepository.findByQuizId(quizId);
         List<AnswerResponse> answerResponses = answers.stream().map(
                 answer -> AnswerResponse.builder()
@@ -40,17 +79,19 @@ public class QuizService {
                         .isCorrect(answer.isCorrect())
                         .build()
         ).collect(Collectors.toList());
-        return quizJpaRepository.findById(quizId).map(
-                quiz -> QuizResponse.builder()
-                        .id(quiz.getId())
-                        .title(quiz.getTitle())
-                        .question(quiz.getQuestion())
-                        .explanation(quiz.getExplanation())
-                        .answers(answerResponses)
-                        .sectionId(section.getId())
-                        .sectionTitle(section.getTitle())
-                        .build()
-        ).orElseThrow(() -> new QuizNotFoundException("Quiz with id " + quizId + " could not be found!"));
+        return QuizResponse.builder()
+                .id(currentQuiz.getId())
+                .title(currentQuiz.getTitle())
+                .question(currentQuiz.getQuestion())
+                .explanation(currentQuiz.getExplanation())
+                .answers(answerResponses)
+                .sectionId(currentSection.getId())
+                .sectionTitle(currentSection.getTitle())
+                .nextQuizId(nextQuizId)
+                .previousQuizId(previousQuizId)
+                .nextLessonId(nextLessonId)
+                .previousLessonId(previousLessonId)
+                .build();
     }
 
     @Transactional
@@ -115,3 +156,6 @@ public class QuizService {
     }
 
 }
+
+
+

@@ -11,5 +11,4 @@ public interface QuizJpaRepository extends JpaRepository<Quiz, Long> {
 
     List<Quiz> findBySectionId(Long sectionId);
 
-
 }

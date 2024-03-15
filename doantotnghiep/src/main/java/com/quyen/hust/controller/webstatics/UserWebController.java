@@ -100,7 +100,7 @@ public class UserWebController {
 
     @GetMapping("/users/{userId}/courses/{courseId}/lessons/{lessonId}")
     public String getLessonDetailsPage(Model model, @PathVariable Long userId, @PathVariable Long courseId,
-                                       @PathVariable Long lessonId) throws CourseNotFoundException, LessonNotFoundException {
+                                       @PathVariable Long lessonId) throws CourseNotFoundException, LessonNotFoundException, QuizNotFoundException {
         EnrollmentResponse enrollment = enrollmentService.getEnrollmentByUserIdAndCourseId(userId, courseId);
         CourseDataResponse courseDetails = courseService.getCourseDetails(courseId);
         List<SectionResponse> sections = sectionService.getSections(courseId);
@@ -109,10 +109,7 @@ public class UserWebController {
         model.addAttribute("enrollment", enrollment);
         model.addAttribute("sections", sections);
         model.addAttribute("lesson", lesson);
-        Integer lessonIndex = lessonService.getLessonIndex(lessonId);
-        Integer sectionIndex = lessonService.getSectionIndex(lessonId);
-        model.addAttribute("lessonIndex", lessonIndex);
-        model.addAttribute("sectionIndex", sectionIndex);
+        model.addAttribute("userId", userId);
         return "course/lesson-details";
     }
 
@@ -127,7 +124,7 @@ public class UserWebController {
         model.addAttribute("sections", sections);
         model.addAttribute("quiz", quiz);
         model.addAttribute("enrollment", enrollment);
-
+        model.addAttribute("userId", userId);
         return "course/quiz-details";
     }
 

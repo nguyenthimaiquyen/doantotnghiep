@@ -98,8 +98,7 @@
                                 <span class="pl-1" th:text="${sectionIndex.index + 1}"></span>.
                                 <span th:text="${section.title}"></span>
                             </span>
-                            <span class="float-right text-muted small">[[${section.totalLessonCount}]] bài học
-                                <span class="pl-10">[[${section.totalTimeCount}]]</span></span>
+                            <span class="float-right text-muted small">[[${section.totalLessons + section.totalQuizzes}]] bài học<span class="pl-10">[[${section.totalTime}]]</span></span>
                         </a>
                         <div class="collapse" th:id="'section' + ${section.id}">
                             <div class="list-group">
@@ -108,9 +107,10 @@
                                    th:data-target="'#lesson' + ${lesson.id}" th:attr="course-id=${course.id}, lesson-id=${lesson.id}">
                                     <span class="pl-4" th:text="${sectionIndex.index + 1}"></span>.<span
                                         class="p-0 m-0" th:text="${lessonIndex.index + 1}"></span>.
-                                    <span th:text="${lesson.title}"></span>
-                                    <span class="float-right text-muted small"><i class="fas fa-play-circle"></i><span
-                                            class="pl-10">[[${lesson.videoDuration}]]</span></span>
+                                    <span th:text="${lesson.title}"></span> <br>
+                                    <span class="float-left text-muted small pl-25"><i class="fas fa-play-circle"></i>
+                                        <span class="pl-1 video-duration">[[${lesson.videoDuration}]]</span>
+                                    </span>
                                 </a>
                             </div>
                             <div class="list-group" th:with="totalLessonCount=${#lists.size(section.lessons)}">
@@ -119,9 +119,9 @@
                                    th:data-target="'#quiz' + ${quiz.id}" th:attr="course-id=${course.id}, quiz-id=${quiz.id}">
                                     <span class="pl-4" th:text="${sectionIndex.index + 1}"></span>.<span
                                         class="p-0 m-0" th:text="${quizIndex.index + 1 + totalLessonCount}"></span>.
-                                    <span th:text="${quiz.title}"></span>
-                                    <span class="float-right text-muted small"><i class="fas fa-file-alt"></i><span
-                                            class="pl-10"></span>[[${quiz.timeCount}]]</span>
+                                    <span th:text="${quiz.title}" class="font-weight-light"></span>  <br>
+                                    <span class="float-left text-muted small pl-25"><i class="fas fa-file-alt"></i><span
+                                            class="pl-1">[[${quiz.timeCount}]]</span></span>
                                 </a>
                             </div>
                         </div>
@@ -144,16 +144,24 @@
                         <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-6">
                             <div class="copyright-text text-center text-lg-right">
                                 <p class="mb-0 text-dark">
-                                    <a class="c-theme text-dark f-500 cursor-pointer"><i class="fas fa-less-than"></i>
-                                        Bài trước</a>
+                                    <a class="c-theme text-dark f-500 cursor-pointer" th:if="${quiz.previousQuizId}"
+                                       th:href="@{'/users/' + ${userId} + '/courses/' + ${course.id} + '/quizzes/' + ${quiz.previousQuizId}}">
+                                        <i class="fas fa-less-than"></i>Bài trước</a>
+                                    <a class="c-theme text-dark f-500 cursor-pointer" th:if="${quiz.previousLessonId}"
+                                       th:href="@{'/users/' + ${userId} + '/courses/' + ${course.id} + '/lessons/' + ${quiz.previousLessonId}}">
+                                        <i class="fas fa-less-than"></i>Bài trước</a>
                                 </p>
                             </div>
                         </div><!-- /col -->
                         <div class="col-xl-6  col-lg-6  col-md-6  col-sm-6 col-6">
                             <div class="copyright-text text-center text-lg-left">
                                 <p class="mb-0">
-                                    <button class="btn btn-warning c-theme text-dark f-500 cursor-pointer border">
-                                        Bài tiếp theo <i class="fas fa-greater-than"></i></button>
+                                    <a class="btn btn-warning c-theme text-dark f-500 cursor-pointer border" th:if="${quiz.nextQuizId}"
+                                       th:href="@{'/users/' + ${userId} + '/courses/' + ${course.id} + '/quizzes/' + ${quiz.nextQuizId}}">
+                                        Bài tiếp theo <i class="fas fa-greater-than"></i></a>
+                                    <a class="btn btn-warning c-theme text-dark f-500 cursor-pointer border" th:if="${quiz.nextLessonId}"
+                                       th:href="@{'/users/' + ${userId} + '/courses/' + ${course.id} + '/lessons/' + ${quiz.nextLessonId}}">
+                                        Bài tiếp theo <i class="fas fa-greater-than"></i></a>
                                 </p>
                             </div>
                         </div><!-- /col -->

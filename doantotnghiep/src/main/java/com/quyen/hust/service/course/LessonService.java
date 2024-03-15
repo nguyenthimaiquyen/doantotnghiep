@@ -41,26 +41,50 @@ public class LessonService {
     public LessonResponse getLessonDetails(Long lessonId) throws LessonNotFoundException {
         Lesson lesson = lessonJpaRepository.findById(lessonId).orElseThrow(
                 () -> new LessonNotFoundException("Lesson with id " + lessonId + " could not be found!"));
-        Section section = lessonJpaRepository.findById(lessonId).get().getSection();
-        List<Lesson> lessons = lessonJpaRepository.findBySectionId(section.getId());
+        Section currentSection = lesson.getSection();
+        List<Lesson> lessons = lessonJpaRepository.findBySectionId(currentSection.getId());
         Long nextLessonId = null;
         Long previousLessonId = null;
+        Long previousQuizId = null;
+        Long nextQuizId = null;
         int currentLessonIndex = lessons.indexOf(lesson);
-        //tìm id của previous lesson
-        if (currentLessonIndex > 0) {
+        //tìm id của previous lesson, previous quiz
+        if (currentLessonIndex == 0) {
+            List<Section> sections = sectionJpaRepository.findByCourseId(currentSection.getCourse().getId());
+            int currentSectionIndex = sections.indexOf(currentSection);
+            if (currentSectionIndex > 0) {
+                Section previousSection = sections.get(currentSectionIndex - 1);
+                List<Quiz> previousSectionQuizzes = quizJpaRepository.findBySectionId(previousSection.getId());
+                if (!previousSectionQuizzes.isEmpty()) {
+                    previousQuizId = previousSectionQuizzes.get(previousSectionQuizzes.size() - 1).getId();
+                }
+                List<Lesson> previousSectionLessons = lessonJpaRepository.findBySectionId(previousSection.getId());
+                if (!previousSectionLessons.isEmpty()) {
+                    previousLessonId = previousSectionLessons.get(previousSectionLessons.size() - 1).getId();
+                }
+            }
+        } else {
             Lesson previousLesson = lessons.get(currentLessonIndex - 1);
             previousLessonId = previousLesson.getId();
         }
-        //tìm id của next lesson
-        if (currentLessonIndex < lessons.size() - 1) {
+        //tìm id của next lesson, next quiz
+        if (currentLessonIndex == (lessons.size() - 1)) {
+            List<Quiz> quizzes = quizJpaRepository.findBySectionId(currentSection.getId());
+            if (!CollectionUtils.isEmpty(quizzes)) {
+                nextQuizId = quizzes.get(0).getId();
+            }
+            List<Section> sections = sectionJpaRepository.findByCourseId(currentSection.getCourse().getId());
+            int currentSectionIndex = sections.indexOf(currentSection);
+            if (currentSectionIndex < sections.size() - 1) {
+                Section nextSection = sections.get(currentSectionIndex + 1);
+                List<Lesson> nextSectionLessons = lessonJpaRepository.findBySectionId(nextSection.getId());
+                if (!nextSectionLessons.isEmpty()) {
+                    nextLessonId = nextSectionLessons.get(0).getId();
+                }
+            }
+        } else {
             Lesson nextLesson = lessons.get(currentLessonIndex + 1);
             nextLessonId = nextLesson.getId();
-        }
-        if (currentLessonIndex == lessons.size() - 1) {
-            List<Quiz> quizzes = quizJpaRepository.findBySectionId(section.getId());
-            if (!CollectionUtils.isEmpty(quizzes)) {
-                nextLessonId = quizzes.get(0).getId();
-            }
         }
         return LessonResponse.builder()
                 .id(lesson.getId())
@@ -69,12 +93,14 @@ public class LessonService {
                 .embeddedUrl(lesson.getEmbeddedUrl())
                 .fileUrl(lesson.getFileUrl())
                 .videoUrl(lesson.getVideoUrl())
-                .sectionId(section.getId())
-                .sectionTitle(section.getTitle())
+                .sectionId(currentSection.getId())
+                .sectionTitle(currentSection.getTitle())
                 .activated(lesson.getActivated())
                 .videoDuration(lesson.getVideoDuration())
                 .nextLessonId(nextLessonId)
                 .previousLessonId(previousLessonId)
+                .previousQuizId(previousQuizId)
+                .nextQuizId(nextQuizId)
                 .build();
     }
 
